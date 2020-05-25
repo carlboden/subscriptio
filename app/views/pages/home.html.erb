@@ -1,6 +1,5 @@
 <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
-
       <% if user_signed_in? %>
         <li class="nav-item active">
           <%= link_to "Home", "#", class: "nav-link" %>
@@ -16,7 +15,17 @@
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
           </div>
         </li>
-      <% else %>
+
+      <% if current_user.company_id == nil %>
+      <%= link_to "Join a company!", new_company_path, class:"nav_link"%>
+      <%= link_to "New Company!", new_company_path, class:"nav_link"%>
+      
+
+      <% else current_user.company.subscriptio_plan.id == 1%>
+        <%= link_to "Become a Premium Member", new_user_bank_detail_path(current_user.id), class:"nav_link"%>
+    <%end%>
+
+          <% else %>
         <li class="nav-item">
           <%= link_to "Login", new_user_session_path, class: "nav-link" %>
         </li>

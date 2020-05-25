@@ -1,0 +1,14 @@
+<h1> My Account </h1>
+<br>
+<ul>
+    <li><%=@user.first_name%></li>
+    <li><%=@user.last_name%></li>
+    <li><%=@user.email%></li>
+    <li><%=@user.phone_number%></li>
+    <li><%=@user.function%></li>
+    <li><%=@user.company.name != nil ? "Company Name: #{@user.company.name}": "You are link to any company"%></li>
+</ul>
+    
+<%= link_to "Edit Account", edit_user_path(current_user.id)%>
+
+<%= button_to "Delete", { action: "destroy", id: current_user.id }, method: :delete, data: { confirm: "Are you sure?" }  %>

@@ -1,0 +1,19 @@
+<h1> Your company </h1>
+<br>
+<ul>
+    <li><%=@company.name%></li>
+    <li><%=@company.address%></li>
+    <li><%=@company.country%></li>
+    <li><%=@company.company_size%></li>
+    <li><%=@company.turnover%></li>
+    <li><%=@company.subscriptio_plan.name%></li>
+    <li><%=@company.subscriptio_plan.price%></li>
+    <li><%=@company.subscriptio_plan.description%></li>
+    <li><%=@company.subscriptio_plan.features%></li>
+</ul>
+
+      <% if current_user.company.subscriptio_plan.id == 1%>
+        <%= link_to "Become a Premium Member", new_user_bank_detail_path(current_user.id), class:"nav_link"%>
+        <%else%>
+        <%= button_to "I want to cancel my subscription", "../users/#{current_user.id}/bank_details/#{BankDetail.where(:user_id => current_user.id)[0].id}", method: :delete, data: { confirm: "Are you sure?" }  %>
+    <%end%>

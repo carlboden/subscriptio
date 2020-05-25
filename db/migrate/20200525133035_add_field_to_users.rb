@@ -6,6 +6,6 @@ class AddFieldToUsers < ActiveRecord::Migration[6.0]
     add_column :users, :function, :string
     add_column :users, :company_admin, :boolean
     add_column :users, :admin, :boolean
-    add_reference :users, :company, null: false, foreign_key: true
+    add_reference :users, :company, foreign_key: true
   end
 end
