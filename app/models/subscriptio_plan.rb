@@ -1,0 +1,2 @@
+class SubscriptioPlan < ApplicationRecord
+end
