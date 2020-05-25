@@ -1,0 +1,2 @@
+class SubscriptioPlansController < ApplicationController
+end

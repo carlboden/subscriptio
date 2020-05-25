@@ -4,7 +4,7 @@ class CreateSubscriptioPlans < ActiveRecord::Migration[6.0]
       t.string :name
       t.float :price
       t.text :description
-      t.array :features
+      t.text :features, array: true, default: []
 
       t.timestamps
     end
