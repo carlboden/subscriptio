@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2020_05_25_151220) do
     t.string "function"
     t.boolean "company_admin"
     t.boolean "admin"
-    t.bigint "company_id"
+    t.bigint "company_id", null: false
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
