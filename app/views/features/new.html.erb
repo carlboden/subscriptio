@@ -1,0 +1,10 @@
+<h1> Add a new feature </h1>
+
+<%= simple_form_for @feature do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :name,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "name" } %>
+    <%= f.button :submit, "Add" %>
+<%end%>
