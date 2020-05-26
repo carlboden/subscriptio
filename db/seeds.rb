@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.destroy_all
+Company.destroy_all
+SubscriptioPlan.destroy_all
+
+SubscriptioPlan.create!(name: "Free", price: 0.00)
+SubscriptioPlan.create!(name: "Premium", price: 10.00)
+

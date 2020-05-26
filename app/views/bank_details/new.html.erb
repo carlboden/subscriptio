@@ -1,0 +1,14 @@
+<h1> Become a premium member </h1>
+<br>
+<%=form_for [@company, @bank_details] do |f| %>
+
+    <%= f.label(:iban, "Iban") %>
+    <%= f.text_field :iban %> <br>
+    <%= f.label(:expiration_date, "Expiration Date") %>
+    <%= f.date_field :expiration_date %> <br>
+    <%= f.label(:cvv, "CVV") %>
+    <%= f.number_field :cvv %> <br>
+    <%= f.submit "Save", class: "btn btn-primary" %>
+  <% end %>
+
+<%#      <%= f.date_field :expiration_date, value: :expiration_date.strftime("%m-%d-%Y")  %> 
