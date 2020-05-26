@@ -19,5 +19,6 @@ Rails.application.routes.draw do
 
   resources :companies do
     resources :bank_details
+    resources :subscriptions
   end
 end
