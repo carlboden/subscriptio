@@ -7,6 +7,7 @@ class SoftwarePlansController < ApplicationController
 
 	def show
 	  @softwarePlan = SoftwarePlan.find(params[:id])
+	  @softwareFeatures = SoftwareFeature.where(:software_plan_id => params[:id])
 	end
 
 	def new

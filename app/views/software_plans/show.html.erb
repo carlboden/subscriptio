@@ -1,3 +1,10 @@
 <h1><%= @softwarePlan.name %></h1>
 
 <p>i want to see here all the features of a software plan and add some</p>
+<ul>
+<%= @softwareFeatures.each do |f| %>
+  <li><%= f.feature.name %></li>
+<% end %>
+</ul>
+
+<p> i want to add some features if i'm an admin</p>

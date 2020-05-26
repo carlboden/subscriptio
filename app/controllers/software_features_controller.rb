@@ -1,6 +1,6 @@
 class SoftwareFeaturesController < ApplicationController
 	def index
-	  @softwareFeatures = SoftwareFeature.where(:software_plans_id => params[:software_plans_id ])
+	  @softwareFeatures = SoftwareFeature.where(:software_plan_id => params[:id])
 	end
 
 	def show
@@ -13,7 +13,9 @@ class SoftwareFeaturesController < ApplicationController
 	end
 
 	def create
-	  
+	  @softwareFeature = SoftwareFeature.new
+	  @sofwarePlan = SoftwarePlan.find(params[:software_plans_id])
+	  @softwareFeature.sofwarePlan = @sofwarePlan
 	end
 
 	def edit
@@ -28,12 +30,9 @@ class SoftwareFeaturesController < ApplicationController
 
 	private
 
-	def softwareplan_params
-  	  params.require(:software_plan).permit(:name, :official_price)
-    end
 
-	def set_softwarePlan
-	  @softwarePlan = SoftwarePlan.find(params[:id])
+	def set_softwareFeature
+	  @softwareFeature = SoftwareFeature.find(params[:id])
 	end
 
 end
