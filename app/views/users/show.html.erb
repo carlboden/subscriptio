@@ -6,7 +6,7 @@
     <li><%=@user.email%></li>
     <li><%=@user.phone_number%></li>
     <li><%=@user.function%></li>
-    <li><%=@user.company.name != nil ? "Company Name: #{@user.company.name}": "You are link to any company"%></li>
+    <li><%=@user.company != nil ? "Company Name: #{@user.company.name}#{@user.status != nil ? @user.status : ""}": "You are not link to a company"%></li>
 </ul>
     
 <%= link_to "Edit Account", edit_user_path(current_user.id)%>
