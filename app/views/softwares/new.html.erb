@@ -1,0 +1,24 @@
+<h1> Add a new software </h1>
+
+<%= simple_form_for @software do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :name,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "name" } %>
+    <%= f.label :category %>            
+    <%= f.select :category,
+                ["marketing", "sales", "database software", "communication", "application suites", "word processing software", "spreadsheet software"],
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "category" } %>
+    <%= f.input :demo_url,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "demo url" } %>
+    <%= f.input :url,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "url" } %>
+    <%= f.button :submit, "Add" %>
+<%end%>

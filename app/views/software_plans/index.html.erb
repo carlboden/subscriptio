@@ -1,0 +1,9 @@
+<h1> index of software plans for a specific software</h1>
+
+<%= @software.name %>
+<ul>
+	<% @softwarePlans.each do |sp| %>
+	  <li><%= sp.name %></li>
+    <% end %>
+</ul>
+

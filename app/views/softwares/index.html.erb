@@ -1,0 +1,12 @@
+<h1>All softwares </h1>
+
+<ul>
+	<% @softwares.each do |soft| %>
+	  <li><%= link_to soft.name, software_path(soft) %>
+	  </li>
+	<%  end %>
+</ul>
+
+
+<!-- add only if admin--->
+<%= link_to "add a software", new_software_path %>
