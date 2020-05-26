@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_25_151220) do
+ActiveRecord::Schema.define(version: 2020_05_26_090831) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bank_details", force: :cascade do |t|
-    t.string "iban"
     t.date "expiration_date"
-    t.integer "cvv"
+    t.string "cvv"
     t.bigint "company_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "card"
     t.index ["company_id"], name: "index_bank_details_on_company_id"
     t.index ["user_id"], name: "index_bank_details_on_user_id"
   end

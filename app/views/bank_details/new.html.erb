@@ -1,14 +1,19 @@
 <h1> Become a premium member </h1>
 <br>
+
+<p style="color:red"><%= @card_incorrect == nil ? "" : "Your card number is incorrect. Please try again!"%> </p>
+<p style="color:red"><%= @cvv_incorrect == nil ? "" : "Your CVV number is incorrect, it should have 3 number. Please try again!"%> </p>
+<p style="color:red"><%= @card_not_valid == nil ? "" : "Your card is not valid anymore. Please try with a new one!"%> </p>
+<br>
+
 <%=form_for [@company, @bank_details] do |f| %>
 
-    <%= f.label(:iban, "Iban") %>
-    <%= f.text_field :iban %> <br>
+    <%= f.label(:card, "Card Number") %>
+    <%= f.text_field :card %> <br>
     <%= f.label(:expiration_date, "Expiration Date") %>
-    <%= f.date_field :expiration_date %> <br>
+    <%= f.text_field :expiration_date, class: "datepicker" %> <br>
     <%= f.label(:cvv, "CVV") %>
-    <%= f.number_field :cvv %> <br>
+    <%= f.text_field :cvv %> <br>
     <%= f.submit "Save", class: "btn btn-primary" %>
   <% end %>
 
-<%#      <%= f.date_field :expiration_date, value: :expiration_date.strftime("%m-%d-%Y")  %> 
