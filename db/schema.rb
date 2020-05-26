@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_25_133035) do
+ActiveRecord::Schema.define(version: 2020_05_25_151220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 2020_05_25_133035) do
     t.string "name"
     t.string "address"
     t.string "country"
-    t.bigint "company_size"
-    t.float "turnover"
+    t.string "company_size"
+    t.string "turnover"
     t.bigint "subscriptio_plan_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2020_05_25_133035) do
     t.string "function"
     t.boolean "company_admin"
     t.boolean "admin"
-    t.bigint "company_id", null: false
+    t.bigint "company_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

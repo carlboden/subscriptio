@@ -1,0 +1,19 @@
+<div class="container">
+  <h1> Create a new Company </h1>
+
+  <%= form_for @company do |f|%>
+    <%= f.label(:name, "Name") %>
+    <%= f.text_field :name %> <br>
+    <%= f.label(:address, "Address") %>
+    <%= f.text_field :address %> <br>
+    <%= f.label(:country, "Country") %>
+    <%= f.country_select :country %> <br>
+    <%= f.label(:company_size, "Company Size") %>
+    <%= f.select :company_size, ['Less than 10', 'Between 10 and 49', 'Between 50 and 499', '500 and more'] %> <br>
+    <%= f.label(:turnover, "Turnover") %>
+    <%= f.select :turnover, ['Less than 1 Million €', 'Between 1 and 4.9 Million €', 'Between 5 and 10 Million €', '10 and 50 Million €', 'More than 50 Million €'] %> <br>
+    <%= f.submit "Save", class: "btn btn-primary" %>
+  <% end %>
+
+</div>
+

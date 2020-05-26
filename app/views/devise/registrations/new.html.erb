@@ -27,7 +27,9 @@
                 required: true,
                 autofocus: true,
                 input_html: { autocomplete: "Phone Number" }%>
-    <%= f.input :job_function,
+    <%= f.label :function, "Function"%><br>
+    <%= f.select :function,
+                ["CEO", "CFO", "CTO", "Buying Manager", "Junior"],
                 required: true,
                 autofocus: true,
                 input_html: { autocomplete: "Job Function" }%>
