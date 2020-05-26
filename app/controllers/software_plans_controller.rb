@@ -1,0 +1,2 @@
+class SoftwarePlansController < ApplicationController
+end
