@@ -14,6 +14,8 @@ class SoftwaresController < ApplicationController
 	end
 
 	def create
+	  @software = Software.new(software_params)
+
 	end
 
 	def edit

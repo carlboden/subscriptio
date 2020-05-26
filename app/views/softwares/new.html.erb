@@ -1,6 +1,7 @@
 <h1> Add a new software </h1>
 
 <%= simple_form_for @software do |f| %>
+    <%= f.label(:name, "name") %>
     <%= f.input :name %>
     <%= f.input :category %>
     <%= f.input :demo_url %>
