@@ -12,6 +12,8 @@
     <li><%=@company.subscriptio_plan.features%></li>
 </ul>
 
+ <%= link_to "My Suscriptions", company_subscriptions_path(current_user.company.id), class: "dropdown-item"%>
+
       <% if current_user.company.subscriptio_plan.id == 1%>
         <%= link_to "Become a Premium Member", new_user_bank_detail_path(current_user.id), class:"nav_link"%>
         <%else%>
