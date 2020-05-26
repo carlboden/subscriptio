@@ -1,12 +1,13 @@
 class SoftwaresController < ApplicationController
 
-	before_action :set_software, only: [ :show, :edit, :update, :destroy]
+	before_action :set_software, only: [:show, :edit, :update, :destroy]
 	
 	def index
 	  @softwares = Software.all
 	end
 
 	def show
+		@software = Software.find(params[:id])
 	end
 
 	def new
@@ -15,7 +16,8 @@ class SoftwaresController < ApplicationController
 
 	def create
 	  @software = Software.new(software_params)
-
+	  @software.save
+	  redirect_to softwares_path
 	end
 
 	def edit

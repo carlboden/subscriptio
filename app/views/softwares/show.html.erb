@@ -1,2 +1,14 @@
 <h1> A specific software </h1>
 <h2> <%= @software.name %></h2>
+
+<% if @software_plans %>
+   <%= link_to "see all plans for this software ", software_software_plans_path(@software) %>
+<% else %>
+   <%= "not yet plans for this software" %>
+<% end %>
+
+<p><%= link_to %></p>
+
+
+
+<p><%= link_to "go Back in the index of softwares", softwares_path %></p>

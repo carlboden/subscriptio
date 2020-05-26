@@ -6,7 +6,9 @@
                 required: true,
                 autofocus: true,
                 input_html: { autocomplete: "name" } %>
-    <%= f.input :category,
+    <%= f.label :category %>            
+    <%= f.select :category,
+                ["marketing", "sales", "database software", "communication", "application suites", "word processing software", "spreadsheet software"],
                 required: true,
                 autofocus: true,
                 input_html: { autocomplete: "category" } %>
