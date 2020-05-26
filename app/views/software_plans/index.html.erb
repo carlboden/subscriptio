@@ -3,7 +3,8 @@
 <%= @software.name %>
 <ul>
 	<% @softwarePlans.each do |sp| %>
-	  <li><%= sp.name %></li>
+	  <li><%= link_to sp.name, software_software_plan_path(@software, sp.id) %></li>
+
     <% end %>
 </ul>
 

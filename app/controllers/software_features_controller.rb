@@ -1,6 +1,6 @@
 class SoftwareFeaturesController < ApplicationController
 	def index
-	  @softwareFeature = SoftwareFeature.where(:software_plans_id => params[:software_plans_id ])
+	  @softwareFeatures = SoftwareFeature.where(:software_plans_id => params[:software_plans_id ])
 	end
 
 	def show
@@ -8,7 +8,8 @@ class SoftwareFeaturesController < ApplicationController
 	end
 
 	def new
-	  
+	  @sofwarePlan = SoftwarePlan.find(params[:software_plans_id])
+	  @softwareFeature = SoftwareFeature.new
 	end
 
 	def create
