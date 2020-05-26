@@ -1,10 +1,11 @@
 <h1> A specific software </h1>
 <h2> <%= @software.name %></h2>
 
-<% if @software_plans %>
-   <%= link_to "see all plans for this software ", software_software_plans_path(@software) %>
-<% else %>
+<% if @softwarePlans == nil %>
    <%= "not yet plans for this software" %>
+<% else %>
+  <%= link_to "see all plans for this software ", software_software_plans_path(@software) %>
+   
 <% end %>
 
 <p><%= link_to "add a new plan", new_software_software_plan_path(@software)%></p>

@@ -5,7 +5,13 @@ Rails.application.routes.draw do
   resources :softwares do 
     resources :software_plans
   end
+
+  resources :software_plans do 
+    resources :software_features
+  end
     
+  resources :features
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :users do
     resources :bank_details

@@ -20,7 +20,7 @@ class SoftwarePlansController < ApplicationController
 	  @softwarePlan.software = @software
 
 	  if @softwarePlan.save
-	    redirect_to software_software_plans_path(@softwarePlan)
+	    redirect_to software_software_plans_path(@software)
 	   else
 	   	render :new
 	   end
