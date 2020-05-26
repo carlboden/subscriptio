@@ -1,0 +1,8 @@
+<h1> Add a new plan for a specificsoftware </h1>
+
+<%= simple_form_for [ @software, @softwarePlan ] do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :name %>
+    <%= f.input :official_price %>
+    <%= f.button :submit, "Add" %>
+<%end%>
