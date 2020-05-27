@@ -14,13 +14,13 @@
 
 .navbar-lewagon a {
   margin: 0;
-  color: $subscriptio-blue;
+  color: rgba(0,0,0,0.5);
   font-weight: bold;
 }
 
 .navbar-lewagon a:hover {
   text-decoration: none;
-  color: $subscriptio-dark-blue;
+  color: rgba(0,0,0,0.8);
 }
 
 .navbar-lewagon subscriptio-nav-link {
