@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-4 offset-sm-4">
-      <div class="form-signup">
+    <div class="col-xs-12 col-sm-6 offset-sm-3">
+      <div class="form-basic">
 
         <h2>Sign up</h2>
 
@@ -12,32 +12,43 @@
             <%= f.input :first_name,
                         required: true,
                         autofocus: true,
+                        placeholder: "John",
                         input_html: { autocomplete: "first name" }%>
             <%= f.input :last_name,
                         required: true,
                         autofocus: true,
+                        placeholder: "Snow",
                         input_html: { autocomplete: "last name" }%>
             <%= f.input :email,
                         required: true,
                         autofocus: true,
+                        placeholder: "john@company.com",
                         input_html: { autocomplete: "email" }%>
             <%= f.input :password,
                         required: true,
+                        placeholder: "........",
                         hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
                         input_html: { autocomplete: "new-password" } %>
             <%= f.input :password_confirmation,
                         required: true,
+                        placeholder: "........",
                         input_html: { autocomplete: "new-password" } %>
             <%= f.input :phone_number,
-                        required: true,
+                        required: false,
                         autofocus: true,
+                        placeholder: "+32 470 12 34 56",
                         input_html: { autocomplete: "Phone Number" }%>
-            <%= f.label :function, "Function"%><br>
+            <%= f.input :function,
+                        required: false,
+                        autofocus: true,
+                        placeholder: "CEO",
+                        input_html: { autocomplete: "Job Function" } %>
+          <!--  <%= f.label :function, "Function"%><br>
             <%= f.select :function,
-                        ["CEO", "CFO", "CTO", "Buying Manager", "Junior"],
+                        ["CEO", "CFO", "CTO", "CIO", "Purchasing Manager", "Other"],
                         required: true,
                         autofocus: true,
-                        input_html: { autocomplete: "Job Function" }%>
+                        input_html: { autocomplete: "Job Function" }%> -->
           </div>
 
           <div class="form-actions">
