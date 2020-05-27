@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if current_user.company_id != nil
+    if current_user.company_id != nil && current_user.status == "Approved"
     company_subscriptions_path(current_user.company_id)
     else
       user_path(current_user.id)
