@@ -1,3 +1,4 @@
+<%if current_user.status == "Approved"%>
 <h1> My Subscriptions </h1>
 <br>
 
@@ -6,3 +7,6 @@
     <li>Software Name: <%=subscription.software_plan.software.name%> - Price: <%= subscription.price%> - Start Date: <%= subscription.start_date%> - End Date: <%= subscription.end_date%> </li>
     <%end%>
     </ul>
+<%else%>
+    <p> Your account is still not approved </p>
+<%end%>

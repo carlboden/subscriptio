@@ -19,3 +19,5 @@
         <%else%>
         <%= button_to "I want to cancel my subscription", "../users/#{current_user.id}/bank_details/#{BankDetail.where(:user_id => current_user.id)[0].id}", method: :delete, data: { confirm: "Are you sure?" }  %>
     <%end%>
+    <a href="./<%=@company.id%>/users"> See all Company Member </a>
+    

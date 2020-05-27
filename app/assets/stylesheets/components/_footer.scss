@@ -1,0 +1,14 @@
+.footer {
+  background: $subscriptio-gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0px 50px;
+  color: rgba(255,255,255,0.3);
+}
+
+
+#page-height {
+  height: calc(100vh - 50px - 50px);
+}
