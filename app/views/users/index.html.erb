@@ -1,0 +1,15 @@
+<%if current_user.company_id == @company.id && current_user.company_admin%>
+<h1> All users </h1>
+<ul>
+    <%@users.each do |user|%>
+        <%if user.company_admin%>
+            <li> <%=user.first_name%> <%=user.last_name%> - <%=user.function%> </li>
+        <%elsif user.status == 'Waiting for approval' %>
+            <li> <%=user.first_name%> <%=user.last_name%> - <%=user.function%> <p style="color:red"><%=user.status %> </p> <a href="./users/<%=user.id%>/edit.Approved"> Approved </a></li>
+        <%elsif user.status == 'Remove access' %>
+        <%else%>
+            <li> <%=user.first_name%> <%=user.last_name%> - <%=user.function%> <a href="./users/<%=user.id%>/edit.Approved"> Remove access </a> </li>
+        <%end%>
+    <%end%>
+    </ul>
+<%end%>
