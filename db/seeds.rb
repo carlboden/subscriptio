@@ -13,9 +13,10 @@ puts "Destroy softwares...."
 SoftwarePlan.destroy_all
 Software.destroy_all
 
+puts "create softwares...."
+Software.create!(name:"sage", url:"www.sage.com", category:"RH", demo_url: "www.demo.com")
 
-
-
+puts "create subscriptio plans...."
 
 SubscriptioPlan.create!(name: "Free", price: 0.00)
 SubscriptioPlan.create!(name: "Premium", price: 10.00)
