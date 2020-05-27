@@ -1,15 +1,44 @@
 <h1>Update your Account </h1>
-
-<%= form_for @user do |f| %>
-    <%= f.label(:first_name, "First Name") %>
-    <%= f.text_field :first_name %> <br>
-    <%= f.label(:last_name, "Last Name") %>
-    <%= f.text_field :last_name %> <br>
-    <%= f.label(:email, "Email") %>
-    <%= f.text_field :email %> <br>
-    <%= f.label(:phone_number, "Phone Number") %>
-    <%= f.text_field :phone_number %> <br>
-    <%= f.label(:function, "Function") %>
-    <%= f.select :function, ["CEO", "CFO", "CTO", "Buying Manager", "Junior"] %> <br>
-    <%= f.submit "Save", class: "btn btn-primary" %>
-  <% end %>
+<% if @user.company != nil && @approving != true && @join != true%>
+  <%= form_for @user do |f| %>
+      <%= f.label(:first_name, "First Name") %>
+      <%= f.text_field :first_name %> <br>
+      <%= f.label(:last_name, "Last Name") %>
+      <%= f.text_field :last_name %> <br>
+      <%= f.label(:email, "Email") %>
+      <%= f.text_field :email %> <br>
+      <%= f.label(:phone_number, "Phone Number") %>
+      <%= f.text_field :phone_number %> <br>
+      <%= f.label(:function, "Function") %>
+      <%= f.select :function, ["CEO", "CFO", "CTO", "Buying Manager", "Junior"] %> <br>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    <% end %>
+<%elsif @approving %>
+  <%= form_for @user do |f| %>
+      <%= f.label :status, "Status"%>
+      <%= f.select :status, ["Approved", "Remove access"]%>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    <% end %>
+<%elsif @join %>
+  <%= form_for @user do |f| %>
+      <%= f.label(:company_id, "Company Name") %>
+      <%= f.text_field :company_id %> <br>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    <% end %>
+<%else%>
+    <%= form_for @user do |f| %>
+      <%= f.label(:first_name, "First Name") %>
+      <%= f.text_field :first_name %> <br>
+      <%= f.label(:last_name, "Last Name") %>
+      <%= f.text_field :last_name %> <br>
+      <%= f.label(:email, "Email") %>
+      <%= f.text_field :email %> <br>
+      <%= f.label(:phone_number, "Phone Number") %>
+      <%= f.text_field :phone_number %> <br>
+      <%= f.label(:function, "Function") %>
+      <%= f.select :function, ["CEO", "CFO", "CTO", "Buying Manager", "Junior"] %> <br>
+      <%= f.label(:company_id, "Company Name") %>
+      <%= f.text_field :company_id %> <br>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    <% end %>
+<%end%>
