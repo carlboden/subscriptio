@@ -1,4 +1,22 @@
-<h1>Pages#home</h1>
+
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.1)), url('<%= asset_url "banner2.png" %>');">
+
+  <div class="container">
+    <h1>Stop overpayment <br> for software solutions</h1>
+  </div>
+
+</div>
+
+<div class="d-flex justify-content-center m-5">
+
+  <%= link_to "START FOR FREE", new_user_registration_path, class: "subscriptio-btn-primary btn-lg mr-5" %>
+  <%= link_to "CHECK VIDEO", new_user_session_path, class: "subscriptio-btn-secondary btn-lg" %>
+
+</div>
+
+
+
+<!-- <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
       <% if user_signed_in? %>
         <li class="nav-item active">
@@ -19,6 +37,7 @@
       <% if current_user.company_id == nil %>
       <a href="./users/<%=current_user.id%>/edit.Join"> I want to join a company </a>
       <%= link_to "New Company!", new_company_path, class:"nav_link"%>
+
     
       <% elsif current_user.company.subscriptio_plan.id == 1 && current_user.company_admin%>
         <%= link_to "Become a Premium Member", new_user_bank_detail_path(current_user.id), class:"nav_link"%>
@@ -29,3 +48,5 @@
           <%= link_to "Login", new_user_session_path, class: "nav-link" %>
         </li>
       <% end %>
+
+-->
