@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :software_plans do
       resources :software_features
+      resources :ratings, only: [:index, :show, :new, :create]
     end
     
   resources :features
