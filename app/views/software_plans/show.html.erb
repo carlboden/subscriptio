@@ -1,6 +1,6 @@
-<h1><%= @softwarePlan.name %></h1>
+<h1><%= @softwarePlan.name %></h1><%= link_to " | add a rating |", new_software_plan_rating_path(@softwarePlan) %>
 
-<p>i want to see here all the features of a software plan and add some</p>
+<h4>Sofware features : </h4>
 <ul>
 <% @softwareFeatures.each do |f| %>
   <li><%= f.feature.name %></li>
@@ -16,3 +16,5 @@
 <%= link_to "  |  Back to all softwares", softwares_path %>
 
 </p>
+
+

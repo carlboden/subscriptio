@@ -1,10 +1,4 @@
 class RatingsController < ApplicationController
-	#t.integer "rating"
-    #t.text "description"
-    #t.bigint "user_id", null: false
-    #t.bigint "software_plan_id", null: false
-
-
     def index
 	  @ratings = Rating.where(:software_plan_id => params[:id])
 	end
@@ -23,8 +17,7 @@ class RatingsController < ApplicationController
   	  @softwarePlan = SoftwarePlan.find(params[:software_plan_id])
   	  @rating.software_plan = @softwarePlan
   	  @rating.user = current_user
-
-	  
+  
 	  if @rating.save
 	    redirect_to software_plan_path(@softwarePlan)
 	  else
