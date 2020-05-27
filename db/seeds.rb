@@ -9,6 +9,12 @@ User.destroy_all
 Company.destroy_all
 SubscriptioPlan.destroy_all
 
+
+
 SubscriptioPlan.create!(name: "Free", price: 0.00)
 SubscriptioPlan.create!(name: "Premium", price: 10.00)
+
+
+
+
 

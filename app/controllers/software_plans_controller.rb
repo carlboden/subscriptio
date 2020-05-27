@@ -7,6 +7,7 @@ class SoftwarePlansController < ApplicationController
 
 	def show
 	  @softwarePlan = SoftwarePlan.find(params[:id])
+	  @softwareFeatures = SoftwareFeature.where(:software_plan_id => params[:id])
 	end
 
 	def new
@@ -20,7 +21,7 @@ class SoftwarePlansController < ApplicationController
 	  @softwarePlan.software = @software
 
 	  if @softwarePlan.save
-	    redirect_to software_software_plans_path(@softwarePlan)
+	    redirect_to software_software_plans_path(@software)
 	   else
 	   	render :new
 	   end

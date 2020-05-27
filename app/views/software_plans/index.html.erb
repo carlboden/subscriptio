@@ -1,9 +1,12 @@
-<h1> index of software plans for a specific software</h1>
+<h1>all software plans for <%=  @software.name%></h1>
 
-<%= @software.name %>
+
 <ul>
 	<% @softwarePlans.each do |sp| %>
-	  <li><%= sp.name %></li>
+	  <li><%= link_to sp.name, software_software_plan_path(@software, sp.id) %></li>
+
     <% end %>
 </ul>
+
+<p><%= link_to "add a new plan", new_software_software_plan_path(@software)%></p>
 

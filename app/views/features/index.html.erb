@@ -1,0 +1,8 @@
+<h1> all features </h1>
+<ul>
+	<% @features.each do |f| %>
+	  <li><%= f.name %></li>
+	<% end %>	
+</ul>
+
+<%= link_to "add a feature", new_feature_path %>

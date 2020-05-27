@@ -1,1 +1,18 @@
-show.html.erb
+<h1><%= @softwarePlan.name %></h1>
+
+<p>i want to see here all the features of a software plan and add some</p>
+<ul>
+<% @softwareFeatures.each do |f| %>
+  <li><%= f.feature.name %></li>
+<% end %>
+</ul>
+<hr>
+<p> I want to add some features if i'm an admin ---> 
+<%= link_to "add a new software feature", new_software_plan_software_feature_path(@softwarePlan) %>
+</p>
+
+<p><%= link_to "Back to all plans for #{@softwarePlan.software.name}  ", software_software_plans_path(@softwarePlan.software) %> 
+
+<%= link_to "  |  Back to all softwares", softwares_path %>
+
+</p>
