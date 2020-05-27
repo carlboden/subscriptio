@@ -1,2 +1,10 @@
 <h1> add some software features </h1>
 
+<%= simple_form_for [@softwarePlan, @softwareFeature] do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :feature_id, collection:Feature.all, nput_html: { multiple: true, class: 'multiple-select' }, include_hidden: false%>
+    <%= f.button :submit, "Add" %>
+<%end%>
+
+
+

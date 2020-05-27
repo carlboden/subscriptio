@@ -14,8 +14,15 @@ class SoftwareFeaturesController < ApplicationController
 
 	def create
 	  @softwareFeature = SoftwareFeature.new
-	  @sofwarePlan = SoftwarePlan.find(params[:software_plans_id])
-	  @softwareFeature.sofwarePlan = @sofwarePlan
+	  @softwarePlan = SoftwarePlan.find(params[:software_plan_id])
+	  @softwareFeature.software_plan = @softwarePlan
+	  @feature = Feature.find(params[:software_feature][:feature_id])
+      @softwareFeature.feature = @feature
+	  if @softwareFeature.save
+	    redirect_to software_plan_path(@softwarePlan)
+	  else
+	  	render :new
+	  end
 	end
 
 	def edit

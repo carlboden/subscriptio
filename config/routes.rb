@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   resources :softwares do 
-    resources :software_plans do
+    resources :software_plans
+  end
+
+  resources :software_plans do
       resources :software_features
     end
-  end
     
   resources :features
 
