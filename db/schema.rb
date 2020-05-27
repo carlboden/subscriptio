@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_124701) do
     t.string "function"
     t.boolean "company_admin"
     t.boolean "admin"
-    t.bigint "company_id", null: false
+    t.bigint "company_id"
     t.string "status"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
