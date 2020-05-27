@@ -12,6 +12,30 @@
   width: 40px;
 }
 
+.navbar-home {
+  position: absolute;
+  width: 100%;
+  background: transparent;
+  box-shadow: none;
+  .navbar-nav .nav-link {
+    color: white;
+    font-weight: bold;
+  }
+  .navbar-nav .nav-link:hover {
+    color: white;
+    opacity: 0.5;
+  }
+  .logo-link {
+    color: white;
+    font-weight: bold;
+  }
+  .logo-link:hover {
+    color: white;
+    opacity: 0.5;
+  }
+}
+
+
 .navbar-lewagon a {
   margin: 0;
   color: rgba(0,0,0,0.5);
@@ -23,10 +47,4 @@
   color: rgba(0,0,0,0.8);
 }
 
-.navbar-lewagon subscriptio-nav-link {
-  color: $subscriptio-blue;
-}
 
-.navbar-lewagon subscriptio-nav-link:hover {
-  color: $subscriptio-dark-blue;
-}
