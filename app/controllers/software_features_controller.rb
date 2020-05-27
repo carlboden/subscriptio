@@ -8,7 +8,7 @@ class SoftwareFeaturesController < ApplicationController
 	end
 
 	def new
-	  @sofwarePlan = SoftwarePlan.find(params[:software_plans_id])
+	  @softwarePlan = SoftwarePlan.find(params[:software_plan_id])
 	  @softwareFeature = SoftwareFeature.new
 	end
 

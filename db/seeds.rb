@@ -14,16 +14,6 @@ SubscriptioPlan.destroy_all
 SubscriptioPlan.create!(name: "Free", price: 0.00)
 SubscriptioPlan.create!(name: "Premium", price: 10.00)
 
-feature1 = Feature.create!(name: "RH")
-feature2 = Feature.create!(name: "sales")
-feature3 = Feature.create!(name: "compta")
-
-s1 = Software.create!(name:"adobe", url:"www.adobe.com", category: "image", demo_url: "www.demo.com")
-s2 = Software.create!(name:"sage", url:"www.sage.com", category: "RH", demo_url: "www.demo.com")
-s3 = Software.create!(name:"skello", url:"www.skello.com", category: "RH", demo_url: "www.demo.com")
-
-
-
 
 
 
