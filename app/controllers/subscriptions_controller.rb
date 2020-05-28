@@ -20,6 +20,19 @@ class SubscriptionsController < ApplicationController
         end
     end
 
+    def edit
+        @company = Company.find(current_user.company_id)
+        @softwares = Software.all   
+        @subscription = Subscription.find(params[:id])
+    end
+
+    def update
+        @subscription = Subscription.find(params[:id])
+        @company = Company.find(current_user.company_id)
+        @subscription.update(params_subscription)
+        redirect_to company_subscriptions_path(@company.id)
+    end
+
     private
 
     def params_subscription

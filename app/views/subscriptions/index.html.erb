@@ -14,6 +14,7 @@
               <h2><%=subscription.software_plan.software.name%></h2>
               <p> <%= subscription.software_plan.software.category %> </p>
               <p><%= subscription.end_date%></p>
+              <a href="./subscriptions/<%=subscription.id%>/edit">edit </a> 
             </div>
             <div class="card-subscription-indicators">
               <%= image_tag "traffic-light-red.png"%>
