@@ -29,11 +29,14 @@
 
 .home-image img {
   width: 400px;
-  height: 250px;
-  padding: 16px 8px;
+  height: 240px;
+  padding: 24px 8px;
 
 }
 
 .home-image-info {
-  padding: 16px 8px;
+  padding: 16px 48px 16px 16px;
+  p {
+    text-align: justify;
+  }
 }
