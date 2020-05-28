@@ -1,6 +1,7 @@
 class SubscriptionsController < ApplicationController
     def index
         @subscriptions = Subscription.all
+        @subscription_decreasing_order = Subscription.order('price ASC').all
     end 
 
     def new
