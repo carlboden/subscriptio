@@ -5,7 +5,7 @@ class SubscriptionsController < ApplicationController
 
     def new
         @company = Company.find(current_user.company_id)
-        @softwares = Software.all   
+        @softwares = Software.order('name ASC').all   
         @subscription = Subscription.new
     end
 
@@ -22,7 +22,7 @@ class SubscriptionsController < ApplicationController
 
     def edit
         @company = Company.find(current_user.company_id)
-        @softwares = Software.all   
+        @softwares = Software.order('name ASC').all   
         @subscription = Subscription.find(params[:id])
     end
 
@@ -31,6 +31,17 @@ class SubscriptionsController < ApplicationController
         @company = Company.find(current_user.company_id)
         @subscription.update(params_subscription)
         redirect_to company_subscriptions_path(@company.id)
+    end
+
+    def destroy
+        @subscription = Subscription.find(params[:id])
+        @subscription.destroy
+        @company = Company.find(current_user.company_id)
+        redirect_to company_subscriptions_path(@company.id)
+    end
+
+    def show
+        @subscription = Subscription.find(params[:id])
     end
 
     private
