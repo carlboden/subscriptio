@@ -1,34 +1,41 @@
-<div class="container">
-
-  <%if current_user.status == "Approved" || current_user.company_admin   %>
-    <h1 class="text-center"> Company Subscriptions </h1>
-    <div class="text-right">
+<%if current_user.status == "Approved" || current_user.company_admin   %>
+  <div class="container">
+    <h1 class="text-center"> Subscriptions </h1>
+    <div class="card-text-right">
       <%= link_to "Add new", new_company_subscription_path(current_user.company_id)%>
     </div>
+  </div>
 
-      <div class="card-subscription-grid">
-        <%@subscriptions.each do |subscription|%>
-          <div class="card-subscription">
-            <a href="./subscriptions/<%=subscription.id%>"> <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" /> </a>
-            <div class="card-subscription-infos">
-              <h2><%=subscription.software_plan.software.name%></h2>
-              <p> <%= subscription.software_plan.software.category %> </p>
-              <p><%= subscription.end_date%></p>
-              <a href="./subscriptions/<%=subscription.id%>/edit">edit </a> 
-               <a href="./subscriptions/<%=subscription.id%>"> See the details</a>
-              <%= button_to "Delete your subscription", { action: "destroy", id: subscription.id }, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"  %>
-            </div>
-            <div class="card-subscription-indicators">
-              <%= image_tag "traffic-light-red.png"%>
-              <p><strong> €<%= subscription.price%></strong></p>
-
-            </div>
-          </div>
-        <%end%>
+  <div class="container">
+    <%@subscriptions.each do |subscription|%>
+      <div class="card-subscription mb-3">
+        <div class="col-xs-1 col-sm-2">
+           <a href="./subscriptions/<%=subscription.id%>"> <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" /> </a>
+        </div>
+        <div class="card-subscription-infos col-xs-5 col-sm-4">
+          <h2><a href="./subscriptions/<%=subscription.id%>"> <%=subscription.software_plan.software.name%> </a></h2>
+          <p> <%= subscription.software_plan.software.category %> </p>
+          <p><%= subscription.end_date%></p>
+<!--          <a href="./subscriptions/<%=subscription.id%>/edit">edit </a> -->
+        </div>
+        <div class="col-5">
+          <p><strong> €<%= subscription.price%> / month</strong></p>
+          <p> Number of users </p>
+        </div>
+        <div class="card-subscription-indicators col-1">
+          <%= image_tag "traffic-light-red.png"%>
+        </div>
       </div>
 
-  <%else%>
-      <p> Your account is still not approved </p>
+    <%end%>
+  </div>
+
+<%else%>
+
+  <div class="container">
+    <h2> Your account is still not approved </h2>
+  </div>
   <%end%>
-</div>
+
+
 
