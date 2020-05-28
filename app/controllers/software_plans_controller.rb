@@ -29,12 +29,25 @@ class SoftwarePlansController < ApplicationController
 	end
 
 	def edit
+	 @softwarePlan = SoftwarePlan.find(params[:id])
+	 @software = @softwarePlan.software
 	end
 
 	def update
+	  @softwarePlan = SoftwarePlan.find(params[:id])
+	  @software = @softwarePlan.software
+	  if @softwarePlan.update(softwareplan_params)
+        redirect_to software_plan_path(@softwarePlan), notice: 'your softwarePlan was successfully updated.'
+      else
+        render :edit
+      end 
 	end
 
 	def destroy
+	  @softwarePlan = SoftwarePlan.find(params[:id])
+	  @software = @softwarePlan.software
+      @softwarePlan.delete
+      redirect_to software_path(@software)
 	end
 
 	def render_select_plans

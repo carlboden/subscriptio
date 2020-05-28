@@ -1,14 +1,31 @@
-<h1> My Account </h1>
-<br>
-<ul>
-    <li><%=@user.first_name%></li>
-    <li><%=@user.last_name%></li>
-    <li><%=@user.email%></li>
-    <li><%=@user.phone_number%></li>
-    <li><%=@user.function%></li>
-    <li><%=@user.company != nil ? "Company Name: #{@user.company.name}#{@user.status != nil ? @user.status : ""}": "You are not link to a company"%></li>
-</ul>
-    
-<%= link_to "Edit Account", edit_user_path(current_user.id)%>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 offset-sm-3">
+      <div class="form-basic">
+        <h2> Your account </h2>
 
-<%= button_to "Delete", { action: "destroy", id: current_user.id }, method: :delete, data: { confirm: "Are you sure?" }  %>
+          <%= simple_form_for @user do |f| %>
+            <%= f.input :first_name, disabled: true %>
+            <%= f.input :last_name, disabled: true %>
+            <%= f.input :email, disabled: true %>
+            <%= f.input :phone_number, disabled: true %>
+            <%= f.input :function, disabled: true %>
+            <%= f.association :company, disabled: true %>
+          <% end %>
+
+<!--        <ul>
+            <li><%=@user.first_name%></li>
+            <li><%=@user.last_name%></li>
+            <li><%=@user.email%></li>
+            <li><%=@user.phone_number%></li>
+            <li><%=@user.function%></li>
+            <li><%=@user.company != nil ? "Company Name: #{@user.company.name}#{@user.status != nil ? @user.status : ""}": "You are not link to a company"%></li>
+        </ul>
+-->
+        <%= link_to "Change your account", edit_user_path(current_user.id), class: "btn btn-primary"%>
+
+
+      </div>
+    </div>
+  </div>
+</div>

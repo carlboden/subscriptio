@@ -1,44 +1,69 @@
-<h1>Update your Account </h1>
-<% if @user.company != nil && @approving != true && @join != true%>
-  <%= form_for @user do |f| %>
-      <%= f.label(:first_name, "First Name") %>
-      <%= f.text_field :first_name %> <br>
-      <%= f.label(:last_name, "Last Name") %>
-      <%= f.text_field :last_name %> <br>
-      <%= f.label(:email, "Email") %>
-      <%= f.text_field :email %> <br>
-      <%= f.label(:phone_number, "Phone Number") %>
-      <%= f.text_field :phone_number %> <br>
-      <%= f.label(:function, "Function") %>
-      <%= f.select :function, ["CEO", "CFO", "CTO", "Buying Manager", "Junior"] %> <br>
-      <%= f.submit "Save", class: "btn btn-primary" %>
-    <% end %>
-<%elsif @approving %>
-  <%= form_for @user do |f| %>
-      <%= f.label :status, "Status"%>
-      <%= f.select :status, ["Approved", "Remove access"]%>
-      <%= f.submit "Save", class: "btn btn-primary" %>
-    <% end %>
-<%elsif @join %>
-  <%= form_for @user do |f| %>
-      <%= f.label(:company_id, "Company Name") %>
-      <%= f.text_field :company_id %> <br>
-      <%= f.submit "Save", class: "btn btn-primary" %>
-    <% end %>
-<%else%>
-    <%= form_for @user do |f| %>
-      <%= f.label(:first_name, "First Name") %>
-      <%= f.text_field :first_name %> <br>
-      <%= f.label(:last_name, "Last Name") %>
-      <%= f.text_field :last_name %> <br>
-      <%= f.label(:email, "Email") %>
-      <%= f.text_field :email %> <br>
-      <%= f.label(:phone_number, "Phone Number") %>
-      <%= f.text_field :phone_number %> <br>
-      <%= f.label(:function, "Function") %>
-      <%= f.select :function, ["CEO", "CFO", "CTO", "Buying Manager", "Junior"] %> <br>
-      <%= f.label(:company_id, "Company Name") %>
-      <%= f.text_field :company_id %> <br>
-      <%= f.submit "Save", class: "btn btn-primary" %>
-    <% end %>
-<%end%>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 offset-sm-3">
+      <div class="form-basic">
+
+        <h2>Change your Account</h2>
+        <% if @user.company != nil && @approving != true && @join != true%>
+
+          <%= simple_form_for @user do |f| %>
+            <%= f.input :first_name,
+                        required: true,
+                        placeholder: "John" %>
+            <%= f.input :last_name,
+                        required: true,
+                        placeholder: "Snow" %>
+            <%= f.input :email,
+                        required: true,
+                        placeholder: "john@company.com" %>
+            <%= f.input :phone_number,
+                        required: false,
+                        placeholder: "+32 470 12 34 56" %>
+            <%= f.input :function,
+                        required: false,
+                        placeholder: "CEO" %>
+            <%= f.submit "Save your changes", class: "btn btn-primary" %>
+          <% end %>
+
+        <%elsif @approving %>
+          <%= simple_form_for do |f| %>
+              <%= f.input :status, "Status"%>
+              <%= f.select :status, ["Approved", "Remove access"]%>
+              <%= f.submit "Save your changes", class: "btn btn-primary" %>
+            <% end %>
+
+        <%elsif @join %>
+          <%= simple_form_for @user do |f| %>
+              <%= f.input(:company_id, "Company Name") %>
+              <%= f.submit "Save your changes", class: "btn btn-primary" %>
+            <% end %>
+        <%else%>
+            <%= simple_form_for @user do |f| %>
+              <%= f.input :first_name,
+                          required: true,
+                          placeholder: "John",
+                          input_html: { autocomplete: "first name" }%>
+              <%= f.input :last_name,
+                          required: true,
+                          placeholder: "Snow",
+                          input_html: { autocomplete: "last name" }%>
+              <%= f.input :email,
+                          required: true,
+                          placeholder: "john@company.com",
+                          input_html: { autocomplete: "email" }%>
+              <%= f.input :phone_number,
+                          required: false,
+                          placeholder: "+32 470 12 34 56",
+                          input_html: { autocomplete: "Phone Number" }%>
+              <%= f.input :function,
+                          required: false,
+                          placeholder: "CEO",
+                          input_html: { autocomplete: "Job Function" } %>
+            <%= f.submit "Save your changes", class: "btn btn-primary" %>
+            <% end %>
+        <%end%>
+        <%= button_to "Delete your account", { action: "destroy", id: current_user.id }, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"  %>
+      </div>
+    </div>
+  </div>
+</div>

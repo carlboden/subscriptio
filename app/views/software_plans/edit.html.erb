@@ -1,0 +1,8 @@
+<h1> edit software plan</h1>
+
+<%= simple_form_for [ @software, @softwarePlan ] do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :name %>
+    <%= f.input :official_price %>
+    <%= f.button :submit, "Update" %>
+<%end%>
