@@ -1,0 +1,83 @@
+.card-subscription {
+  overflow: hidden;
+  height: 100px;
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  img {
+    height: 100%;
+    width: 100px;
+    object-fit: cover;
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  p {
+    font-size: 12px;
+    line-height: 1.4;
+    opacity: .7;
+    margin-bottom: 0;
+    margin-top: 8px;
+  }
+  .card-subscription-infos {
+    padding: 16px;
+    flex-grow: 1;
+  }
+  .card-subscription-indicators {
+    padding: 16px;
+    img {
+      height: 50%;
+      width: 30px;
+    }
+  }
+
+}
+
+.card-subscription-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 16px;
+}
+
+
+
+/*
+// Smallest device
+@media (min-width: 100px) and (max-width: 575px) {
+  .card-subscription-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  .card-subscription-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .card-subscription-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .card-subscription-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  .card-subscription-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+*/

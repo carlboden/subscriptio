@@ -1,14 +1,40 @@
 <%= content_for(:navbar_class, "navbar-home") %>
 
 <div class="banner" >
-
   <div class="container text-center">
     <h1>Stop losing money: act now</h1>
     <p>Subscriptio helps you to stop overpaying for your software subscriptions</p>
      <%= link_to "START FOR FREE", new_user_registration_path, class: "subscriptio-btn-primary" %>
   </div>
-
 </div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="home-image-info col-xs-12 col-sm-6">
+        <h2>Stop overpayment</h2>
+        <p>Companies overpay on average more than 30% on software subscriptions </p>
+        <p>Subscriptio allows you to save costs by benchmarking your software subscriptions </p>
+    </div>
+    <div class="home-image col-xs-12 col-sm-6">
+        <%= image_tag "dashboard.png" %>
+    </div>
+
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="home-image col-xs-12 col-sm-6">
+        <%= image_tag "overview_page.png" %>
+      </div>
+      <div class="home-image-info col-xs-12 col-sm-6">
+        <h2>Manage software subscriptions</h2>
+        <p>Companies overpay on average more than 30% on software subscriptions </p>
+        <p>Subscriptio allows you to save costs by benchmarking your software subscriptions </p>
+      </div>
+  </div>
+</div>
+
 
 <div >
   <%= render 'shared/footer' %>
