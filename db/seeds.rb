@@ -15,6 +15,7 @@ SoftwareFeature.destroy_all
 Feature.destroy_all
 SoftwarePlan.destroy_all
 Software.destroy_all
+puts 'Finished!'
 
 
 puts 'Creating 80 features...'
@@ -64,9 +65,26 @@ puts 'Finished!'
 
 
 puts "create subscriptio plans...."
-
 SubscriptioPlan.create!(name: "Free", price: 0.00)
 SubscriptioPlan.create!(name: "Premium", price: 10.00)
+puts 'Finished!'
+
+
+puts "Create Companies ..."
+company_sizes = ['Less than 5', 'Between 5 and 10', 'Between 10 and 49', 'Between 50 and 499', '500 and more']
+turnovers = ['Less than €100k', 'Between €100k and €500k', 'Between €500k and €1 Million', 'Between €1 Million and €5 Million', 'Between €5 Million and €10 Million', 'Between €10 Million and €50 Million', 'More than €50 Million' ]
+20.times do 
+  company = Company.new(
+  	name: Faker::Company.name,
+  	address: "#{Faker::Address.street_address}, #{Faker::Address.city}",
+  	country: "Belgium",
+  	company_size: company_sizes.shuffle.take(1)[0],
+  	turnover:  turnovers.shuffle.take(1)[0]
+  	)
+  company.subscriptio_plan = SubscriptioPlan.all.shuffle.take(1)[0]
+  company.save!
+end
+puts 'Finished!'
 
 
 
