@@ -7,7 +7,7 @@
         <%= f.input :price, as: :float %> <br>
         <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), :include_blank => true, data: { action: "software-plan#fetchPlans" } %> <br>
         <div data-target="software-plan.wrapper">
-        
+
         </div>
         <%= f.submit "Save", class: "btn btn-primary" %>
     <% end %>
