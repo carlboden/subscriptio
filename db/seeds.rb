@@ -6,11 +6,11 @@ require 'faker'
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.destroy_all
+#User.destroy_all
 Company.destroy_all
 SubscriptioPlan.destroy_all
 
-puts "Destroy softwares...."
+puts "Destroy softwares Feature, Feature, Softwareplan, Software...."
 SoftwareFeature.destroy_all
 Feature.destroy_all
 SoftwarePlan.destroy_all
@@ -47,7 +47,7 @@ puts 'Creating 80 fake softwares Plans...'
     official_price: Faker::Commerce.price,
   )
   #add a software to softwareplan
-  softwareplan.software = Software.shuffle.take(1)
+  softwarePlan.software= Software.all.shuffle.take(1)[0]
   softwarePlan.save!
 end
 puts 'Finished!'
@@ -56,8 +56,8 @@ puts 'Creating 80 fake softwares features...'
 80.times do
   softwareFeature = SoftwareFeature.new
   #add a softwareplan to softwarefeatures
-  softwareFeature.software_plan = SoftwarePlan.shuffle.take(1)
-  sofwareFeature.feature = Feature.shuffle.take(1)
+  softwareFeature.software_plan = SoftwarePlan.all.shuffle.take(1)[0]
+  softwareFeature.feature = Feature.all.shuffle.take(1)[0]
   softwareFeature.save!
 end
 puts 'Finished!'
