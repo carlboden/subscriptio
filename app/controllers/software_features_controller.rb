@@ -32,6 +32,11 @@ class SoftwareFeaturesController < ApplicationController
 	end
 
 	def destroy
+	  @softwareFeature = SoftwareFeature.find(params[:id])
+	  @softwarePlan = SoftwarePlan.find(params[:software_plan_id])
+	  @software_feature.delete
+	  redirect_to software_plan_path(@softwarePlan)
+
 	end
 
 
