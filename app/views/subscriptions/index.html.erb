@@ -44,4 +44,26 @@
   <%end%>
 </div>
 
+<div class="container">
+
+  <%= simple_form_for softwares_path, method: :get do %>
+    <%= text_field_tag :query,
+      params[:query],
+      class: "form-control",
+      placeholder: "I want to find...."
+    %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+  <% end %>
+
+
+  <ul>
+    <% @softwares.each do |soft| %>
+      <li><%= link_to soft.name, software_path(soft) %>
+      </li>
+    <%  end %>
+  </ul>
+
+
+</div>
+
 
