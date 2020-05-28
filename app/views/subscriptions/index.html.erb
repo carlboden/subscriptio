@@ -4,7 +4,7 @@
 <%= link_to "Add a new subscription", new_company_subscription_path(current_user.company_id)%>
 <ul>
     <%@subscriptions.each do |subscription|%>
-    <li>Software Name: <%=subscription.software_plan.software.name%> - Price: <%= subscription.price%> - Start Date: <%= subscription.start_date%> - End Date: <%= subscription.end_date%> </li>
+    <li>Software Name: <%=subscription.software_plan.software.name%> - Price: <%= subscription.price%> - Start Date: <%= subscription.start_date%> - End Date: <%= subscription.end_date%> <a href="./subscriptions/<%=subscription.id%>/edit">edit </a> </li>
     <%end%>
     </ul>
 <%else%>
