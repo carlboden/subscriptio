@@ -6,7 +6,7 @@ require 'faker'
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-#User.destroy_all
+User.destroy_all
 Company.destroy_all
 SubscriptioPlan.destroy_all
 
@@ -86,7 +86,39 @@ turnovers = ['Less than €100k', 'Between €100k and €500k', 'Between €500
 end
 puts 'Finished!'
 
+puts "Create users"
 
+functions = ["CEO", "CFO", "CTO", "CIO", "Purchasing Manager", "Other"]
+
+5.times do 
+	user = User.new(
+	  email: Faker::Internet.email,
+	  password: "123456",
+	  first_name: Faker::Name.first_name,
+	  last_name: Faker::Name.last_name,
+	  phone_number: "+32 #{Faker::PhoneNumber.subscriber_number(length: 9)}",
+	  function: functions.shuffle.take(1)[0],
+	  company_admin: false,
+	  admin: false,
+	)
+	user.company = Company.all.shuffle.take(1)[0]
+	user.save!
+end
+puts 'Finished!'
+
+
+puts "Create ratings"
+80.times do
+	rating = Rating.new(
+		rating: [0, 1, 2, 3, 4, 5].shuffle.first,
+		description: Faker::Hipster.paragraph
+	)
+	rating.user = User.all.shuffle.take(1)[0]
+	rating.software_plan = SoftwarePlan.all.shuffle.first
+	rating.save!
+end
+
+puts "finished"
 
 
 
