@@ -1,9 +1,9 @@
 <%if current_user.status == "Approved" || current_user.company_admin   %>
 <h1> My Subscriptions </h1>
 <br>
-
+<%= link_to "Add a new subscription", new_company_subscription_path(current_user.company_id)%>
 <ul>
-    <%=@subscriptions.each do |subscription|%>
+    <%@subscriptions.each do |subscription|%>
     <li>Software Name: <%=subscription.software_plan.software.name%> - Price: <%= subscription.price%> - Start Date: <%= subscription.start_date%> - End Date: <%= subscription.end_date%> </li>
     <%end%>
     </ul>

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :softwares do 
     resources :software_plans
+    get "select_plans", to: "software_plans#render_select_plans"
   end
 
   resources :software_plans do
