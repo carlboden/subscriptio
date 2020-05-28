@@ -1,19 +1,34 @@
-<h1> Become a premium member </h1>
-<br>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 offset-sm-4">
+      <div class="form-basic">
+        <h2> Enter your credit card details </h2>
 
-<p style="color:red"><%= @card_incorrect == nil ? "" : "Your card number is incorrect. Please try again!"%> </p>
-<p style="color:red"><%= @cvv_incorrect == nil ? "" : "Your CVV number is incorrect, it should have 3 number. Please try again!"%> </p>
-<p style="color:red"><%= @card_not_valid == nil ? "" : "Your card is not valid anymore. Please try with a new one!"%> </p>
-<br>
+        <p style="color:red"><%= @card_incorrect == nil ? "" : "Your card number is incorrect. Please try again!"%> </p>
+        <p style="color:red"><%= @cvv_incorrect == nil ? "" : "Your CVV number is incorrect, it should have 3 number. Please try again!"%> </p>
+        <p style="color:red"><%= @card_not_valid == nil ? "" : "Your card is not valid anymore. Please try with a new one!"%> </p>
 
-<%=form_for [@company, @bank_details] do |f| %>
+        <%= simple_form_for [@company, @bank_details] do |f| %>
 
-    <%= f.label(:card, "Card Number") %>
-    <%= f.text_field :card %> <br>
-    <%= f.label(:expiration_date, "Expiration Date") %>
-    <%= f.text_field :expiration_date, class: "datepicker" %> <br>
-    <%= f.label(:cvv, "CVV") %>
-    <%= f.text_field :cvv %> <br>
-    <%= f.submit "Save", class: "btn btn-primary" %>
-  <% end %>
+          <%= f.input :card,
+                      label: "Card Number",
+                      required: true,
+                      autofocus: true,
+                      placeholder: "4242 4242 4242 4242" %>
+          <%= f.input :expiration_date,
+                      as: :string,
+                      required: true,
+                      autofocus: true,
+                      input_html: {class: "datepicker"} %>
+          <%= f.input :cvv,
+                      required: true,
+                      autofocus: true,
+                      placeholder: "876" %>
+          <%= f.submit "Save", class: "btn btn-primary" %>
+        <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
