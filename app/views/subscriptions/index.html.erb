@@ -1,12 +1,31 @@
-<%if current_user.status == "Approved" || current_user.company_admin   %>
-<h1> My Subscriptions </h1>
-<br>
-<%= link_to "Add a new subscription", new_company_subscription_path(current_user.company_id)%>
-<ul>
-    <%@subscriptions.each do |subscription|%>
-    <li>Software Name: <%=subscription.software_plan.software.name%> - Price: <%= subscription.price%> - Start Date: <%= subscription.start_date%> - End Date: <%= subscription.end_date%> </li>
-    <%end%>
-    </ul>
-<%else%>
-    <p> Your account is still not approved </p>
-<%end%>
+<div class="container">
+
+  <%if current_user.status == "Approved" || current_user.company_admin   %>
+    <h1 class="text-center"> Company Subscriptions </h1>
+    <div class="text-right">
+      <%= link_to "Add new", new_company_subscription_path(current_user.company_id)%>
+    </div>
+
+      <div class="card-subscription-grid">
+        <%@subscriptions.each do |subscription|%>
+          <div class="card-subscription">
+            <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
+            <div class="card-subscription-infos">
+              <h2><%=subscription.software_plan.software.name%></h2>
+              <p> <%= subscription.software_plan.software.category %> </p>
+              <p><%= subscription.end_date%></p>
+            </div>
+            <div class="card-subscription-indicators">
+              <%= image_tag "traffic-light-red.png"%>
+              <p><strong> €<%= subscription.price%></strong></p>
+
+            </div>
+          </div>
+        <%end%>
+      </div>
+
+  <%else%>
+      <p> Your account is still not approved </p>
+  <%end%>
+</div>
+
