@@ -45,7 +45,7 @@ class SoftwarePlansController < ApplicationController
 
 	def destroy
 	  @softwarePlan = SoftwarePlan.find(params[:id])
-	  @softwarePlan.software = @software
+	  @software = @softwarePlan.software
       @softwarePlan.delete
       redirect_to software_path(@software)
 	end

@@ -1,8 +1,5 @@
 <h1><%= @softwarePlan.name %></h1>
 <p>
-<%= link_to software_plan_path(@softwarePlan), method: :delete, data: { confirm: "Are you sure?" } do %>
-      <i class="fa fa-trash destroy_dose"></i>
-<% end %>
 
 <%= link_to "Update", edit_software_software_plan_path(@softwarePlan) %><%= link_to " | add a rating |", new_software_plan_rating_path(@softwarePlan) %>
 </p>
