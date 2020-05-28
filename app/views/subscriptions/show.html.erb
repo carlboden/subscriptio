@@ -13,7 +13,7 @@
               <h2><%=@subscription.software_plan.software.name%></h2>
               <p> <%= @subscription.software_plan.software.category %> </p>
               <p><%= @subscription.end_date%></p>
-              <a href="./subscriptions/<%=@subscription.id%>/edit">edit </a> 
+              <a href="../subscriptions/<%=@subscription.id%>/edit">edit </a> 
               <%= button_to "Delete your subscription", { action: "destroy", id: @subscription.id }, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"  %>
             </div>
             <div class="card-subscription-indicators">
