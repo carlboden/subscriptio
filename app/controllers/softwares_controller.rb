@@ -30,6 +30,9 @@ class SoftwaresController < ApplicationController
 	def destroy
 	end
 
+	def project_params
+		params.require(:software).permit(:name, :url, :demo_url, :category, software_plans_attributes: [:id, :name, :official_price, :_destroy])
+	  end
 
 	private
 

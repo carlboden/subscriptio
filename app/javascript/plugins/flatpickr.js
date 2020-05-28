@@ -17,6 +17,25 @@ const initFlatPicker = () => {
         ]
     });
   }
+  else if (document.querySelector(".datepicker_full") ){
+    flatpickr(".datepicker_full", {
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d"
+    });
+  }
 }
 
+const initFlatPicker2 = () => { 
+  if (document.querySelector(".datepicker_full") ){
+    flatpickr(".datepicker_full", {
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d"
+    });
+  }
+}
+
+
 export default initFlatPicker;
+

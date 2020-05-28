@@ -50,6 +50,13 @@ class SoftwarePlansController < ApplicationController
       redirect_to software_path(@software)
 	end
 
+	def render_select_plans
+		@software = Software.find(params[:software_id])
+		@software_plans = @software.software_plans
+		html_string = render_to_string(partial: "select_plans.html.erb",locals: { software_plans: @software_plans})
+		render json: { html_string: html_string }
+	end
+
 
 	private
 
