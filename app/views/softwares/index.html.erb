@@ -1,4 +1,4 @@
-<h1>All softwares </h1>
+<h1>All softwares for the category <%=@softwares[0].category%> </h1>
 
 
 <%= simple_form_for softwares_path, method: :get do %>
@@ -12,15 +12,30 @@
 
 
 <ul>
-	<% @softwares.each do |soft| %>
-	  <li><%= link_to soft.name, software_path(soft) %>
-	  </li>
+	<% @softwares.each do |software| %>
+		<%software_plan = SoftwarePlan.where(software_id: software.id)%>
+		<%software_plan.each do |plan|%>
+		<%reviews = plan.ratings%>
+		<%sum_reviews = 0.0%>
+		<%reviews.each do |review|%>
+			<%sum_reviews += review.rating%>
+		<%end%>
+		<%average_reviews = sum_reviews/(reviews.length)%>
+		<%sum_price = 0%>
+		<%subscriptions = Subscription.order('price ASC').where(:software_plan_id => plan.id)%>
+
+		<%subscriptions[0] == nil ? lowest_price = nil : lowest_price = subscriptions[0].price%>
+		<%subscriptions.each do |subscription|%>
+			<%sum_price += subscription.price%>
+		<%end%>
+		<%subscriptions[0] == nil ? average_price = nil :  average_price = sum_price / (subscriptions.length)%>
+		<li><%= plan.software.name %> - <%=plan.name%> - Official Price: <%=plan.official_price%> € - <%=sum_reviews%> stars <%=lowest_price == nil ? "" : "- lowest_price: #{lowest_price}" %>  <%=average_price == nil ? "" : "- average_price: #{average_price}" %></li>
+		<%end%>
 	<%  end %>
 </ul>
 <hr>
 
 <!-- add only if admin--->
-<%= link_to "add a software", new_software_path %>
 
-
+<%# <%= link_to "add a software", new_software_path %>
 

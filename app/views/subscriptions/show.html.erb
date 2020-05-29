@@ -1,9 +1,10 @@
 <%if current_user.status == "Approved" || current_user.company_admin   %>
   <div class="container">
-    <h1 class="text-center"> Subscription for <%=@subscription.software_plan.software.name %> </h1>
+   <h1 class="text-center"> Subscription for <a href="<%=@subscription.software_plan.software.url%>"><%=@subscription.software_plan.software.name %> </a> </h1>
      <div class="card-text-right">
         <%= link_to edit_company_subscription_path(current_user.company_id) do %> <i class="fa fa-edit"> </i> <% end %>
         <%= link_to company_subscription_path, method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
+
     </div>
   </div>
 
@@ -15,12 +16,13 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-4">
-        <p>Category: <%= @subscription.software_plan.software.category%> </p>
+        <p>Category: <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> <%= @subscription.software_plan.software.category%> </a> </p>
         <p>Plan: <%= @subscription.software_plan.name %> </p>
         <p><%= @subscription.number_of_user%> users </p>
         <p>Start: <%= @subscription.start_date %> </p>
         <p>End: <%= @subscription.end_date%></p>
       </div>
+
       <div class="col-xs-12 col-sm-3 ">
         <div class="price-flex">
           <h2> €<%= @subscription.price%> / month </h2>
@@ -36,9 +38,24 @@
     <p> <strong>Lowest Price available for your plan: </strong> €<%=@lowest_price.price%> for <%=@lowest_price.number_of_user%> users and a company of <%=@lowest_price.company.company_size%> employees </p>
     <p> <strong> Lowest price for the same number of users: </strong> €<%=@lowest_price_same_range_number_user.price %> which is <strong> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </strong> difference  </p>
 
+      <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a>
+
+  <%@reviews = @subscription.software_plan.ratings%>
+  <ul>
+  <%@reviews.each do |review|%>
+    <li> <%=review.rating%> stars - <%=review.description%> </li>
+    <%end%>
+
+  </ul>
+    
     <div class="mt-5">
       <%= link_to "< Back to overview", company_subscriptions_path(current_user.company_id) %>
     </div>
+  </div>
+
+  <h3>My Chart</h3>
+  <div id="chartContainer">
+   <%= @chart.render() %>
   </div>
 
 <%else%>
