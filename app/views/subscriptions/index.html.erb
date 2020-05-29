@@ -12,6 +12,12 @@
     <p> Your account is still not approved </p>
 <%end%>
 =======
+
+
+
+
+
+
 <div class="container">
 
   <%if current_user.status == "Approved" || current_user.company_admin   %>
@@ -21,6 +27,12 @@
     </div>
 
       <div class="card-subscription-grid">
+        <div>
+          
+        </div>
+
+
+
         <%@subscriptions.each do |subscription|%>
           <div class="card-subscription">
             <a href="./subscriptions/<%=subscription.id%>"> <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" /> </a>
@@ -48,17 +60,28 @@
 
 <div class="container">
 
+
+<h2>Search in all softwares</h2>
+
   <%= simple_form_for softwares_path, method: :get do %>
     <%= text_field_tag :query,
       params[:query],
-      class: "form-control",
-      placeholder: "Search a software by name...."
+      autocomplete: :off,
+      class: "form-control search-input",
+      placeholder: "Search a software by name, category, or a feature...."
     %>
     <%= submit_tag "Search", class: "btn btn-primary" %>
   <% end %>
 
   <% if @results == [] %>
      <%= "Sorry no results" %>
+  <% elsif @results == nil %>
+      <ul>
+          <% @softwares.each do |software| %>
+              <li><%= link_to software.name, software_path(software) %>
+              </li>
+          <%  end %>
+      </ul>
 
   <% else %>
     <ul>
@@ -76,3 +99,18 @@
 
 </div>
 
+<div class="container">
+
+<h2> Search in my subscriptions</h2>
+
+  <%= simple_form_for company_subscriptions_path, method: :get do %>
+      <%= text_field_tag :query2,
+        params[:query2],
+        autocomplete: :off,
+        class: "form-control search-input",
+        placeholder: "Search in my subscriptions...."
+      %>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    <% end %>
+
+</div>  

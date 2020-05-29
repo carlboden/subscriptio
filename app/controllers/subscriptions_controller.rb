@@ -1,13 +1,16 @@
 class SubscriptionsController < ApplicationController
     def index
+        #@softwares = Software.pluck(:name).sort
         @subscriptions = Subscription.all
         if params[:query].present?
           PgSearch::Multisearch.rebuild(Feature)
           PgSearch::Multisearch.rebuild(Software)
           @results = PgSearch.multisearch(params[:query])
+          #@results = Feature.whose_name_starts_with(params[:query])
         else
          @softwares = Software.all
         end
+
     end 
 
     def new
