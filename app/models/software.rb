@@ -1,6 +1,6 @@
 class Software < ApplicationRecord
     include PgSearch::Model
-	multisearchable against: [:name, :category]
+	multisearchable against: [:name, :category], using: { tsearch: { prefix: true } }
 	pg_search_scope :whose_name_starts_with,
                   against: [:name, :category],
                   using: {

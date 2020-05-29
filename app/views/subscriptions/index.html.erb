@@ -1,21 +1,4 @@
 
-<%if current_user.status == "Approved" || current_user.company_admin   %>
-<h1> My Subscriptions </h1>
-<br>
-<%= link_to "Add a new subscription", new_company_subscription_path(current_user.company_id)%>
-<ul>
-    <%@subscriptions.each do |subscription|%>
-    <li>Software Name: <%=subscription.software_plan.software.name%> - Price: <%= subscription.price%> - Start Date: <%= subscription.start_date%> - End Date: <%= subscription.end_date%> </li>
-    <%end%>
-    </ul>
-<%else%>
-    <p> Your account is still not approved </p>
-<%end%>
-
-
-
-
-
 
 <div class="container">
 
@@ -53,29 +36,6 @@
 
 
 
-
-      <div class="card-subscription-grid">
-
-        <%@subscriptions.each do |subscription|%>
-          <div class="card-subscription">
-            <a href="./subscriptions/<%=subscription.id%>"> <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" /> </a>
-            <div class="card-subscription-infos">
-              <h2><%=subscription.software_plan.software.name%></h2>
-              <p> <%= subscription.software_plan.software.category %> </p>
-              <p><%= subscription.end_date%></p>
-              <a href="./subscriptions/<%=subscription.id%>/edit">edit </a> 
-               <a href="./subscriptions/<%=subscription.id%>"> See the details</a>
-              <%= button_to "Delete your subscription", { action: "destroy", id: subscription.id }, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"  %>
-            </div>
-            <div class="card-subscription-indicators">
-              <%= image_tag "traffic-light-red.png"%>
-              <p><strong> €<%= subscription.price%></strong></p>
-
-            </div>
-          </div>
-        <%end%>
-      </div>
-
 <%else%>
 
   <div class="container">
@@ -102,14 +62,6 @@
 
   <% if @results == [] %>
      <%= "Sorry no results" %>
-  <% elsif @results == nil %>
-      <ul>
-          <% @softwares.each do |software| %>
-              <li><%= link_to software.name, software_path(software) %>
-              </li>
-          <%  end %>
-      </ul>
-
   <% else %>
     <ul>
       <% @results.each do |result| %>
