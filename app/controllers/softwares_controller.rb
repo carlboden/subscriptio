@@ -3,8 +3,7 @@ class SoftwaresController < ApplicationController
 	before_action :set_software, only: [:show, :edit, :update, :destroy]
 	
 	def index
-		b
-	  @softwares = Software.where(:category => params)
+	  @softwares = Software.where(:category => params[:format])
 	end
 
 	def show
