@@ -3,6 +3,8 @@ class SubscriptionsController < ApplicationController
 
         #@softwares = Software.pluck(:name).sort
         @subscriptions = Subscription.where(:company_id => params[:company_id])
+        @subscription_decreasing_order = Subscription.order('price ASC').where(:company_id => params[:company_id])
+
 
         if params[:query].present?
           PgSearch::Multisearch.rebuild(Feature)
@@ -16,16 +18,12 @@ class SubscriptionsController < ApplicationController
         if params[:query2].present?
           @subs= Subscription.software_search(params[:query2])
         else
-          @subs = @subscriptions 
+          @subs = @subscriptions
         end
-
-        @subscription_decreasing_order = Subscription.order('price ASC').where(:company_id => params[:company_id])
-
-    end 
 
     def new
         @company = Company.find(current_user.company_id)
-        @softwares = Software.order('name ASC').all   
+        @softwares = Software.order('name ASC').all
         @subscription = Subscription.new
     end
 
@@ -42,7 +40,7 @@ class SubscriptionsController < ApplicationController
 
     def edit
         @company = Company.find(current_user.company_id)
-        @softwares = Software.order('name ASC').all   
+        @softwares = Software.order('name ASC').all
         @subscription = Subscription.find(params[:id])
     end
 
@@ -164,5 +162,5 @@ class SubscriptionsController < ApplicationController
 
     def params_subscription
         params.require(:subscription).permit(:start_date, :end_date, :price, :software_plan_id, :number_of_user)
-    end 
+    end
 end

@@ -20,6 +20,7 @@ class CompaniesController < ApplicationController
 
     def show
         @company = Company.find(current_user.company_id)
+        @users = User.where(:company_id => params[:company_id])
     end
 
     private
