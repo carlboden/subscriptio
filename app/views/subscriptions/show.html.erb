@@ -11,7 +11,7 @@
     <div class="row justify-content-around">
       <div class="col-xs-12 col-sm-2">
         <div class="subscription-show-image">
-          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
+          <%= image_tag "slack-logo.png"%>
         </div>
       </div>
       <div class="col-xs-12 col-sm-4">
@@ -35,6 +35,10 @@
     <p> <strong>Official Price for your plan: </strong> €<%= @subscription.software_plan.official_price%></p>
     <p> <strong>Lowest Price available for your plan: </strong> €<%=@lowest_price.price%> for <%=@lowest_price.number_of_user%> users and a company of <%=@lowest_price.company.company_size%> employees </p>
     <p> <strong> Lowest price for the same number of users: </strong> €<%=@lowest_price_same_range_number_user.price %> which is <strong> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </strong> difference  </p>
+
+    <div class="mt-5">
+      <%= link_to "< Back to overview", company_subscriptions_path(current_user.company_id) %>
+    </div>
   </div>
 
 <%else%>
@@ -42,5 +46,6 @@
     <p> Your account is still not approved </p>
   </div>
 <%end%>
+
 
 

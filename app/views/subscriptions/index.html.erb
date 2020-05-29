@@ -4,7 +4,7 @@
 
 <%if current_user.status == "Approved" || current_user.company_admin   %>
   <div class="container">
-    <h1 class="text-center"> Subscriptions </h1>
+    <h1 class="text-center"> Overview of subscriptions </h1>
     <div class="card-text-right">
       <%= link_to "Add new", new_company_subscription_path(current_user.company_id)%>
     </div>
@@ -14,7 +14,7 @@
     <%@subscriptions.each do |subscription|%>
       <div class="card-subscription mb-3">
         <div class="col-xs-1 col-sm-2">
-           <a href="./subscriptions/<%=subscription.id%>"> <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" /> </a>
+           <a href="./subscriptions/<%=subscription.id%>"> <%= image_tag "slack-logo.png"%> </a>
         </div>
         <div class="card-subscription-infos col-xs-5 col-sm-4">
           <h2><a href="./subscriptions/<%=subscription.id%>"> <%=subscription.software_plan.software.name%> </a></h2>
@@ -94,4 +94,4 @@
       <%= submit_tag "Search", class: "btn btn-primary" %>
     <% end %>
 
-</div>  
+</div>
