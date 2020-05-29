@@ -9,9 +9,9 @@
       <%= link_to "Add new", new_company_subscription_path(current_user.company_id)%>
     </div>
   </div>
-  <div class="container">
+  <div class="container mb-3 d-flex justify-content-center">
     <%= form_tag company_subscriptions_path, method: :get do %>
-        <%=label_tag :query2, "Name of my software : "%>
+
               <%= text_field_tag :query2, params[:query2]%>
         <%= submit_tag "Search", class: "btn btn-primary" %>
       <% end %>
@@ -50,11 +50,12 @@
   <%end%>
 
 
+<!--
 
 <div class="container">
 
 
-<h2>Search in all softwares</h2>
+ <h2>Search in all softwares</h2>
 
   <%= simple_form_for softwares_path, method: :get do %>
     <%= text_field_tag :query,
@@ -83,6 +84,5 @@
     </ul>
   <% end %>
 
-
 </div>
-
+-->
