@@ -29,7 +29,7 @@
       </div>
       <div class="home-image-info col-xs-12 col-sm-6">
         <h2>Manage software subscriptions</h2>
-        <p> Currently 56%  of companies  rely only on subscription-based software. It is projected to grow to more than 80% by 2023</p>
+        <p> Currently 56%  of companies  rely only on subscription-based software, which is projected to grow to more than 80% by 2023</p>
         <p>Subscriptio provides you a clear overview of all your software subscriptions and indicates the ones that need your attention</p>
       </div>
   </div>
@@ -48,6 +48,60 @@
   </div>
 </div>
 
+<div class="container my-5">
+  <div class="row justify-content-around">
+    <div class="col-xs-12 col-sm-5">
+      <div class="card-subscriptio-plan">
+        <h2>Free</h2>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p>  Overview of software subscriptions </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p>  Add new software subscription </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Terminate software subscription </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Receive basic recommendations </p>
+        </div>
+        <h2>€0</h2>
+        <div class="button">
+          <%= link_to "SIGN UP", new_user_registration_path, class: "subscriptio-btn-primary" %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-5">
+      <div class="card-subscriptio-plan">
+        <h2>Premium</h2>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Everything in the free plan </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Receive advanced recommendations </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Dashboard to see how much you spend </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Dashboard to see how much you can save </p>
+        </div>
+        <h2>€99 / month</h2>
+        <div class="button">
+          <%= link_to "SIGN UP", new_user_registration_path, class: "subscriptio-btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div >
   <%= render 'shared/footer' %>
