@@ -46,7 +46,7 @@ class SubscriptionsController < ApplicationController
         @subscription_decreasing_order = Subscription.order('price ASC').where(:software_plan_id => @subscription.software_plan_id)
         @lowest_price = @subscription_decreasing_order[0]
         @subscription_in_range = []
-        range_user = (@subscription.number_of_user - 5)..(@subscription.number_of_user + 5)
+        range_user = (@subscription.number_of_user - (1 + (@subscription.number_of_user/2)**2))..(@subscription.number_of_user + (1 + (@subscription.number_of_user/2)**2))
         @subscription_decreasing_order.each do |subscription|
             if range_user === subscription.number_of_user
                 @subscription_in_range << subscription
@@ -59,5 +59,5 @@ class SubscriptionsController < ApplicationController
 
     def params_subscription
         params.require(:subscription).permit(:start_date, :end_date, :price, :software_plan_id, :number_of_user)
-    end
+    end 
 end
