@@ -9,13 +9,23 @@
       <%= link_to "Add new", new_company_subscription_path(current_user.company_id)%>
     </div>
   </div>
-  <div class="container mb-3 d-flex justify-content-center">
-    <%= form_tag company_subscriptions_path, method: :get do %>
 
-              <%= text_field_tag :query2, params[:query2]%>
-        <%= submit_tag "Search", class: "btn btn-primary" %>
-      <% end %>
+
+
+  <div class="container mb-3 d-flex justify-content-center">
+    <%= simple_form_for company_subscriptions_path, method: :get do %>
+      <%= text_field_tag :query2,
+        params[:query2],
+        autocomplete: :off,
+        class: "form-control search-input",
+        placeholder: "Search a software in my subscriptions...."
+      %>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    <% end %>
   </div>
+
+
+
    <div class="container">
     <%@subs.each do |subscription|%>
       <div class="card-subscription mb-3">
