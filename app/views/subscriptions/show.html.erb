@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-4">
-        <p>Category: <%= @subscription.software_plan.software.category%> </p>
+        <p>Category: <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> <%= @subscription.software_plan.software.category%> </a> </p>
         <p>Plan: <%= @subscription.software_plan.name %> </p>
         <p><%= @subscription.number_of_user%> users </p>
         <p>Start: <%= @subscription.start_date %> </p>
