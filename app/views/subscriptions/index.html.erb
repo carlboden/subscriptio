@@ -11,8 +11,7 @@
   </div>
   <div class="container">
     <%= form_tag company_subscriptions_path, method: :get do %>
-        <%=label_tag :query2, "Name of my software : "%>
-              <%= text_field_tag :query2, params[:query2]%>
+              <%= text_field_tag :query2, params[:query2], placeholder: "Name of the software..."%>
         <%= submit_tag "Search", class: "btn btn-primary" %>
       <% end %>
   </div>
