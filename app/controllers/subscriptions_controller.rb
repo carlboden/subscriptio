@@ -1,7 +1,26 @@
 class SubscriptionsController < ApplicationController
     def index
-            @subscriptions = Subscription.where(:company_id => params[:company_id])
-            @subscription_decreasing_order = Subscription.order('price ASC').where(:company_id => params[:company_id])
+
+        #@softwares = Software.pluck(:name).sort
+        @subscriptions = Subscription.where(:company_id => params[:company_id])
+
+        if params[:query].present?
+          PgSearch::Multisearch.rebuild(Feature)
+          PgSearch::Multisearch.rebuild(Software)
+          @results = PgSearch.multisearch(params[:query])
+          #@results = Feature.whose_name_starts_with(params[:query])
+        else
+         @softwares = Software.all
+        end
+
+        if params[:query2].present?
+          @subs= Subscription.software_search(params[:query2])
+        else
+          @subs = @subscriptions 
+        end
+
+        @subscription_decreasing_order = Subscription.order('price ASC').where(:company_id => params[:company_id])
+
     end 
 
     def new

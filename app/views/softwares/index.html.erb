@@ -1,5 +1,16 @@
 <h1>All softwares for the category <%=@softwares[0].category%> </h1>
 
+
+<%= simple_form_for softwares_path, method: :get do %>
+  <%= text_field_tag :query,
+    params[:query],
+    class: "form-control",
+    placeholder: "I want to find...."
+  %>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
+
+
 <ul>
 	<% @softwares.each do |software| %>
 		<%software_plan = SoftwarePlan.where(software_id: software.id)%>
@@ -22,7 +33,9 @@
 		<%end%>
 	<%  end %>
 </ul>
-
+<hr>
 
 <!-- add only if admin--->
+
 <%# <%= link_to "add a software", new_software_path %>
+
