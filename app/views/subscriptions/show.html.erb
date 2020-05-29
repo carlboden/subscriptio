@@ -29,7 +29,7 @@
   <p> Lowest Price Available for your Plan: <%=@lowest_price.price%> € for <%=@lowest_price.number_of_user%> users and a company of <%=@lowest_price.company.company_size%> employee
   <p> The Official Price for your plan is <%= @subscription.software_plan.official_price%> €</p>
 
-  <p> The lowest price for the same number of user as you is <%=@lowest_price_same_range_number_user.price %> </p>
+  <p> The lowest price for the same number of user as you is <%=@lowest_price_same_range_number_user.price %> which is <strong> <%= @lowest_price_same_range_number_user.price - @subscription.price %> €</strong> </p>
   <%else%>
       <p> Your account is still not approved </p>
   <%end%>
