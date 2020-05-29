@@ -9,6 +9,17 @@
       <%= link_to "Add new", new_company_subscription_path(current_user.company_id)%>
     </div>
   </div>
+  <%= form_tag company_subscriptions_path, method: :get do %>
+      <%=label_tag :query2, "Name of my software : "%>
+            <%= text_field_tag :query2, params[:query2]%>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    <% end %>
+    <ul>
+      <% @subs.each do |sub|%>
+        <li><a href="./subscriptions/<%=sub.id%>"> <%=sub.software_plan.software.name%> </a></li>
+      <% end %>
+    </ul>
+
 
    <div class="container">
     <%@subscriptions.each do |subscription|%>
@@ -68,10 +79,10 @@
     <ul>
       <% @results.each do |result| %>
         <% if result.searchable_type == "Software" %>
-          <li><%= link_to result.content, software_path(result.searchable_id) %>
+          <li>[Software]<%= link_to result.content, software_path(result.searchable_id) %>
           </li>
         <% else %>
-          <li><%= link_to result.content, feature_path(result.searchable_id) %></li>
+          <li>[Feature]<%= link_to result.content, feature_path(result.searchable_id) %></li>
         <% end %>
       <%  end %>
     </ul>
@@ -93,5 +104,7 @@
       %>
       <%= submit_tag "Search", class: "btn btn-primary" %>
     <% end %>
+
+
 
 </div>  
