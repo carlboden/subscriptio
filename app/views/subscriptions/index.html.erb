@@ -62,6 +62,8 @@
 
   <% if @results == [] %>
      <%= "Sorry no results" %>
+  <% elsif @results == nil %>
+   <%= "You can easily make a search by software name, category, ou feature" %>
   <% else %>
     <ul>
       <% @results.each do |result| %>
