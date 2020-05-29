@@ -1,37 +1,47 @@
-<div class="container">
-
-  <%if current_user.status == "Approved" || current_user.company_admin   %>
+<%if current_user.status == "Approved" || current_user.company_admin   %>
+  <div class="container">
     <h1 class="text-center"> Subscription for <%=@subscription.software_plan.software.name %> </h1>
-    <div class="text-right">
-      <%= link_to "Add new", new_company_subscription_path(current_user.company_id)%>
+     <div class="card-text-right">
+        <%= link_to edit_company_subscription_path(current_user.company_id) do %> <i class="fa fa-edit"> </i> <% end %>
+        <%= link_to company_subscription_path, method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
     </div>
+  </div>
 
-      <div class="card-subscription-grid">
-          <div class="card-subscription">
-            <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
-            <div class="card-subscription-infos">
-              <h2><%=@subscription.software_plan.software.name%></h2>
-              <p> <%= @subscription.software_plan.software.category %> - <%= @subscription.software_plan.name %> </p>
-              <p><%= @subscription.end_date%></p>
-              <a href="../subscriptions/<%=@subscription.id%>/edit">edit </a>
-              <!--
-              <%= button_to "Delete your subscription", { action: "destroy", id: @subscription.id }, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"  %>
-              -->
-            </div>
-            <div class="card-subscription-indicators">
-              <%= image_tag "traffic-light-red.png"%>
-              <p><strong> €<%= @subscription.price%></strong></p>
 
-            </div>
-          </div>
+  <div class="container pb-3">
+    <div class="row justify-content-around">
+      <div class="col-xs-12 col-sm-2">
+        <div class="subscription-show-image">
+          <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
+        </div>
       </div>
-  <p> <%=@subscription.number_of_user%> </p>
-  <p> Lowest Price Available for your Plan: <%=@lowest_price.price%> € for <%=@lowest_price.number_of_user%> users and a company of <%=@lowest_price.company.company_size%> employee
-  <p> The Official Price for your plan is <%= @subscription.software_plan.official_price%> €</p>
+      <div class="col-xs-12 col-sm-4">
+        <p>Category: <%= @subscription.software_plan.software.category%> </p>
+        <p>Plan: <%= @subscription.software_plan.name %> </p>
+        <p><%= @subscription.number_of_user%> users </p>
+        <p>Start: <%= @subscription.start_date %> </p>
+        <p>End: <%= @subscription.end_date%></p>
+      </div>
+      <div class="col-xs-12 col-sm-3 ">
+        <div class="price-flex">
+          <h2> €<%= @subscription.price%> / month </h2>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <p> The lowest price for the same number of user as you is <%=@lowest_price_same_range_number_user.price %> which is <strong> <%= @lowest_price_same_range_number_user.price - @subscription.price %> €</strong> </p>
-  <%else%>
-      <p> Your account is still not approved </p>
-  <%end%>
-</div>
+<!--   <%= image_tag "traffic-light-red.png"%> -->
+  <div class="container border-top pt-3">
+    <h2 class="mb-5"> Recommendations </h2>
+    <p> <strong>Official Price for your plan: </strong> €<%= @subscription.software_plan.official_price%></p>
+    <p> <strong>Lowest Price available for your plan: </strong> €<%=@lowest_price.price%> for <%=@lowest_price.number_of_user%> users and a company of <%=@lowest_price.company.company_size%> employees </p>
+    <p> <strong> Lowest price for the same number of users: </strong> €<%=@lowest_price_same_range_number_user.price %> which is <strong> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </strong> difference  </p>
+  </div>
+
+<%else%>
+  <div>
+    <p> Your account is still not approved </p>
+  </div>
+<%end%>
+
 
