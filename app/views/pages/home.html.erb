@@ -9,13 +9,13 @@
 </div>
 
 <div class="container mt-5">
-  <div class="row">
-    <div class="home-image-info col-xs-12 col-sm-6">
+  <div class="row justify-content-around mb-5">
+    <div class="home-image-info col-xs-12 col-sm-4">
         <h2>Stop overpayment</h2>
         <p>Companies overpay on average more than 30% on software subscriptions </p>
         <p>Subscriptio allows you to save costs by benchmarking your software subscriptions </p>
     </div>
-    <div class="home-image col-xs-12 col-sm-6">
+    <div class="home-image col-xs-12 col-sm-4">
         <%= image_tag "dashboard.png" %>
     </div>
 
@@ -23,18 +23,85 @@
 </div>
 
 <div class="container">
-  <div class="row">
-    <div class="home-image col-xs-12 col-sm-6">
+  <div class="row justify-content-around mb-5">
+    <div class="home-image col-xs-12 col-md-4">
         <%= image_tag "overview_page.png" %>
       </div>
-      <div class="home-image-info col-xs-12 col-sm-6">
+      <div class="home-image-info col-xs-12 col-sm-4">
         <h2>Manage software subscriptions</h2>
-        <p>Companies overpay on average more than 30% on software subscriptions </p>
-        <p>Subscriptio allows you to save costs by benchmarking your software subscriptions </p>
+        <p> Currently 56%  of companies  rely only on subscription-based software, which is projected to grow to more than 80% by 2023</p>
+        <p>Subscriptio provides you a clear overview of all your software subscriptions and indicates the ones that need your attention</p>
       </div>
   </div>
 </div>
 
+<div class="container">
+  <div class="row justify-content-around">
+    <div class="home-image-info col-xs-12 col-md-4">
+      <h2>Find cheapest vendors</h2>
+      <p>Finding the cheapest software vendors is a time-consuming task and requires a lot of detailed knowledge  </p>
+      <p>Subscriptio takes this work completely out of your hands and recommends the cheapest software solutions for your needs </p>
+    </div>
+    <div class="home-image col-xs-12 col-md-4">
+      <%= image_tag "dashboard.png" %>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row justify-content-around">
+    <div class="col-xs-12 col-sm-5">
+      <div class="card-subscriptio-plan">
+        <h2>Free</h2>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p>  Overview of software subscriptions </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p>  Add new software subscription </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Terminate software subscription </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Receive basic recommendations </p>
+        </div>
+        <h2>€0</h2>
+        <div class="button">
+          <%= link_to "SIGN UP", new_user_registration_path, class: "subscriptio-btn-primary" %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-5">
+      <div class="card-subscriptio-plan">
+        <h2>Premium</h2>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Everything in the free plan </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Receive advanced recommendations </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Dashboard to see how much you spend </p>
+        </div>
+        <div class="subscriptio-features">
+          <i class="fas fa-check"></i>
+          <p> Dashboard to see how much you can save </p>
+        </div>
+        <h2>€99 / month</h2>
+        <div class="button">
+          <%= link_to "SIGN UP", new_user_registration_path, class: "subscriptio-btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div >
   <%= render 'shared/footer' %>

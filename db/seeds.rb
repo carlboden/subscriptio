@@ -13,6 +13,8 @@ SoftwarePlan.destroy_all
 Software.destroy_all
 puts 'Finished!'
 
+SubscriptioPlan.create!(name: "Free", price: 0.00, description: "Free plan")
+SubscriptioPlan.create!(name: "Premium Plan", price: 10.00, description: "Premium plan")
 
 puts 'Creating 80 features...'
 80.times do
