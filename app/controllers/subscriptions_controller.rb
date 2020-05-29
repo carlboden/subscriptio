@@ -20,6 +20,7 @@ class SubscriptionsController < ApplicationController
         else
           @subs = @subscriptions
         end
+    end
 
     def new
         @company = Company.find(current_user.company_id)
