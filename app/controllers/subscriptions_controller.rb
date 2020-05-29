@@ -43,6 +43,7 @@ class SubscriptionsController < ApplicationController
 
     def show
         @subscription = Subscription.find(params[:id])
+        @subscription_decreasing_order = Subscription.order('price ASC').all
     end
 
     private
