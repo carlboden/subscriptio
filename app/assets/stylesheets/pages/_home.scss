@@ -26,3 +26,17 @@
     border: 1px solid $subscriptio-dark-blue;
     text-decoration: none;
   }
+
+.home-image img {
+  width: 400px;
+  height: 240px;
+  padding: 24px 8px;
+
+}
+
+.home-image-info {
+  padding: 16px 48px 16px 16px;
+  p {
+    text-align: justify;
+  }
+}

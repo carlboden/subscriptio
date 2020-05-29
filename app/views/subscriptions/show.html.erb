@@ -13,8 +13,10 @@
               <h2><%=@subscription.software_plan.software.name%></h2>
               <p> <%= @subscription.software_plan.software.category %>  - Lowest Price Available: <%=@subscription_decreasing_order.where(:software_plan_id => @subscription.software_plan_id)[0].price%> - Official Price <%= @subscription.software_plan.official_price%>  </p>
               <p><%= @subscription.end_date%></p>
-              <a href="../subscriptions/<%=@subscription.id%>/edit">edit </a> 
+              <a href="../subscriptions/<%=@subscription.id%>/edit">edit </a>
+              <!--
               <%= button_to "Delete your subscription", { action: "destroy", id: @subscription.id }, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"  %>
+              -->
             </div>
             <div class="card-subscription-indicators">
               <%= image_tag "traffic-light-red.png"%>
