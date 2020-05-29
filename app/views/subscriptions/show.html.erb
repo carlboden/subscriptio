@@ -1,6 +1,6 @@
 <%if current_user.status == "Approved" || current_user.company_admin   %>
   <div class="container">
-   <h1 class="text-center"> Subscription for <a href="<%=@subscription.software_plan.software.url%>"><%=@subscription.software_plan.software.name %> </a> </h1>
+   <h1 class="text-center"> Subscription for <%=@subscription.software_plan.software.name %> </h1>
      <div class="card-text-right">
         <%= link_to edit_company_subscription_path(current_user.company_id) do %> <i class="fa fa-edit"> </i> <% end %>
         <%= link_to company_subscription_path, method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
@@ -17,10 +17,10 @@
       </div>
       <div class="col-xs-12 col-sm-4">
         <p>Category: <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> <%= @subscription.software_plan.software.category%> </a> </p>
-        <p>Plan: <%= @subscription.software_plan.name %> </p>
-        <p><%= @subscription.number_of_user%> users </p>
+        <p>Plan: <%= @subscription.software_plan.name %> - <%= @subscription.number_of_user%> users </p>
         <p>Start: <%= @subscription.start_date %> </p>
         <p>End: <%= @subscription.end_date%></p>
+        <p>Website: <a href="<%=@subscription.software_plan.software.url%>"> <%=@subscription.software_plan.software.name %> </a>
       </div>
 
       <div class="col-xs-12 col-sm-3 ">
@@ -33,21 +33,44 @@
 
 <!--   <%= image_tag "traffic-light-red.png"%> -->
   <div class="container border-top pt-3">
-    <h2 class="mb-5"> Recommendations </h2>
-    <p> <strong>Official Price for your plan: </strong> €<%= @subscription.software_plan.official_price%></p>
-    <p> <strong>Lowest Price available for your plan: </strong> €<%=@lowest_price.price%> for <%=@lowest_price.number_of_user%> users and a company of <%=@lowest_price.company.company_size%> employees </p>
-    <p> <strong> Lowest price for the same number of users: </strong> €<%=@lowest_price_same_range_number_user.price %> which is <strong> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </strong> difference  </p>
+    <div class="row justify-content-between">
+      <div class="col-xs-12 col-sm-5">
+        <h2 class="mb-3"> Recommendations </h2>
+        <p> <strong>Official price for your plan: </strong> €<%= @subscription.software_plan.official_price%></p>
+        <p> <strong>Lowest rice available for your plan: </strong> €<%=@lowest_price.price%> for <%=@lowest_price.number_of_user%> users and a company of <%=@lowest_price.company.company_size.downcase%> employees </p>
+        <p> <strong> Lowest price for the same number of users: </strong> €<%=@lowest_price_same_range_number_user.price %> which is <strong> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </strong> difference  </p>
+      </div>
+      <div class="col-xs-12 col-sm-5">
+        <h2 class="mb-3"><%= pluralize @subscription.software_plan.ratings.size, "review" %> </h2>
 
-      <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a>
 
-  <%@reviews = @subscription.software_plan.ratings%>
-  <ul>
-  <%@reviews.each do |review|%>
-    <li> <%=review.rating%> stars - <%=review.description%> </li>
-    <%end%>
+        <% if @subscription.software_plan.ratings.blank? %>
+          Be the first to leave a review for <%= @subscription.software_plan.software.name %> - <%= @subscription.software_plan.name %>
+        <% else %>
+          <% @subscription.software_plan.ratings.each do |rating| %>
+              <% if rating.rating == 1 %>
+                <p> ⭐ | <%= rating.description %> </p>
+                <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+              <% elsif rating.rating == 2 %>
+                <p> ⭐️⭐️ | <%= rating.description %> </p>
+                <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+              <% elsif rating.rating == 3 %>
+                <p> ⭐️⭐️⭐️ | <%= rating.description %> </p>
+                <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+              <% elsif rating.rating == 4 %>
+                <p> ⭐️⭐️⭐️⭐️ | <%= rating.description %> </p>
+                <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+              <% elsif rating.rating == 5 %>
+                <p> ⭐️⭐️⭐️⭐️⭐️ | <%= rating.description %> </p>
+                <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+              <%end%>
+          <%end%>
+        <%end%>
 
-  </ul>
-    
+        <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a>
+      </div>
+    </div>
+
     <div class="mt-5">
       <%= link_to "< Back to overview", company_subscriptions_path(current_user.company_id) %>
     </div>

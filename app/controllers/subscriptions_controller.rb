@@ -71,6 +71,8 @@ class SubscriptionsController < ApplicationController
             end
         end
         @lowest_price_same_range_number_user = @subscription_in_range[0]
+        @rating = Rating.new
+        @softwarePlan = SoftwarePlan.where(:subscription_id => params[:id])
 
         @chart =
       Fusioncharts::Chart.new(
