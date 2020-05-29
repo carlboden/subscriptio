@@ -9,6 +9,7 @@
             <%= simple_form_for([@company, @subscription]) do |f|%>
                 <%= f.input :start_date, as: :string, input_html: {class: "datepicker_full"} %> <br>
                 <%= f.input :end_date, as: :string, input_html: { class: "datepicker_full"} %> <br>
+                <%= f.input :number_of_user, as: :integer %> <br>
                 <%= f.input :price, as: :float %> <br>
                 <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), :include_blank => true, data: { action: "software-plan#fetchPlans" } %>
                 <div data-target="software-plan.wrapper">
