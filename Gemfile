@@ -67,3 +67,7 @@ gem 'country-select'
 gem "date"
 
 gem "cocoon"
+
+gem "fusioncharts-rails"
+
+gem "json"
