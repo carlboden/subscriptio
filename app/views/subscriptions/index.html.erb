@@ -1,3 +1,7 @@
+
+
+<div class="container">
+
 <%if current_user.status == "Approved" || current_user.company_admin   %>
   <div class="container">
     <h1 class="text-center"> Subscriptions </h1>
@@ -41,3 +45,53 @@
 
 
 
+<div class="container">
+
+
+<h2>Search in all softwares</h2>
+
+  <%= simple_form_for softwares_path, method: :get do %>
+    <%= text_field_tag :query,
+      params[:query],
+      autocomplete: :off,
+      class: "form-control search-input",
+      placeholder: "Search a software by name, category, or a feature...."
+    %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+  <% end %>
+
+  <% if @results == [] %>
+     <%= "Sorry no results" %>
+  <% elsif @results == nil %>
+   <%= "You can easily make a search by software name, category, ou feature" %>
+  <% else %>
+    <ul>
+      <% @results.each do |result| %>
+        <% if result.searchable_type == "Software" %>
+          <li><%= link_to result.content, software_path(result.searchable_id) %>
+          </li>
+        <% else %>
+          <li><%= link_to result.content, feature_path(result.searchable_id) %></li>
+        <% end %>
+      <%  end %>
+    </ul>
+  <% end %>
+
+
+</div>
+
+<div class="container">
+
+<h2> Search in my subscriptions</h2>
+
+  <%= simple_form_for company_subscriptions_path, method: :get do %>
+      <%= text_field_tag :query2,
+        params[:query2],
+        autocomplete: :off,
+        class: "form-control search-input",
+        placeholder: "Search in my subscriptions...."
+      %>
+      <%= submit_tag "Search", class: "btn btn-primary" %>
+    <% end %>
+
+</div>  
