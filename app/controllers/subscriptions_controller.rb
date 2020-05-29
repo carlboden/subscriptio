@@ -13,15 +13,10 @@ class SubscriptionsController < ApplicationController
         end
 
         if params[:query2].present?
-          @subs = []
-          @subscriptions.each do |sub|
-            @subs << sub if params[:query2] == sub.software_plan.software.name
-          end
+          @subs= Subscription.software_search(params[:query2])
         else
           @subs = @subscriptions 
         end
-
-
 
         @subscription_decreasing_order = Subscription.order('price ASC').all
 
