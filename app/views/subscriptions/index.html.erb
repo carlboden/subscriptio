@@ -52,20 +52,27 @@
     <%= text_field_tag :query,
       params[:query],
       class: "form-control",
-      placeholder: "I want to find...."
+      placeholder: "Search a software by name...."
     %>
     <%= submit_tag "Search", class: "btn btn-primary" %>
   <% end %>
 
+  <% if @results == [] %>
+     <%= "Sorry no results" %>
 
-  <ul>
-    <% @softwares.each do |soft| %>
-      <li><%= link_to soft.name, software_path(soft) %>
-      </li>
-    <%  end %>
-  </ul>
+  <% else %>
+    <ul>
+      <% @results.each do |result| %>
+        <% if result.searchable_type == "Software" %>
+          <li><%= link_to result.content, software_path(result.searchable_id) %>
+          </li>
+        <% else %>
+          <li><%= link_to result.content, feature_path(result.searchable_id) %></li>
+        <% end %>
+      <%  end %>
+    </ul>
+  <% end %>
 
 
 </div>
-
 

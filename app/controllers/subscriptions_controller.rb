@@ -1,6 +1,13 @@
 class SubscriptionsController < ApplicationController
     def index
         @subscriptions = Subscription.all
+        if params[:query].present?
+          PgSearch::Multisearch.rebuild(Feature)
+          PgSearch::Multisearch.rebuild(Software)
+          @results = PgSearch.multisearch(params[:query])
+        else
+         @softwares = Software.all
+        end
     end 
 
     def new

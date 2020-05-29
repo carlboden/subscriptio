@@ -85,7 +85,6 @@ puts 'Finished!'
 puts "Create users"
 
 functions = ["CEO", "CFO", "CTO", "CIO", "Purchasing Manager", "Other"]
-
 5.times do 
 	user = User.new(
 	  email: Faker::Internet.email,
