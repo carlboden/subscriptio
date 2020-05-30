@@ -34,11 +34,20 @@
 <!--   <%= image_tag "traffic-light-red.png"%> -->
   <div class="container border-top pt-3">
     <div class="row justify-content-between">
-      <div class="col-xs-12 col-sm-5">
+      <div class="col-xs-12 col-sm-6">
         <h2 class="mb-3"> Recommendations </h2>
-        <p> <strong>Official price for your plan: </strong> €<%= @subscription.software_plan.official_price%></p>
-        <p> <strong>Lowest rice available for your plan: </strong> €<%=@lowest_price.price%> for <%=@lowest_price.number_of_user%> users and a company of <%=@lowest_price.company.company_size.downcase%> employees </p>
-        <p> <strong> Lowest price for the same number of users: </strong> €<%=@lowest_price_same_range_number_user.price %> which is <strong> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </strong> difference  </p>
+        <p class="mb-3"> <i> <u> Your software </u></i></p>
+        <% if  ( @lowest_price_same_range_number_user.price - @subscription.price ) < 0 %>
+          <p class="ml-3"> <strong> Lowest price for same users: </strong> €<%=@lowest_price_same_range_number_user.price %>: <span style="background-color:#CF1015; color:white"> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </span> difference  </p>
+        <% else %>
+          <p class="ml-3"> <strong> Lowest price for same users: </strong> €<%=@lowest_price_same_range_number_user.price %>: <span style="background-color:#5DCD8D; color:white"> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </span> difference  </p>
+        <% end %>
+        <p class="ml-3"> <strong>Lowest price: </strong> €<%=@lowest_price.price%> ( <%=@lowest_price.number_of_user%> users - company: <%=@lowest_price.company.company_size.downcase%> FTEs) </p>
+        <p class="ml-3"> <strong>Official price: </strong> €<%= @subscription.software_plan.official_price%></p>
+        <p class="mb-3"> <i> <u> Other software </u></i></p>
+        <p class="ml-3"> Cheaper alternative with same features: (based on price) </p>
+        <p class="ml-3"> Better alternative with same features: (based on reviews?) </p>
+        <p class="ml-3"> Check out their website: </p>
       </div>
       <div class="col-xs-12 col-sm-5">
         <h2 class="mb-3"><%= pluralize @subscription.software_plan.ratings.size, "review" %> </h2>
@@ -49,19 +58,44 @@
         <% else %>
           <% @subscription.software_plan.ratings.each do |rating| %>
               <% if rating.rating == 1 %>
-                <p> ⭐ | <%= rating.description %> </p>
+                <p> <span class="fa fa-star checked"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                 | <%= rating.description %> </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 2 %>
-                <p> ⭐️⭐️ | <%= rating.description %> </p>
+                <p> <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                 | <%= rating.description %> </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 3 %>
-                <p> ⭐️⭐️⭐️ | <%= rating.description %> </p>
+                <p> <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="far fa-star"></span>
+                    <span class="far fa-star"></span>
+                 | <%= rating.description %> </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 4 %>
-                <p> ⭐️⭐️⭐️⭐️ | <%= rating.description %> </p>
+                <p> <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="far fa-star"></span>
+                  | <%= rating.description %> </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 5 %>
-                <p> ⭐️⭐️⭐️⭐️⭐️ | <%= rating.description %> </p>
+                <p> <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                  | <%= rating.description %> </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <%end%>
           <%end%>
@@ -70,11 +104,6 @@
         <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a>
       </div>
     </div>
-
-    <div class="mt-5">
-      <%= link_to "< Back to overview", company_subscriptions_path(current_user.company_id) %>
-    </div>
-  </div>
 
   <h3>My Chart</h3>
   <div id="chartContainer">
@@ -87,5 +116,14 @@
   </div>
 <%end%>
 
+<div class="container">
+<div class="row justify-content-center">
+      <div class="mt-5 mb-3">
+      <%= link_to "Back to overview", company_subscriptions_path(current_user.company_id), class: "btn btn-primary" %>
+    </div>
+  </div>
 
+</div>
+
+</div>
 
