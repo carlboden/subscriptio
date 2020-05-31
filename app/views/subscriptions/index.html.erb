@@ -6,7 +6,11 @@
   <div class="container">
     <h1 class="text-center"> Overview of subscriptions </h1>
     <div class="card-text-right">
-      <%= link_to "Add new", new_company_subscription_path(current_user.company_id)%>
+
+      <%= link_to new_company_subscription_path(current_user.company_id) do %>
+        <i class="fas fa-plus ">  </i>
+      <% end %>
+</div>
     </div>
   </div>
 
@@ -18,8 +22,7 @@
         params[:query2],
         autocomplete: :off,
         class: "form-control search-input",
-        placeholder: "Search a software in my subscriptions...."
-      %>
+        placeholder: "Search in my subscriptions...."%>
       <%= submit_tag "Search", class: "btn btn-primary" %>
     <% end %>
   </div>
@@ -44,7 +47,28 @@
           <p> <%= subscription.number_of_user%> users </p>
         </div>
         <div class="card-subscription-indicators col-1">
-          <%= image_tag "traffic-light-red.png"%>
+
+<!-- Start of: Not sure where to put this code?? -->
+        <% @subscription_decreasing_order = Subscription.order('price ASC').where(:software_plan_id => subscription.software_plan_id)
+        @lowest_price = @subscription_decreasing_order[0]
+        @subscription_in_range = []
+        range_user = (subscription.number_of_user - (1 + (subscription.number_of_user/2)**2))..(subscription.number_of_user + (1 + (subscription.number_of_user/2)**2))
+        @subscription_decreasing_order.each do |sub|
+            if range_user === sub.number_of_user
+                @subscription_in_range << sub
+            end
+        end
+        @lowest_price_same_range_number_user = @subscription_in_range[0] %>
+<!-- End of: Not sure where to put this code?? -->
+
+          <% if ( @lowest_price_same_range_number_user.price - subscription.price ) < 0 %>
+            <%= image_tag "traffic-light-red.png"%>
+          <%elsif #if there are other software recommendations # %>
+            <%= image_tag "traffic-light-orange.png"%>
+          <% else %>
+            <%= image_tag "traffic-light-green.png"%>
+          <% end %>
+
         </div>
          </div>
             <%end%>

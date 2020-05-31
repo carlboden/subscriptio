@@ -1,23 +1,67 @@
-<h1> Your company </h1>
-<br>
-<ul>
-    <li><%=@company.name%></li>
-    <li><%=@company.address%></li>
-    <li><%=@company.country%></li>
-    <li><%=@company.company_size%></li>
-    <li><%=@company.turnover%></li>
-    <li><%=@company.subscriptio_plan.name%></li>
-    <li><%=@company.subscriptio_plan.price%></li>
-    <li><%=@company.subscriptio_plan.description%></li>
-    <li><%=@company.subscriptio_plan.features%></li>
-</ul>
+<div class="container p-5">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <h2> Company details </h2>
+        <div class="p-3">
+          <p><%=@company.name%></p>
+          <p><%=@company.address%></p>
+          <p><%=@company.country%></p>
+          <p><%=@company.company_size%></p>
+          <p><%=@company.turnover%></p>
+        </div>
+      <h3> Subscriptio plan </h3>
+        <div class="p-3">
+          <p><%=@company.subscriptio_plan.name%></p>
+          <p>€<%=@company.subscriptio_plan.price%></p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+      <h2 class="text-center">Company members</h2>
+      <table class="table table-bordered m-3">
+        <thead>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Function</th>
+          <th>Company Admin</th>
+          <th>Action</th>
+        </thead>
+        <% sum_users = 0 %>
+        <tbody>
+          <% @users.each do |user| %>
+            <%sum_users += 1%>
 
- <%= link_to "My Suscriptions", company_subscriptions_path(current_user.company.id), class: "dropdown-item"%>
+            <tr>
+              <td><%= user.first_name%></td>
+              <td><%= user.last_name%></td>
+              <td><%= user.function%></td>
+              <td><%= user.company_admin %>
+              <td><%= link_to edit_user_path(@user.id, booking) do %>
+                 <i class="fas fa-edit"></i>
+                <% end %>
+                <%= link_to user_path(@user.id), method: :delete, data: { confirm: "Are you sure?" } do %>
+                <i class="fa fa-trash"></i></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+          <tfoot>
+            <tr>
+              <td><strong>Total users</strong></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><strong> <%= sum_users %> </strong> </td>
+            </tr>
+          </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
 
       <% if current_user.company.subscriptio_plan.id == 1%>
         <%= link_to "Become a Premium Member", new_user_bank_detail_path(current_user.id), class:"nav_link"%>
         <%else%>
         <%= button_to "I want to cancel my subscription", "../users/#{current_user.id}/bank_details/#{BankDetail.where(:user_id => current_user.id)[0].id}", method: :delete, data: { confirm: "Are you sure?" }  %>
     <%end%>
-    <a href="./<%=@company.id%>/users"> See all Company Member </a>
-    
+    <a href="./<%=@company.id%>/users"> See all Company Members </a>
