@@ -29,7 +29,7 @@
 			<%sum_price += subscription.price%>
 		<%end%>
 		<%subscriptions[0] == nil ? average_price = nil :  average_price = sum_price / (subscriptions.length)%>
-		<li><%= plan.software.name %> - <%=plan.name%> - Official Price: <%=plan.official_price%> € - <%=sum_reviews%> stars <%=lowest_price == nil ? "" : "- lowest_price: #{lowest_price}" %>  <%=average_price == nil ? "" : "- average_price: #{average_price}" %></li>
+		<li><%= plan.software.name %> - <%=plan.name%> - Official Price: <%=plan.official_price%> € - <%=sum_reviews%> stars <%=lowest_price == nil ? "" : "- lowest_price: #{lowest_price}" %>  <%=average_price == nil ? "" : "- average_price: #{'%.2f' % average_price}" %></li>
 		<%end%>
 	<%  end %>
 </ul>
