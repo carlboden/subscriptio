@@ -1,0 +1,5 @@
+<h1> Rating from <%= @rating.user.first_name%></h1>
+
+<li> <%=@rating.rating%> by <%=@rating.user.first_name%> size company: <%=@rating.user.company.company_size.downcase%> employees and with <%=@subscription.number_of_user%> users</a></li>
+<p> <%= @rating.description%> </p>
+

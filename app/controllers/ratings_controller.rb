@@ -1,10 +1,11 @@
 class RatingsController < ApplicationController
-    def index
-	  @ratings = Rating.where(:software_plan_id => params[:id])
+	def index
+		@ratings = Rating.where(:software_plan_id => params[:software_plan_id])
 	end
 
 	def show
-
+		@rating = Rating.find(params[:id])
+		@subscription = Subscription.where(:software_plan_id => @rating.software_plan.id)[0]
 	end
 
 	def new
@@ -14,12 +15,14 @@ class RatingsController < ApplicationController
 
 	def create
 	  @rating = Rating.new(rating_params)
-  	  @softwarePlan = SoftwarePlan.find(params[:software_plan_id])
+	  @softwarePlan = SoftwarePlan.find(params[:software_plan_id])
+	  @subscription = Subscription.where(:software_plan_id => params[:software_plan_id])[0]		
   	  @rating.software_plan = @softwarePlan
   	  @rating.user = current_user
   
 	  if @rating.save
-	    redirect_to software_plan_path(@softwarePlan)
+		
+	    redirect_to company_subscriptions_path(current_user.company.id)
 	  else
 	  	render :new
 	  end

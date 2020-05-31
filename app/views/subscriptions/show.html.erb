@@ -56,7 +56,7 @@
         <% if @subscription.software_plan.ratings.blank? %>
           Be the first to leave a review for <%= @subscription.software_plan.software.name %> - <%= @subscription.software_plan.name %>
         <% else %>
-          <% @subscription.software_plan.ratings.each do |rating| %>
+          <% @subscription.software_plan.ratings[0..4].each do |rating| %>
               <% if rating.rating == 1 %>
                 <p> <span class="fa fa-star checked"></span>
                     <span class="far fa-star"></span>
@@ -100,6 +100,7 @@
               <%end%>
           <%end%>
         <%end%>
+        <a href="<%=software_plan_ratings_path(@subscription.software_plan_id)%>"> See all reviews </a>
 
         <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a>
       </div>
