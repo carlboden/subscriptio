@@ -3,7 +3,6 @@ class SoftwaresController < ApplicationController
 	before_action :set_software, only: [:show, :edit, :update, :destroy]
 	
 	def index
-
 	   if params[:query].present?
 	     @softwares = Software.where("name ILIKE ?", "%#{params[:query]}%")
 	   else
