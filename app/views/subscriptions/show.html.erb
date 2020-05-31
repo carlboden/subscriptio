@@ -46,8 +46,8 @@
         <p class="ml-3"> <strong>Official price: </strong> €<%= @subscription.software_plan.official_price%></p>
         <p class="mb-3"> <i> <u> Other software </u></i></p>
         <p class="ml-3"> <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> See all the alternatives </a> </p>
-        <p class="ml-3"> Cheaper alternative with same features: (based on price) </p>
-        <p class="ml-3"> Better alternative with same features: (based on reviews?) </p>
+        <p class="ml-3"> Cheaper alternative with same features: <a href="<%=software_plan_path(@lowest_subscription.software_plan.id)%>"> <%=@lowest_subscription.software_plan.software.name%> </a> </p>
+        <p class="ml-3"> Better alternative with same features: (based on reviews?) <a href="<%=software_plan_path(@max_rated_alternative.id)%>"> <%=@max_rated_alternative.software.name%> - <%=@max_rated_alternative.name%> </a> </p>
         <p class="ml-3"> Check out their website: <a href="<%=@subscription.software_plan.software.url%>"> <%=@subscription.software_plan.software.url %> </a></p>
       </div>
       <div class="col-xs-12 col-sm-5">
@@ -113,8 +113,9 @@
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <%end%>
           <%end%>
+          <a href="<%=software_plan_ratings_path(@subscription.software_plan_id)%>"> See all reviews </a>
         <%end%>
-        <a href="<%=software_plan_ratings_path(@subscription.software_plan_id)%>"> See all reviews </a>
+        
 
         <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a>
       </div>

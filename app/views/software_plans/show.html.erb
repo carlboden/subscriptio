@@ -11,8 +11,7 @@
 <% end %>
 </ul>
 <hr>
-<p> I want to add some features if i'm an admin ---> 
-<%= link_to "add a new software feature", new_software_plan_software_feature_path(@softwarePlan) %>
+
 </p>
 
 <p><%= link_to "Back to all plans for #{@softwarePlan.software.name}  ", software_software_plans_path(@softwarePlan.software) %> 
