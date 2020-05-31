@@ -47,7 +47,7 @@
         <p class="mb-3"> <i> <u> Other software </u></i></p>
         <p class="ml-3"> Cheaper alternative with same features: (based on price) </p>
         <p class="ml-3"> Better alternative with same features: (based on reviews?) </p>
-        <p class="ml-3"> Check out their website: </p>
+        <p class="ml-3"> Check out their website: <a href="<%=@subscription.software_plan.software.url%>"> <%=@subscription.software_plan.software.url %> </a></p>
       </div>
       <div class="col-xs-12 col-sm-5">
         <h2 class="mb-3"><%= pluralize @subscription.software_plan.ratings.size, "review" %> </h2>
