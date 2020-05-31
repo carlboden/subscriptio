@@ -1,1 +1,7 @@
 <h1> all the ratings for a software plan</h1>
+<ul>
+    <% @ratings.each do |rating| %>
+        <li> <a href="<%=rating_path(rating.id)%>"> <%=rating.rating%> by <%=rating.user.first_name%> </a></li>
+        <p> <%= rating.description%> </p>
+    <%end%>
+</ul>

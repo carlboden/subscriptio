@@ -42,9 +42,10 @@
 
   <%@reviews = @subscription.software_plan.ratings%>
   <ul>
-  <%@reviews.each do |review|%>
-    <li> <%=review.rating%> stars - <%=review.description%> </li>
-    <%end%>
+    <%@reviews[0..4].each do |review|%>
+      <li> <a href="<%=rating_path(review.id)%>"> <%=review.rating%> stars - <%=review.description%> </a></li>
+  <%end%>
+    <a href="<%=software_plan_ratings_path(@subscription.software_plan_id)%>"> See all reviews </a>
 
   </ul>
     
