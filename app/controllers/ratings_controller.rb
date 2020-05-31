@@ -5,6 +5,7 @@ class RatingsController < ApplicationController
 
 	def show
 		@rating = Rating.find(params[:id])
+		@subscription = Subscription.where(:software_plan_id => @rating.software_plan.id)[0]
 	end
 
 	def new
