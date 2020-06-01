@@ -18,9 +18,18 @@
                 <br>
                 <%= f.input :start_date, as: :string, input_html: {class: "datepicker_full"} %> <br>
                 <%= f.input :end_date, as: :string, input_html: { class: "datepicker_full"} %> <br>
-                <%= f.input :number_of_user, as: :integer %> <br>
-                <%= f.input :price, as: :float, label: 'Price per Month per User' %> <br>
-                
+
+                <%= f.input :number_of_user,
+                            as: :integer,
+                            required: true %>
+                <%= f.input :price,
+                            as: :float,
+                            label: 'Price per Month per User',
+                            required: true %>
+                <div data-target="software-plan.wrapper">
+
+                </div>
+
                 <br>
                 <%= f.submit "Save", class: "btn btn-primary" %>
             <% end %>
