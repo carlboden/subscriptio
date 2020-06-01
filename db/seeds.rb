@@ -25,8 +25,6 @@ puts 'Creating 80 features...'
 end
 puts 'Finished!'
 
-
-
 puts 'Creating 30 fake softwares...'
 30.times do
   software = Software.new(
@@ -35,6 +33,7 @@ puts 'Creating 30 fake softwares...'
     url:  Faker::Internet.url,
     demo_url: Faker::Internet.url
   )
+
   software.save!
 end
 puts 'Finished!'
@@ -71,7 +70,7 @@ puts 'Finished!'
 puts "Create Companies ..."
 company_sizes = ['Less than 5', 'Between 5 and 10', 'Between 10 and 49', 'Between 50 and 499', '500 and more']
 turnovers = ['Less than €100k', 'Between €100k and €500k', 'Between €500k and €1 Million', 'Between €1 Million and €5 Million', 'Between €5 Million and €10 Million', 'Between €10 Million and €50 Million', 'More than €50 Million' ]
-20.times do 
+20.times do
   company = Company.new(
   	name: Faker::Company.name,
   	address: "#{Faker::Address.street_address}, #{Faker::Address.city}",
@@ -87,7 +86,7 @@ puts 'Finished!'
 puts "Create users"
 
 functions = ["CEO", "CFO", "CTO", "CIO", "Purchasing Manager", "Other"]
-5.times do 
+5.times do
 	user = User.new(
 	  email: Faker::Internet.email,
 	  password: "123456",

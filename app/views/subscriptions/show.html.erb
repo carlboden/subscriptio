@@ -12,7 +12,7 @@
     <div class="row justify-content-around">
       <div class="col-xs-12 col-sm-2">
         <div class="subscription-show-image">
-          <%= image_tag "slack-logo.png"%>
+         <%= cl_image_tag @subscription.software_plan.software.photo.key %>
         </div>
       </div>
       <div class="col-xs-12 col-sm-4">
@@ -100,7 +100,7 @@
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
-                    <span class="far fa-star"></span> 
+                    <span class="far fa-star"></span>
                   <a href="<%=rating_path(rating.id)%>"> <%= description %> </a> </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 5 %>
@@ -115,7 +115,7 @@
           <%end%>
           <a href="<%=software_plan_ratings_path(@subscription.software_plan_id)%>"> See all reviews </a>
         <%end%>
-        
+
 
         <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a>
       </div>

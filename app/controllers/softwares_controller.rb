@@ -1,7 +1,7 @@
 class SoftwaresController < ApplicationController
 
 	before_action :set_software, only: [:show, :edit, :update, :destroy]
-	
+
 	def index
 	   if params[:query].present?
 	     @softwares = Software.where("name ILIKE ?", "%#{params[:query]}%")
@@ -25,8 +25,8 @@ class SoftwaresController < ApplicationController
 	def create
 	  @software = Software.new(software_params)
 	  @software.save
-	  redirect_to softwares_path
-	end
+    redirect_to root_path
+ 	end
 
 	def edit
 	end
@@ -44,7 +44,7 @@ class SoftwaresController < ApplicationController
 	private
 
 	def software_params
-  	  params.require(:software).permit(:name, :url, :demo_url, :category)
+  	  params.require(:software).permit(:name, :url, :demo_url, :category, :photo)
     end
 
 	def set_software
