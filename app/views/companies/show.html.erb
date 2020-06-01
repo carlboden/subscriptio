@@ -42,9 +42,10 @@
               <td><%= link_to edit_user_path(user.id) do %>
                   <i class="fas fa-edit"></i>
                 <% end %>
-                <%= link_to user_path(user.id), method: :delete, data: { confirm: "Are you sure?" } do %>
-                  <i class="fa fa-trash"></i>
-                <% end %>
+                 <a href="./<%=@company.id%>/users/<%=user.id%>/edit.Approved">
+                    <i class="fa fa-trash"></i>
+                  </a>
+
                 <%if user.status == 'Waiting for approval' %>
                   <a href="./<%=@company.id%>/users/<%=user.id%>/edit.Approved">
                     <i class="far fa-thumbs-up"></i>
@@ -118,7 +119,7 @@
 
 <h2> Your software price per user distribution </h2>
   <%= column_chart @subscription_range_price , width: "800px", height: "300px"%>
-  
+
 
 
 
