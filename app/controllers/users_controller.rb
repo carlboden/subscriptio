@@ -21,7 +21,7 @@ class UsersController < ApplicationController
         elsif params[:format] == "Join"
             @join = true
         end
-    
+
         @user = User.find(params[:id])
     end
 
@@ -30,17 +30,18 @@ class UsersController < ApplicationController
             @user = User.find(params[:id])
             @user.status = params[:user][:status]
             @user.save
-            redirect_to company_users_path(current_user.company.id)
+            redirect_to company_path(current_user.company.id)
         elsif params[:user][:status] == "Remove access"
             @user = User.find(params[:id])
             @user.company = nil
             @user.status = nil
             @user.save
-            redirect_to company_users_path(current_user.company.id)
+            redirect_to company_path(current_user.company.id)
         else
             @user = User.find(current_user.id)
+
             if @user.company == nil
-                @company = Company.where(:name => params[:user][:company_id])[0]
+                @company = Company.where(:id => params[:user][:company_id])[0]
                 @user.company = @company
                 @user.status = "Waiting for approval"
             end

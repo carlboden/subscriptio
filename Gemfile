@@ -76,3 +76,6 @@ gem "json"
 gem "chartkick"
 
 gem 'cloudinary', '~> 1.12.0'
+
+
+
