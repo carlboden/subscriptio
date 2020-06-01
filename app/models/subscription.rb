@@ -8,5 +8,5 @@ class Subscription < ApplicationRecord
 
   pg_search_scope :software_search, associated_against: {
     software: :name,
-  }, using: :tsearch
+  }, using: { tsearch: { prefix: true } }
 end
