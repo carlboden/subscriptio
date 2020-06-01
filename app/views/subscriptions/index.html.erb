@@ -9,7 +9,11 @@
 
       <%= link_to new_company_subscription_path(current_user.company_id) do %>
         <i class="fas fa-plus ">  </i>
+
       <% end %>
+      <br>
+      <%= link_to "Create new software with logo", new_software_path %>
+
 </div>
     </div>
   </div>
@@ -28,18 +32,17 @@
   </div>
 
 
-
    <div class="container">
     <%@subs.each do |subscription|%>
       <div class="card-subscription mb-3">
         <div class="col-xs-1 col-sm-2">
-           <a href="./subscriptions/<%=subscription.id%>"> <%= image_tag "slack-logo.png"%> </a>
+           <a href="./subscriptions/<%=subscription.id%>">
+            <%= cl_image_tag subscription.software_plan.software.photo.key %>
         </div>
         <div class="card-subscription-infos col-xs-5 col-sm-4">
           <h2><a href="./subscriptions/<%=subscription.id%>"> <%=subscription.software_plan.software.name%> </a></h2>
           <p> <%= subscription.software_plan.software.category %>  </p>
           <p><%= subscription.end_date%></p>
-<!--          <a href="./subscriptions/<%=subscription.id%>/edit">edit </a> -->
         </div>
         <div class="col-5">
           <p><strong> €<%= subscription.price%> / month</strong>

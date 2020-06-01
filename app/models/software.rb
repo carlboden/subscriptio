@@ -8,6 +8,7 @@ class Software < ApplicationRecord
                   }
 
 	has_many :software_plans
+  has_one_attached :photo
 	validates :name, presence: :true, uniqueness: :true
 	validates :category, presence: :true
 end
