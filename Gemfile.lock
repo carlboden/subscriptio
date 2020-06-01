@@ -102,6 +102,8 @@ GEM
     fusioncharts-rails (0.0.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    groupdate (5.0.0)
+      activesupport (>= 5)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     jbuilder (2.10.0)
@@ -257,6 +259,7 @@ DEPENDENCIES
   faker
   font-awesome-sass
   fusioncharts-rails
+  groupdate
   jbuilder (~> 2.7)
   json
   listen (~> 3.2)
