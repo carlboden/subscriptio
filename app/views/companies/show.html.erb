@@ -1,62 +1,79 @@
-<%if params[:format] != 'Dashboard'%>
-    <div class="container p-5">
-    <div class="row">
-      <div class="col-xs-12 col-sm-4">
-        <h2> Company details </h2>
-          <div class="p-3">
-            <p><%=@company.name%></p>
-            <p><%=@company.address%></p>
-            <p><%=@company.country%></p>
-            <p><%=@company.company_size%></p>
-            <p><%=@company.turnover%></p>
-          </div>
-        <h3> Subscriptio plan </h3>
-          <div class="p-3">
-            <p><%=@company.subscriptio_plan.name%></p>
-            <p>€<%=@company.subscriptio_plan.price%></p>
-          </div>
-      </div>
-      <div class="col-xs-12 col-sm-8">
-        <h2 class="text-center">Company members</h2>
-        <table class="table table-bordered m-3">
-          <thead>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Function</th>
-            <th>Company Admin</th>
-            <th>Action</th>
-          </thead>
-          <% sum_users = 0 %>
-          <tbody>
-            <% @users.each do |user| %>
-              <%sum_users += 1%>
 
-              <tr>
-                <td><%= user.first_name%></td>
-                <td><%= user.last_name%></td>
-                <td><%= user.function%></td>
-                <td><%= user.company_admin %>
-                <td><%= link_to edit_user_path(@user.id, booking) do %>
-                    <i class="fas fa-edit"></i>
-                  <% end %>
-                  <%= link_to user_path(@user.id), method: :delete, data: { confirm: "Are you sure?" } do %>
-                  <i class="fa fa-trash"></i></td>
-                <% end %>
-              </tr>
-            <% end %>
-          </tbody>
-            <tfoot>
-              <tr>
-                <td><strong>Total users</strong></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><strong> <%= sum_users %> </strong> </td>
-              </tr>
-            </tfoot>
-        </table>
-      </div>
+<%if params[:format] != 'Dashboard'%>
+
+<div class="container p-5 mt-3">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <h2> Company details </h2>
+        <div class="p-3">
+          <p><%=@company.name%></p>
+          <p><%=@company.address%></p>
+          <p><%=@company.country%></p>
+          <p><%=@company.company_size%> employees</p>
+          <p><%=@company.turnover%> turnover</p>
+        </div>
+      <h3> Subscriptio plan </h3>
+        <div class="p-3">
+          <p><%=@company.subscriptio_plan.name%></p>
+          <p>€<%=@company.subscriptio_plan.price%></p>
+        </div>
     </div>
+    <div class="col-xs-12 col-sm-8">
+      <h2 class="text-center">Company members</h2>
+      <table class="table table-bordered m-3">
+        <thead>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Function</th>
+          <th>Admin</th>
+          <th>Status</th>
+          <th>Action</th>
+        </thead>
+        <% sum_users = 0 %>
+        <tbody>
+          <% @users.each do |user| %>
+            <%sum_users += 1%>
+            <tr>
+              <td><%= user.first_name%></td>
+              <td><%= user.last_name%></td>
+              <td><%= user.function%></td>
+              <td><%= user.company_admin %> </td>
+              <td><%= user.status %> </td>
+              <td><%= link_to edit_user_path(user.id) do %>
+                  <i class="fas fa-edit"></i>
+                <% end %>
+                <%= link_to user_path(user.id), method: :delete, data: { confirm: "Are you sure?" } do %>
+                  <i class="fa fa-trash"></i>
+                <% end %>
+                <%if user.status == 'Waiting for approval' %>
+                  <a href="./<%=@company.id%>/users/<%=user.id%>/edit.Approved">
+                    <i class="far fa-thumbs-up"></i>
+                  </a>
+<!--                  <form method="patch" action="./<%=@company.id%>/users/<%=user.id%>" class="inline">
+                    <input type="hidden" name="status" value="Approved">
+                    <button type="submit"  class="link-button">
+                      <i class="far fa-thumbs-up"></i>
+                    </button>
+                  </form>
+-->
+                <% end %>
+               </td>
+
+            </tr>
+          <% end %>
+        </tbody>
+          <tfoot>
+            <tr>
+              <td><strong>Total users</strong></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><strong> <%= sum_users %> </strong> </td>
+            </tr>
+          </tfoot>
+      </table>
+
     </div>
 
 

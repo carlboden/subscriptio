@@ -19,8 +19,9 @@ class CompaniesController < ApplicationController
     end
 
     def show
-        @company = Company.find(params[:id])
-        @users = User.where(:company_id => params[:company_id])
+
+        @company = Company.find(current_user.company_id)
+        @users = User.where(company_id: @company.id)
         @subscriptions = Subscription.order(:start_date).where(:company_id => params[:id])
         
         @expenses_per_month = {"2020-01" => 0, "2020-02" => 0, "2020-03" => 0, "2020-04" => 0, "2020-05" => 0, "2020-06" => 0, "2020-07" => 0, "2020-08" => 0, "2020-09" => 0, "2020-10" => 0, "2020-11" => 0, "2020-12" => 0}
@@ -118,6 +119,7 @@ class CompaniesController < ApplicationController
         else
             date[0..3] + ( date[4..7].to_i + 1).to_s
         end
+
     end
 
     private
