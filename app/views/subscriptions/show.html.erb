@@ -23,7 +23,7 @@
         <p>Website: <a href="<%=@subscription.software_plan.software.url%>"> <%=@subscription.software_plan.software.name %> </a>
       </div>
 
-      <div class="col-xs-12 col-sm-3 ">
+      <div class="col-xs-12 col-sm-3">
         <div class="price-flex">
           <h2> €<%= @subscription.price%> / month</h2>
         </div>
@@ -31,7 +31,6 @@
     </div>
   </div>
 
-<!--   <%= image_tag "traffic-light-red.png"%> -->
   <div class="container border-top pt-3">
     <div class="row justify-content-between">
       <div class="col-xs-12 col-sm-6">
@@ -45,11 +44,12 @@
         <p class="ml-3"> <strong>Lowest price: </strong> €<%=@lowest_price.price%> ( <%=@lowest_price.number_of_user%> users - company: <%=@lowest_price.company.company_size.downcase%> FTEs) </p>
         <p class="ml-3"> <strong>Official price: </strong> €<%= @subscription.software_plan.official_price%></p>
         <p class="mb-3"> <i> <u> Other software </u></i></p>
+
+        <p class="ml-3"> <strong>Cheaper alternative: </strong> <a href="<%=@lowest_subscription.software_plan.software.url%>"> <%=@lowest_subscription.software_plan.software.name%> </a> - <a href="<%=software_plan_path(@lowest_subscription.software_plan) %>"> <%= @lowest_subscription.software_plan.name %> </a></p>
+        <p class="ml-3"> <strong>Better alternative: </strong> <a href="<%=@max_rated_alternative.software.url%>"> <%=@max_rated_alternative.software.name%> </a> - <a href="<%=software_plan_path(@max_rated_alternative.id)%>"> <%=@max_rated_alternative.name%> </a></p>
         <p class="ml-3"> <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> See all the alternatives </a> </p>
-        <p class="ml-3"> Cheaper alternative with same features: <a href="<%=software_plan_path(@lowest_subscription.software_plan.id)%>"> <%=@lowest_subscription.software_plan.software.name%> </a> </p>
-        <p class="ml-3"> Better alternative with same features: (based on reviews?) <a href="<%=software_plan_path(@max_rated_alternative.id)%>"> <%=@max_rated_alternative.software.name%> - <%=@max_rated_alternative.name%> </a> </p>
-        <p class="ml-3"> Check out their website: <a href="<%=@subscription.software_plan.software.url%>"> <%=@subscription.software_plan.software.url %> </a></p>
       </div>
+
       <div class="col-xs-12 col-sm-5">
         <h2 class="mb-3"><%= pluralize @subscription.software_plan.ratings.size, "review" %> </h2>
 
