@@ -57,7 +57,7 @@
         <% if @subscription.software_plan.ratings.blank? %>
           Be the first to leave a review for <%= @subscription.software_plan.software.name %> - <%= @subscription.software_plan.name %>
         <% else %>
-          <% @subscription.software_plan.ratings[0..4].each do |rating| %>
+          <% @subscription.software_plan.ratings.order("created_at DESC")[0..4].each do |rating| %>
           <%if rating.description.length > 30%>
             <%description = rating.description[0..25] + "..."%>
           <%else %>
@@ -125,6 +125,13 @@
   <div id="chartContainer">
    <%= @chart.render() %>
   </div>
+
+  <%= pie_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+  <%= column_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+  <%= line_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+
+
+
 
 <%else%>
   <div>

@@ -7,18 +7,29 @@
 
         <div data-controller="software-plan">
             <%= simple_form_for([@company, @subscription]) do |f|%>
-                <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), :include_blank => true, data: { action: "software-plan#fetchPlans" } %>
+                <%= label :software, "Your Software Provider"%><br>
+                <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), include_blank: true, data: { action: "software-plan#fetchPlans" } %>
+                <br>
+                <br>
+                <%= label :other, "Your Plan"%><br>
+                <div data-target="software-plan.wrapper">
+  
+                </div>
+                <br>
                 <%= f.input :start_date, as: :string, input_html: {class: "datepicker_full"} %> <br>
                 <%= f.input :end_date, as: :string, input_html: { class: "datepicker_full"} %> <br>
+
                 <%= f.input :number_of_user,
                             as: :integer,
                             required: true %>
                 <%= f.input :price,
                             as: :float,
+                            label: 'Price per Month per User',
                             required: true %>
                 <div data-target="software-plan.wrapper">
 
                 </div>
+
                 <br>
                 <%= f.submit "Save", class: "btn btn-primary" %>
             <% end %>

@@ -72,3 +72,5 @@ gem "cocoon"
 gem "fusioncharts-rails"
 
 gem "json"
+
+gem "chartkick"
