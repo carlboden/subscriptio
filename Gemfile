@@ -74,3 +74,5 @@ gem "fusioncharts-rails"
 gem "json"
 
 gem "chartkick"
+
+gem 'date'
