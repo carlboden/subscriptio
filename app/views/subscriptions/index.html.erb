@@ -83,10 +83,14 @@
   </div>
   <%end%>
 
+<script>
+  $(function() {
+    new app.pg_search_documents;
+  });
+</script>
 
 
-
-<div class="container">
+<div id='#aa-search-input'class="container">
 
 
  <h2>Search in all softwares</h2>
@@ -95,19 +99,20 @@
     <%= text_field_tag :query,
       params[:query],
       autocomplete: :off,
+      id: "myInput",
       class: "form-control search-input",
       placeholder: "Search a software by name, category, or a feature...."
     %>
     <%= submit_tag "Search", class: "btn btn-primary" %>
   <% end %>
 
-  <% if @results == [] %>
+  <% if @pg_search_documents == [] %>
      <%= "Sorry no results" %>
-  <% elsif @results == nil %>
+  <% elsif @pg_search_documents == nil %>
    <%= "You can easily make a search by software name, category, ou feature" %>
   <% else %>
     <ul>
-      <% @results.each do |result| %>
+      <% @pg_search_documents.each do |result| %>
         <% if result.searchable_type == "Software" %>
           <li>[Software]<%= link_to result.content, software_path(result.searchable_id) %>
           </li>
@@ -119,3 +124,4 @@
   <% end %>
 
 </div>
+

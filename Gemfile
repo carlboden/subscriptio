@@ -31,10 +31,15 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'faker'
 gem 'pg_search', '~> 2.3.0'
+gem 'select2-rails'
+gem 'underscore-rails'
 
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass'
 gem 'simple_form'
+gem 'algoliasearch-rails'
+gem 'jquery-rails'
+
 group :development, :test do  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'dotenv-rails'

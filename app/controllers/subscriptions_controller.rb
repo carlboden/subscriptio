@@ -4,16 +4,22 @@ class SubscriptionsController < ApplicationController
         #@softwares = Software.pluck(:name).sort
         @subscriptions = Subscription.where(:company_id => params[:company_id])
         @subscription_decreasing_order = Subscription.order('price ASC').where(:company_id => params[:company_id])
-
+        
+        respond_to do |format|
+            format.json
+            format.html { @pg_search_documents = PgSearch.multisearch(params[:query]) }
+        end
 
         if params[:query].present?
+
           PgSearch::Multisearch.rebuild(Feature)
           PgSearch::Multisearch.rebuild(Software)
-          @results = PgSearch.multisearch(params[:query])
-          #@results = Feature.whose_name_starts_with(params[:query])
+          @pg_search_documents = PgSearch.multisearch(params[:query])
+
         else
          @softwares = Software.all
         end
+     
 
         if params[:query2].present?
           @subs= Subscription.software_search(params[:query2])

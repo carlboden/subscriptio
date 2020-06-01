@@ -28,4 +28,7 @@ Rails.application.routes.draw do
     resources :subscriptions
     resources :users
   end
+
+  resources :messages, only: [:new]
+  
 end
