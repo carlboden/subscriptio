@@ -88,39 +88,49 @@
 
 <%else%>
 
-<br>
-<br>
-<h2> Your Expenses evolution </h2>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="text-center m-5"> Expenses evolution current year</h2>
 
-<p> Your total expenses during your subscription: <%=@sum_expenses_2020%> €</p>
-<p> The total expenses with the lowest subscription fee: <%= @low_sum_expenses_2020%> € </p>
-<p> The difference (possible economy): <%=@sum_expenses_2020 - @low_sum_expenses_2020%> € </p>
-<%  current_month = Date.today.strftime('%Y-%m')%>
+      <p> <strong>Predicted total expenses: </strong> €<%=@sum_expenses_2020%></p>
+      <p> <strong>Lowest possible total expenses: </strong> €<%= @low_sum_expenses_2020%>
+  <!--      - <strong>Total possible savings: </strong> €<%=@sum_expenses_2020 - @low_sum_expenses_2020%>  -->
+      </p>
 
+      <%  current_month = Date.today.strftime('%Y-%m')%>
 
-<p> The payment for this month <%=@expenses_per_month[current_month]%> € </p>
-<p> The payment with the lowest subscription for this month <%=@low_expenses_per_month[current_month]%> € </p>
-<br>
-<br>
+      <p> <strong>Potential savings if you switch now: </strong> </p>
 
-<%= line_chart [{name: "Your Price", data: @expenses_per_month_2020},
-   {name: "Cheapest Price available", data: @low_expenses_per_month_2020}]  %>
+<!--      <p> The payment for this month <%=@expenses_per_month[current_month]%> € </p>
+      <p> The payment with the lowest subscription for this month <%=@low_expenses_per_month[current_month]%> € </p>
+-->
+      <br>
+      <br>
 
-   <br>
-   <br>
+      <%= line_chart [{name: "Your Price", data: @expenses_per_month_2020},
+         {name: "Cheapest Price available", data: @low_expenses_per_month_2020}]  %>
 
-   <h2> Your software plan status </h2>
-  <%= pie_chart @subscription_status,  colors: ["#109618", "#DC3912"] %>
+         <br>
+         <br>
+    </div>
+  </div>
 
+  <div class="row m-3">
+    <div class="col-12">
+      <h2 class="text-center m-5"> Software price per user distribution </h2>
+      <%= column_chart @subscription_range_price , width: "800px", height: "300px"%>
+    </div>
+  </div>
 
+  <div class="row m-5">
+    <div class="col-12">
+      <h2 class="text-center m-5"> Software plan status </h2>
+      <%= pie_chart @subscription_status,  colors: ["#109618", "#DC3912"] %>
+    </div>
 
-<br>
-<br>
-
-<h2> Your software price per user distribution </h2>
-  <%= column_chart @subscription_range_price , width: "800px", height: "300px"%>
-
-
-
+    </div>
+  </div>
+</div>
 
 <%end%>
