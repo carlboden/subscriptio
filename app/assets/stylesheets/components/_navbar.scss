@@ -28,11 +28,16 @@
   .logo-link {
     color: white;
     font-weight: bold;
+    font-family: $headers-font;
   }
   .logo-link:hover {
     color: white;
     opacity: 0.5;
   }
+}
+
+.navbar-lewagon-white {
+  background-color: white;
 }
 
 
