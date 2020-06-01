@@ -8,8 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+         
+
+       
     <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    
+
   </head>
 
   <body>
@@ -17,6 +21,9 @@
     <%= render 'shared/flashes' %>
 
       <%= yield %>
+      <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'  %>
+      <%= yield :charts_js %>
+       
 
   </body>
 </html>

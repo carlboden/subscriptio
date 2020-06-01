@@ -126,6 +126,13 @@
    <%= @chart.render() %>
   </div>
 
+  <%= pie_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+  <%= column_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+  <%= line_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+
+
+
+
 <%else%>
   <div>
     <p> Your account is still not approved </p>
