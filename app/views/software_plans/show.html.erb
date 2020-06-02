@@ -12,6 +12,7 @@
 </ul>
 <hr>
 
+<%= cl_image_tag @softwarePlan.software.photo.key  %>
 </p>
 
 <p><%= link_to "Back to all plans for #{@softwarePlan.software.name}  ", software_software_plans_path(@softwarePlan.software) %> 

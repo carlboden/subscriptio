@@ -1,3 +1,4 @@
+require "open-uri"
 require 'faker'
 puts "Destroy user, company, subscriptioplan, ratings"
 Rating.destroy_all
@@ -114,11 +115,128 @@ puts "Create ratings"
 	rating.save!
 end
 
+
+
+scrapped_data = {}
+
+urls = [
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/revamp-crm", "https://www.capterra.com/p/148028/Revamp-CRM/"]
+]
+
+
+urls.each do |url|
+  @doc = Nokogiri::HTML(RestClient.get(url[0]))
+      
+  # Extract the name of the company
+  p "extracting company name"
+  company = @doc.css("nav.ng-star-inserted a.ng-star-inserted")[2].content.gsub("\n", "").strip
+  
+  scrapped_data[company] = {picture: [], website: [], plan: [], category: [], price: [], period: [], features: [], detailed_features: [], have_detailed_features: []}
+  # Extract the Plan type
+
+  p "extracting plan"
+
+  @doc.css("div.ng-star-inserted div").each do |link|
+      # test << link.content
+      scrapped_data[company][:plan] << link.content
+  end
+
+  # Extract the Price
+
+  p "price"
+
+  @doc.css(".ng-star-inserted span.price").each do |link|
+      # test << link.content
+      scrapped_data[company][:price] << link.content
+  end
+
+  # Extract the period (how the payment occur)
+
+  p "period"
+
+  @doc.css(".ng-star-inserted span.period").each do |link|
+      # test << link.content
+      scrapped_data[company][:period] << link.content
+  end
+
+
+  # Extract the main category of the software
+  scrapped_data[company][:category] << @doc.css("nav.ng-star-inserted a.ng-star-inserted")[1].content.gsub("\n", "").strip
+
+
+  # try to extract the features
+
+  p "features"
+
+  @doc.css("section.ng-star-inserted div.group.table-section").each do |link|
+      # test << link.content
+      scrapped_data[company][:features] << link.content
+  end
+
+  # try to extract the detailed features
+  p ""
+  p "detailed features"
+
+  @doc.css("section.ng-star-inserted cim-edition-comparison-feature-row.ng-star-inserted div").each do |link|
+      # test << link.content
+      scrapped_data[company][:detailed_features] << link.content.gsub("\n", "").strip  
+  end
+
+  scrapped_data[company][:detailed_features] = scrapped_data[company][:detailed_features].reject { |value| value == ""}
+  scrapped_data[company][:detailed_features] = scrapped_data[company][:detailed_features].map{|value| value.split("  ")[0]}
+
+
+  @doc.xpath("/html/body/cim-root/main/cim-application-presentation/section[2]/cim-edition-comparison/section/cim-edition-comparison-feature-row/div/div/clr-icon/@shape").each do |link|
+      # test << link.content
+      scrapped_data[company][:have_detailed_features] << link.content
+  end
+
+
+
+  m = Mechanize.new
+  m.user_agent_alias = 'Windows Mozilla'
+  page = m.get(url[1])
+  @doc = Nokogiri::HTML(page.body)
+
+
+
+  scrapped_data[company][:picture] << @doc.css("img.Thumbnail__Image-sc-1xvq2zk-0.idhssu")[0]['src']
+
+  scrapped_data[company][:website] << @doc.css("p.ProductSummary__CompanyDetailItem-uex5jn-5.fxpGcm")[1].content
+
+  p "Pausing 15 seconds to avoid being kicked out of the websites"
+  sleep(15) 
+end
+
+
+
+scrapped_data.each do |key, value|
+  
+  p "Software picture url: #{value[:picture][0]}"
+
+  file = URI.open(value[:picture][0])
+  software = Software.new(:name => key, :url => value[:website][0], :category => value[:category][0])
+  p file
+
+  software.photo.attach(io: file, filename: 'nes.png', content_type: 'image/png')
+
+  software.save
+  p value[:plan].length 
+
+  i = 0
+  while i < value[:plan].length
+      if value[:price][i] == nil || value[:price][i].match(/\d+/) == nil
+        software_plan = SoftwarePlan.new(:name => value[:plan][i], :official_price => nil)
+        software_plan.software = software
+        software_plan.save
+      else
+      software_plan = SoftwarePlan.new(:name => value[:plan][i], :official_price => value[:price][i].match(/([+-]?([0-9]*[.])?[0-9]+)/)[0])
+      software_plan.software = software
+      software_plan.save
+    end
+      i += 1
+  end
+end
+
 puts "finished"
-
-
-
-
-
-
 
