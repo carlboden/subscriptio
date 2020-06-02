@@ -35,19 +35,32 @@
     <div class="row justify-content-between">
       <div class="col-xs-12 col-sm-6">
         <h2 class="mb-3"> Recommendations </h2>
-        <p class="mb-3"> <i> <u> Your software </u></i></p>
+        <p class="mb-3"> <i> <u> Your software</u>: <%= @subscription.software_plan.software.name %> - <%= @subscription.software_plan.name %> </i></p>
+        <p class="ml-3"> <strong>Official published price: </strong> €<%= @subscription.software_plan.official_price%></p>
+         <p class="ml-3"> <strong>Lowest price on market: </strong> €<%=@lowest_price.price%> ( <%=@lowest_price.number_of_user%> users - company: <%=@lowest_price.company.company_size.downcase%> FTEs) </p>
+
         <% if  ( @lowest_price_same_range_number_user.price - @subscription.price ) < 0 %>
-          <p class="ml-3"> <strong> Lowest price for same users: </strong> €<%=@lowest_price_same_range_number_user.price %>: <span style="background-color:#CF1015; color:white"> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </span> difference  </p>
+          <p class="ml-3"> <strong> Lowest price for same users: </strong> €<%=@lowest_price_same_range_number_user.price %>: <span style="background-color:#CF1015; color:white"> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </span> difference per month </p>
         <% else %>
-          <p class="ml-3"> <strong> Lowest price for same users: </strong> €<%=@lowest_price_same_range_number_user.price %>: <span style="background-color:#5DCD8D; color:white"> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </span> difference  </p>
+          <p class="ml-3"> <strong> Lowest price for same users: </strong> €<%=@lowest_price_same_range_number_user.price %>: <span style="background-color:#5DCD8D; color:white"> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </span> difference per month </p>
         <% end %>
-        <p class="ml-3"> <strong>Lowest price: </strong> €<%=@lowest_price.price%> ( <%=@lowest_price.number_of_user%> users - company: <%=@lowest_price.company.company_size.downcase%> FTEs) </p>
-        <p class="ml-3"> <strong>Official price: </strong> €<%= @subscription.software_plan.official_price%></p>
+
         <p class="mb-3"> <i> <u> Other software </u></i></p>
 
-        <p class="ml-3"> <strong>Cheaper alternative: </strong> <a href="<%=@lowest_subscription.software_plan.software.url%>"> <%=@lowest_subscription.software_plan.software.name%> </a> - <a href="<%=software_plan_path(@lowest_subscription.software_plan) %>"> <%= @lowest_subscription.software_plan.name %> </a></p>
-        <p class="ml-3"> <strong>Better alternative: </strong> <a href="<%=@max_rated_alternative.software.url%>"> <%=@max_rated_alternative.software.name%> </a> - <a href="<%=software_plan_path(@max_rated_alternative.id)%>"> <%=@max_rated_alternative.name%> </a></p>
-        <p class="ml-3"> <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> See all the alternatives </a> </p>
+        <p class="ml-3"> <strong>Cheaper alternative: </strong>
+          <% if @lowest_subscription.software_plan.software.name == @subscription.software_plan.software.name && @lowest_subscription.software_plan.name == @subscription.software_plan.name %>
+            <span style="display:inline; background-color:#5DCD8D; color:white"> You have the cheapest software 🎉  </span> </p>
+          <% else %>
+            <a href="<%=@lowest_subscription.software_plan.software.url%>"> <%=@lowest_subscription.software_plan.software.name%> </a> - <a href="<%=software_plan_path(@lowest_subscription.software_plan) %>"> <%= @lowest_subscription.software_plan.name %> </a>
+            : €<%= @lowest_subscription.price %> : <span style="background-color:#F5B643; color:white"> €<%= @lowest_subscription.price - @subscription.price %> </span> difference per month  </p>
+          <% end %>
+           <p class="ml-3"> <strong>Better alternative: </strong>
+          <% if @max_rated_alternative.software.name == @subscription.software_plan.software.name && @max_rated_alternative.name == @subscription.software_plan.name %>
+            <span style="display:inline; background-color:#5DCD8D; color:white"> You have the best-rated software 🥇 </span> </p>
+            <% else %>
+              <a href="<%=@max_rated_alternative.software.url%>"> <%=@max_rated_alternative.software.name%> </a> - <a href="<%=software_plan_path(@max_rated_alternative.id)%>"> <%=@max_rated_alternative.name%> </a></p>
+          <% end %>
+        <p class="ml-3"> <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> See all alternatives </a> </p>
       </div>
 
       <div class="col-xs-12 col-sm-5">

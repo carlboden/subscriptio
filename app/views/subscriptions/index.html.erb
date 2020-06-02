@@ -51,25 +51,12 @@
         </div>
         <div class="card-subscription-indicators col-1">
 
-<!-- Start of: Not sure where to put this code?? -->
-        <% @subscription_decreasing_order = Subscription.order('price ASC').where(:software_plan_id => subscription.software_plan_id)
-        @lowest_price = @subscription_decreasing_order[0]
-        @subscription_in_range = []
-        range_user = (subscription.number_of_user - (1 + (subscription.number_of_user/2)**2))..(subscription.number_of_user + (1 + (subscription.number_of_user/2)**2))
-        @subscription_decreasing_order.each do |sub|
-            if range_user === sub.number_of_user
-                @subscription_in_range << sub
-            end
-        end
-        @lowest_price_same_range_number_user = @subscription_in_range[0] %>
-<!-- End of: Not sure where to put this code?? -->
-
           <% if ( @lowest_price_same_range_number_user.price - subscription.price ) < 0 %>
             <%= image_tag "traffic-light-red.png"%>
-          <%elsif #if there are other software recommendations # %>
-            <%= image_tag "traffic-light-orange.png"%>
-          <% else %>
+          <%elsif @lowest_subscription.software_plan.software.name == subscription.software_plan.software.name && @lowest_subscription.software_plan.name == subscription.software_plan.name %>
             <%= image_tag "traffic-light-green.png"%>
+          <% else %>
+            <%= image_tag "traffic-light-orange.png"%>
           <% end %>
 
         </div>
