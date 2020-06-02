@@ -77,5 +77,8 @@ gem "chartkick"
 
 gem 'cloudinary', '~> 1.12.0'
 
+gem 'nokogiri'
 
+gem "rest-client"
 
+gem 'mechanize'
