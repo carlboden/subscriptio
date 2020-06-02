@@ -177,16 +177,25 @@
       </div>
     </div>
 
-  <h3>My Chart</h3>
+  <!-- <h3>My Chart</h3>
   <div id="chartContainer">
    <%= @chart.render() %>
   </div>
+-->
+  <h2 class="my-5">Graphical analysis </h2>
+  <div class="row">
+    <div class="col-xs-12 col sm-6">
+      <%= column_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+    </div>
 
-  <%= pie_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
-  <%= column_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
-  <%= line_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+    <div class="col-xs-12 col sm-6">
+      <%= pie_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+    </div>
+  </div>
 
-
+  <div class="row mt-5">
+      <%= line_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+  </div>
 
 
 <%else%>
