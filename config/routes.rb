@@ -2,16 +2,17 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'pages#home'
 
-  resources :softwares do 
+  resources :softwares do
     resources :software_plans
     get "select_plans", to: "software_plans#render_select_plans"
+
   end
 
   resources :software_plans do
       resources :software_features
       resources :ratings
     end
-    
+
   resources :ratings
 
   resources :features

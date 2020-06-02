@@ -70,16 +70,18 @@ class SubscriptionsController < ApplicationController
                 @subscription_in_range << subscription
             end
         end
+
         @lowest_price_same_range_number_user = @subscription_in_range[0]
         @softwares_same_category = Software.where(:category => @subscription.software_plan.software.category)
         all_software_plans = []
         @softwares_same_category.each { |software| all_software_plans << software.software_plans}
         all_subscription = []
-        all_software_plans.each do |software| 
+        all_software_plans.each do |software|
           software.each do |plan|
             Subscription.where(software_plan_id: plan.id,  :number_of_user => range_user ).order("price ASC")[0] != nil ? all_subscription << Subscription.where(software_plan_id: plan.id).order("price ASC")[0] : ""
           end
         end
+
         min_price = all_subscription[0].price
         @lowest_subscription = all_subscription[0]
         all_subscription.each do |subscription|
@@ -88,15 +90,26 @@ class SubscriptionsController < ApplicationController
             @lowest_subscription = subscription
           end
         end
+
         software_plan_with_ratings = {}
-        all_software_plans.each do |software| 
-          
+        all_software_plans.each do |software|
+
           software.each do |plan|
             sum = 0.0
             if Rating.where(software_plan_id: plan.id)[0] != nil
+
               ratings_plan = Rating.where(software_plan_id: plan.id)
-              ratings_plan.each {|rating| sum += rating.rating  }
+
+                ratings_plan.each do |rating|
+                  if rating.rating != nil
+                    sum += rating.rating
+                  end
+                  if rating.user_id = current_user.id
+                    @reviewed = true
+                  end
+                end
               software_plan_with_ratings[plan.id] = sum / (ratings_plan.length)
+              @average_review = software_plan_with_ratings[plan.id].round(2)
             else
               software_plan_with_ratings[plan.id] = 0
             end
@@ -112,7 +125,7 @@ class SubscriptionsController < ApplicationController
         end
         @max_rated_alternative = SoftwarePlan.find(max_rating_id)
 
-        @softwarePlan = SoftwarePlan.where(:subscription_id => params[:id])
+        @rating = Rating.new
 
         @chart =
       Fusioncharts::Chart.new(

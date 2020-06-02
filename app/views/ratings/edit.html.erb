@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 offset-sm-4">
+      <div class="form-basic">
+        <h2> Add a rating</h2>
+
+        <%= simple_form_for [ @softwarePlan, @rating ] do |f| %>
+            <%= f.error_notification %>
+            <%= f.input :rating,
+                        collection:[0, 1, 2, 3, 4, 5],
+                        required: true,
+                        autofocus: true,
+                        include_hidden: false%>
+            <%= f.input :description,
+                        autofocus: true %>
+            <%= f.submit "Save", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

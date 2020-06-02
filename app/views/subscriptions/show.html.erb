@@ -51,57 +51,109 @@
       </div>
 
       <div class="col-xs-12 col-sm-5">
-        <h2 class="mb-3"><%= pluralize @subscription.software_plan.ratings.size, "review" %> </h2>
+        <div class="d-inline-flex ">
+          <h2 class="mb-3"><%= pluralize @subscription.software_plan.ratings.size, "review" %> </h2>
+          <p class="pl-3 pt-2">  <span class="fa fa-star checked"></span> <%= @average_review %> </p>
+        </div>
+
+        <% unless @reviewed %>
+          <%= simple_form_for( [ @subscription.software_plan, @rating ], remote: true) do |f| %>
+            <%= f.error_notification %>
+            <div class="pr-5">
+            <%= f.input :rating,
+                        collection:[0, 1, 2, 3, 4, 5],
+                        required: true,
+                        input_html:{ style: "width:25%"} %>
+            </div>
+            <%= f.input :description,
+                        autofocus: true %>
+            <div class="d-flex justify-content-center">
+              <%= f.submit "Add", class: "btn btn-primary mb-3"  %>
+            </div>
+          <% end %>
+        <% end %>
+
 
 
         <% if @subscription.software_plan.ratings.blank? %>
           Be the first to leave a review for <%= @subscription.software_plan.software.name %> - <%= @subscription.software_plan.name %>
         <% else %>
-          <% @subscription.software_plan.ratings.order("created_at DESC")[0..4].each do |rating| %>
-          <%if rating.description.length > 30%>
-            <%description = rating.description[0..25] + "..."%>
-          <%else %>
-            <%description = rating.description%>
-          <%end%>
+          <% @subscription.software_plan.ratings.order("created_at DESC")[0..2].each do |rating| %>
+            <%if rating.description.length > 30%>
+              <%description = rating.description[0..25] + "..."%>
+            <% else %>
+
+              <%description = rating.description%>
+            <% end %>
+
+            <% if rating.user_id == current_user.id
+              user_own_review = true
+             end %>
+
               <% if rating.rating == 0 %>
-                <p> <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                 | <a href="<%=rating_path(rating.id)%>"> <%= description %> </a> </p>
+                <p> <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                 | <a href="<%=rating_path(rating.id)%>"> <%= description %> </a>
+                    <% if user_own_review %>
+                    | <%= link_to edit_software_plan_rating_path(@subscription.software_plan, rating) do %> <i class="fa fa-edit"> </i> <% end %>
+                      <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
+                    <% end %>
+                  </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 1 %>
                 <p> <span class="fa fa-star checked"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                 | <a href="<%=rating_path(rating.id)%>"> <%= description %> </a> </p>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                 | <a href="<%=rating_path(rating.id)%>"> <%= description %> </a>
+                    <% if user_own_review %>
+                    | <%= link_to edit_software_plan_rating_path(@subscription.software_plan, rating) do %> <i class="fa fa-edit"> </i> <% end %>
+                      <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
+                    <% end %>
+                  </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 2 %>
                 <p> <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                 | <a href="<%=rating_path(rating.id)%>"> <%= description %> </a></p>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                 | <a href="<%=rating_path(rating.id)%>"> <%= description %> </a>
+                    <% if user_own_review %>
+                    | <%= link_to edit_software_plan_rating_path(@subscription.software_plan, rating) do %> <i class="fa fa-edit"> </i> <% end %>
+                      <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
+                    <% end %>
+               </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 3 %>
                 <p> <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
-                    <span class="far fa-star"></span>
-                    <span class="far fa-star"></span>
-                 |<a href="<%=rating_path(rating.id)%>"> <%= description %> </a> </p>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                 |<a href="<%=rating_path(rating.id)%>"> <%= description %> </a>
+                    <% if user_own_review %>
+                    | <%= link_to edit_software_plan_rating_path(@subscription.software_plan, rating) do %> <i class="fa fa-edit"> </i> <% end %>
+                      <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
+                    <% end %>
+                  </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 4 %>
                 <p> <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
-                    <span class="far fa-star"></span>
-                  <a href="<%=rating_path(rating.id)%>"> <%= description %> </a> </p>
+                    <span class="fa fa-star"></span>
+                  <a href="<%=rating_path(rating.id)%>"> <%= description %> </a>
+                    <% if user_own_review %>
+                    | <%= link_to edit_software_plan_rating_path(@subscription.software_plan, rating) do %> <i class="fa fa-edit"> </i> <% end %>
+                      <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
+                    <% end %>
+                </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <% elsif rating.rating == 5 %>
                 <p> <span class="fa fa-star checked"></span>
@@ -109,15 +161,19 @@
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
-                  | <a href="<%=rating_path(rating.id)%>"> <%= description %> </a> </p>
+                  | <a href="<%=rating_path(rating.id)%>"> <%= description %> </a>
+                    <% if user_own_review %>
+                    | <%= link_to edit_software_plan_rating_path(@subscription.software_plan, rating) do %> <i class="fa fa-edit"> </i> <% end %>
+                      <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
+                    <% end %>
+                </p>
                 <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
               <%end%>
           <%end%>
           <a href="<%=software_plan_ratings_path(@subscription.software_plan_id)%>"> See all reviews </a>
         <%end%>
 
-
-        <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a>
+    <!--    <a href="<%=new_software_plan_rating_path(@subscription.software_plan.id)%>"> Add a review </a> -->
       </div>
     </div>
 
