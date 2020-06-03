@@ -8,7 +8,6 @@ class SubscriptionsController < ApplicationController
 
 
 
-
         
 
         if params[:query2].present? 
