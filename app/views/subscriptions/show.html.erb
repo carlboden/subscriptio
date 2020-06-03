@@ -81,9 +81,9 @@
           <div class="card-software">
             <p>Potential yearly savings</p>
             <% if ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) > 0.0 %>
-              <h2 class="mt-3 mb-4 card-orange" > €<%= ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) * 12 %>  </h2>
+              <h2 class="mt-3 mb-4 card-orange" > €<%= ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) * 12 * @subscription.number_of_user %>  </h2>
             <% else %>
-              <h2 class="mt-3 mb-4 card-green" > €<%= ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) * 12 %>  </h2>
+              <h2 class="mt-3 mb-4 card-green" > €<%= ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) * 12 * @subscription.number_of_user %>  </h2>
             <% end %>
 
           </div>
