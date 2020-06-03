@@ -82,3 +82,7 @@ gem 'nokogiri'
 gem "rest-client"
 
 gem 'mechanize'
+
+gem 'mini_magick'
+
+gem "down", "~> 5.0"
