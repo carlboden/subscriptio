@@ -22,16 +22,4 @@ const initUpdateNavbarOnScroll = () => {
   }
 }
 
-const initActivateNavItem = () => {
-  const navitem = document.querySelector('.nav-item');
-  console.log(navitem);
-    navitem.addEventListener('click', (event) => {
-
-      navitem.classList.add('active');
-
-    })
-}
-
-
-
-export { initUpdateNavbarOnScroll, initActivateNavItem };
+export { initUpdateNavbarOnScroll };

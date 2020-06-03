@@ -86,3 +86,5 @@ gem 'mechanize'
 gem 'mini_magick'
 
 gem "down", "~> 5.0"
+
+gem 'will_paginate-bootstrap'

@@ -2,11 +2,11 @@ class SubscriptionsController < ApplicationController
 
   def index
 
-        @subscriptions = Subscription.where(:company_id => params[:company_id])
+        @subscriptions = Subscription.where(:company_id => params[:company_id]).paginate(page: params[:page], per_page: 5)
 
         @lowest_price_same_range_number_user = calculate_cheaper_plan_range_user(@subscriptions)
         @all_alternative_hash = calculate_alternative_price(@subscriptions)
-        if params[:query2].present? 
+        if params[:query2].present?
           @subscriptions = Subscription.where(:software_plan_id => SoftwarePlan.where(software_id: Software.where("name ILIKE ?", "%#{params[:query2]}%")), :company_id => params[:company_id])
         end
     end
@@ -88,11 +88,11 @@ class SubscriptionsController < ApplicationController
 
       @chart = fusion_chart
 
-      
 
-      
+
+
     end
-    
+
 
     private
 
@@ -101,7 +101,7 @@ class SubscriptionsController < ApplicationController
       format_date = date.strftime('%Y%m')
       # To keep the format the same even if for the first date
       # formatted_date = format_date[0..3] + ( format_date[4..7].to_i).to_s
-      
+
   end
 
   def add_one_day_strip_date(date)
@@ -125,7 +125,7 @@ class SubscriptionsController < ApplicationController
         features.each {|feature| hash_features_all_subscriptions[subscription.id] << feature.feature_id}
       end
 
-    
+
       hash_features_all_subscriptions.each do |subscription_id, array_feature|
         sub = Subscription.find(subscription_id)
         alternatives_software_same_category = Software.where(:category => sub.software_plan.software.category)
@@ -143,7 +143,7 @@ class SubscriptionsController < ApplicationController
         end
 
         array_same_feature_software_plan = []
-        
+
         features_all_software_plan_hash.each do |key, features|
           right = {true: 0, false: 0}
           array_feature[1..10].each do |feature|
@@ -152,15 +152,15 @@ class SubscriptionsController < ApplicationController
             else
               right[:false] += 1
             end
-          
+
           end
 
           right[:false] < 5 ? array_same_feature_software_plan << key : ""
-        
+
         end
 
-        
-        
+
+
         subscriptions_same_features = Subscription.where(:software_plan_id =>  array_same_feature_software_plan)
 
         lowest_price_same_features = calculate_cheaper_plan_range_user(subscriptions_same_features)
@@ -170,9 +170,9 @@ class SubscriptionsController < ApplicationController
             lowest_price = {subscription_id =>[key, subscription.price] }
           end
         end
-        
+
         all_alternative_hash = all_alternative_hash.merge(lowest_price)
-      
+
       end
       all_alternative_hash
     end
@@ -201,7 +201,7 @@ class SubscriptionsController < ApplicationController
 
 
     def create_data_histogram
-      
+
       @expenses_per_month = {"2020-01" => 0, "2020-02" => 0, "2020-03" => 0, "2020-04" => 0, "2020-05" => 0, "2020-06" => 0, "2020-07" => 0, "2020-08" => 0, "2020-09" => 0, "2020-10" => 0, "2020-11" => 0, "2020-12" => 0}
         @low_expenses_per_month = {"2020-01" => 0, "2020-02" => 0, "2020-03" => 0, "2020-04" => 0, "2020-05" => 0, "2020-06" => 0, "2020-07" => 0, "2020-08" => 0, "2020-09" => 0, "2020-10" => 0, "2020-11" => 0, "2020-12" => 0}
         @sum_expenses = 0
@@ -220,7 +220,7 @@ class SubscriptionsController < ApplicationController
                  subscription_in_range << subscription
              end
          end
-         
+
          subscription.price == subscription_in_range[0].price ? @subscription_status["You already have the best plan"] += 1 : @subscription_status["Cheaper Plan Available"] += 1
          if (0..25) === subscription.price
           @subscription_range_price["0 - 25€"] += 1
@@ -235,15 +235,15 @@ class SubscriptionsController < ApplicationController
          else
           @subscription_range_price["501€ +"] += 1
          end
-         
-         
+
+
           start_date = strip_date(subscription.start_date)
           end_date = strip_date(subscription.end_date)
 
           # To have if the month is before 10, keep the format 2020-05
           udpate_format_date = start_date[0..3] + '-' + ( start_date[4..7].to_i < 10 ?  "0" + start_date[4..7].to_i.to_s : start_date[4..7])
           if @expenses_per_month[udpate_format_date] == nil
-              
+
               @expenses_per_month[udpate_format_date] = ( subscription.price * subscription.number_of_user )
               @low_expenses_per_month[udpate_format_date] = ( subscription_in_range[0].price * subscription.number_of_user )
               @sum_expenses += ( subscription.price * subscription.number_of_user )
@@ -254,25 +254,25 @@ class SubscriptionsController < ApplicationController
               @sum_expenses += ( subscription.price * subscription.number_of_user )
               @low_sum_expenses += ( subscription_in_range[0].price * subscription.number_of_user )
           end
-          
+
           start_date = add_one_day_strip_date(start_date)
 
           while start_date.to_i <= end_date.to_i
               udpate_format_date = start_date[0..3] + '-' + ( start_date[4..7].to_i < 10 ? "0" + start_date[4..7] : start_date[4..7] )
-              if @expenses_per_month[udpate_format_date] == nil 
+              if @expenses_per_month[udpate_format_date] == nil
                   @expenses_per_month[udpate_format_date] = ( subscription.price * subscription.number_of_user )
                   @low_expenses_per_month[udpate_format_date] = ( subscription_in_range[0].price * subscription.number_of_user )
                   @sum_expenses += ( subscription.price * subscription.number_of_user )
                   @low_sum_expenses += ( subscription_in_range[0].price * subscription.number_of_user )
-              else 
+              else
                   @expenses_per_month[udpate_format_date] += ( subscription.price * subscription.number_of_user )
                   @low_expenses_per_month[udpate_format_date] += ( subscription_in_range[0].price * subscription.number_of_user )
                   @sum_expenses += ( subscription.price * subscription.number_of_user )
-                  @low_sum_expenses += ( subscription_in_range[0].price * subscription.number_of_user )   
+                  @low_sum_expenses += ( subscription_in_range[0].price * subscription.number_of_user )
               end
               start_date = add_one_day_strip_date(start_date)
-              
-          end           
+
+          end
       end
     end
 
@@ -456,7 +456,7 @@ class SubscriptionsController < ApplicationController
           }
         }
       )
-    
+
     end
 
 end
