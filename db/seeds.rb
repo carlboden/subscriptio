@@ -205,7 +205,7 @@ scrapped_data.each do |key, value|
       
     else
       software_plan = SoftwarePlan.new(:name => value[:plan][i], :official_price => value[:price][i].match(/([+-]?([0-9]*[.])?[0-9]+)/)[0])
-      software_plan.software = software
+      software_plan.software = s  oftware
       software_plan.save!
       while j < value[:detailed_features].length
         p value[:have_detailed_features][h]
@@ -225,7 +225,7 @@ scrapped_data.each do |key, value|
     end
 
    
-  j = 0
+    j = 0
   
     i += 1 
     h = i
