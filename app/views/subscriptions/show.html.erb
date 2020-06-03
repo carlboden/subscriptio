@@ -1,4 +1,4 @@
-<%# <%if current_user.status == "Approved" || current_user.company_admin   %>
+
 
   <div class="container">
    <h1 class="text-center"> Subscription for <%=@subscription.software_plan.software.name %> </h1>
@@ -58,18 +58,7 @@
 
           </div>
         </div>
-<%
-=begin %>
-        <p class="ml-3"> <strong>Official published price: </strong> €<%= @subscription.software_plan.official_price%></p>
-         <p class="ml-3"> <strong>Lowest price on market: </strong> €<%=@lowest_price.price%> ( <%=@lowest_price.number_of_user%> users - company: <%=@lowest_price.company.company_size.downcase%> FTEs) </p>
 
-        <% if  ( @lowest_price_same_range_number_user.price - @subscription.price ) < 0 %>
-          <p class="ml-3"> <strong> Lowest price for same users: </strong> €<%=@lowest_price_same_range_number_user.price %>: <span style="background-color:#CF1015; color:white"> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </span> difference per month </p>
-        <% else %>
-          <p class="ml-3"> <strong> Lowest price for same users: </strong> €<%=@lowest_price_same_range_number_user.price %>: <span style="background-color:#5DCD8D; color:white"> €<%= @lowest_price_same_range_number_user.price - @subscription.price %> </span> difference per month </p>
-        <% end %>
-<%
-=end %>
         <p class="mb-3"> <i> <u> Other software </u></i></p>
 
         <div class="cards text-center mb-4">
@@ -99,47 +88,6 @@
 
           </div>
         </div>
-
-<%
-=begin %>
-        <p class="ml-3"> <strong>Cheaper alternative: </strong>
-          <% if Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name == @subscription.software_plan.software.name  %>
-            <span style="display:inline; background-color:#5DCD8D; color:white"> You have the cheapest software </span> </p>
-          <% else %>
-            <a href="<%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.url%>"> <%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name%> </a> - <a href="<%=software_plan_path(Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan) %>"> <%= Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.name %> </a>
-            : €<%= @lowest_subscription.price %> : <span style="background-color:#F5B643; color:white"> €<%= @lowest_subscription.price - @subscription.price %> </span> difference per month  </p>
-          <% end %>
-<%
-
-
-        <div class="cards text-center mb-4">
-          <div class="card-software">
-            <p>Better alternative </p>
-            <% if ( @max_rating - @ ) > 0.0 %>
-              <h2 class="mt-3 mb-4"><a href="<%=@max_rated_alternative.software.url%>"> <%=@max_rated_alternative.software.name%> </a>
-                - <a href="<%=software_plan_path(@max_rated_alternative.id)%>"> <%=@max_rated_alternative.name%> </a></h2>
-            <% else %>
-              <p class= "mt-3 mb-4 full-opacity-bold">You have already the best-rated software 🥇</p>
-            <% end %>
-          </div>
-
-          <div class="card-software">
-            <p>Your software average review score</p>
-            <h2 class="mt-3 mb-4">€<%= @average_review %></h2>
-          </div>
-
-          <div class="card-software">
-            <p>Other software average review score</p>
-            <% if ( @subscription.price - @lowest_subscription.price ) > 0.0 %>
-              <h2 class="mt-3 mb-4 card-red" > €<%= ( @subscription.price - @lowest_subscription.price ) * 12 %>  </h2>
-            <% else %>
-              <h2 class="mt-3 mb-4 card-green" > €<%= ( @subscription.price - @lowest_subscription.price ) * 12 %>  </h2>
-            <% end %>
-
-          </div>
-        </div>
-=end %>
-
 
            <p class="ml-3"> <strong>Better alternative: </strong>
           <% if @max_rated_alternative.software.name == @subscription.software_plan.software.name && @max_rated_alternative.name == @subscription.software_plan.name %>
@@ -200,7 +148,7 @@
                     <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
                 <% end %>
               </p>
-            <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+            <p class="review-origin ml-3"> <%=rating.updated_at.strftime('%d-%m-%Y') %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
           <% end %>
           <% if rating.rating == 1 %>
             <p> <span class="fa fa-star checked"></span>
@@ -214,7 +162,7 @@
                     <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
                 <% end %>
               </p>
-            <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+            <p class="review-origin ml-3"> <%=rating.updated_at.strftime('%d-%m-%Y') %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
           <% end %>
           <% if rating.rating == 2 %>
             <p> <span class="fa fa-star checked"></span>
@@ -228,7 +176,7 @@
                     <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
                 <% end %>
            </p>
-            <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+            <p class="review-origin ml-3"> <%=rating.updated_at.strftime('%d-%m-%Y') %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
           <% end %>
           <% if rating.rating == 3 %>
             <p> <span class="fa fa-star checked"></span>
@@ -242,7 +190,7 @@
                     <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
                 <% end %>
               </p>
-            <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+            <p class="review-origin ml-3"> <%=rating.updated_at.strftime('%d-%m-%Y') %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
           <% end %>
           <% if rating.rating == 4 %>
             <p> <span class="fa fa-star checked"></span>
@@ -256,7 +204,7 @@
                     <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
                 <% end %>
             </p>
-            <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+            <p class="review-origin ml-3"> <%=rating.updated_at.strftime('%d-%m-%Y') %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
           <% end %>
           <% if rating.rating == 5 %>
             <p> <span class="fa fa-star checked"></span>
@@ -270,7 +218,7 @@
                     <%= link_to software_plan_rating_path(@subscription.software_plan, rating), method: :delete, data: { confirm: "Are you sure?" } do %> <i class="fa fa-trash"> </i> <% end %>
                 <% end %>
             </p>
-            <p class="review-origin ml-3"> <%=rating.updated_at %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
+            <p class="review-origin ml-3"> <%=rating.updated_at.strftime('%d-%m-%Y') %> by someone from <%= rating.user.company.country%> with function <%= rating.user.function %> in company of <%= rating.user.company.company_size.downcase %> employees </p>
           <% end %>
 
         <% end %>
