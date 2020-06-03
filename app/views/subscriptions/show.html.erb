@@ -64,9 +64,9 @@
         <div class="cards text-center mb-4">
           <div class="card-software">
             <p>Cheaper alternative </p>
-            <% if ( @subscription.price - @lowest_subscription.price ) > 0.0 %>
-              <h2 class="mt-3 mb-4"><a href="<%=@lowest_subscription.software_plan.software.url%>"> <%=@lowest_subscription.software_plan.software.name%> </a>
-                - <a href="<%=software_plan_path(@lowest_subscription.software_plan) %>"> <%= @lowest_subscription.software_plan.name %> </a></h2>
+            <% if ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) > 0.0 %>
+              <h2 class="mt-3 mb-4"><a href="<%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.url%>">  <%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name%> </a>
+                - <a href="<%=software_plan_path(Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan) %>"> <%= Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.name %> </a></h2>
             <% else %>
               <p class= "mt-3 mb-4 full-opacity-bold">You have already the cheapest software 🎉</p>
 
@@ -75,13 +75,13 @@
 
           <div class="card-software">
             <p>Lowest monthly price</p>
-            <h2 class="mt-3 mb-4">€<%= @lowest_subscription.price %></h2>
+            <h2 class="mt-3 mb-4">€<%= Subscription.find(@all_alternative_hash[@subscription.id][0]).price %></h2>
           </div>
 
           <div class="card-software">
             <p>Potential yearly savings</p>
-            <% if ( @subscription.price - @lowest_subscription.price ) > 0.0 %>
-              <h2 class="mt-3 mb-4 card-red" > €<%= ( @subscription.price - @lowest_subscription.price ) * 12 %>  </h2>
+            <% if ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) > 0.0 %>
+              <h2 class="mt-3 mb-4 card-red" > €<%= ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) * 12 %>  </h2>
             <% else %>
               <h2 class="mt-3 mb-4 card-green" > €<%= ( @subscription.price - @lowest_subscription.price ) * 12 %>  </h2>
             <% end %>
