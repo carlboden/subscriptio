@@ -5,7 +5,6 @@ class SubscriptionsController < ApplicationController
         @subscriptions = Subscription.where(:company_id => params[:company_id])
 
         @lowest_price_same_range_number_user = calculate_cheaper_plan_range_user(@subscriptions)
-
         @all_alternative_hash = calculate_alternative_price(@subscriptions)
         if params[:query2].present? 
           @subscriptions = Subscription.where(:software_plan_id => SoftwarePlan.where(software_id: Software.where("name ILIKE ?", "%#{params[:query2]}%")), :company_id => params[:company_id])
