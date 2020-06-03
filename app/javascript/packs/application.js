@@ -29,7 +29,7 @@ import initFlatPicker from "../plugins/flatpickr"
 
 
 // Internal imports, e.g:
-import { initSelect2 } from '../components/init_select2';
+import { initSelect2 } from '../plugins/init_select2';
 import { autocompleteSearch } from "../components/autocomplete"
 import { initUpdateNavbarOnScroll } from '../components/navbar';
 import { initActivateNavItem } from '../components/navbar';

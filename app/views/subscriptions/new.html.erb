@@ -5,17 +5,16 @@
 
         <h2> Add a new subscription </h2>
 
-        <div data-controller="software-plan">
+        <div data-controller="software">
             <%= simple_form_for([@company, @subscription]) do |f|%>
                 <div class="form-group" >
                   <%= label :software, "Software"%>
-                  <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), include_blank: true, data: { action: "software-plan#fetchPlans" }, class: "form-control, select2" %>
+                  <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), include_blank: true, data: { action: "software#fetchPlans" }, class: "form-control select2" %>
                 </div>
 
                 <div class="form-group">
                   <%= label :other, "Plan"%>
-                    <div data-target="software-plan.wrapper", class="form-control">
-                    
+                    <div data-target="software.wrapper" >
                     </div>
                 </div>
 
