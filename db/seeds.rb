@@ -1,5 +1,8 @@
 require "open-uri"
 require 'faker'
+require 'mini_magick'
+require 'net/http'
+
 puts "Destroy user, company, subscriptioplan, ratings"
 Rating.destroy_all
 User.destroy_all
@@ -14,114 +17,62 @@ SoftwarePlan.destroy_all
 Software.destroy_all
 puts 'Finished!'
 
+puts "create subscriptio plans...."
 SubscriptioPlan.create!(name: "Free", price: 0.00, description: "Free plan")
 SubscriptioPlan.create!(name: "Premium Plan", price: 10.00, description: "Premium plan")
-
-puts 'Creating 80 features...'
-80.times do
-  feature = Feature.new(
-    name:    Faker::Company.bs,
-  )
-  feature.save!
-end
-puts 'Finished!'
-
-puts 'Creating 30 fake softwares...'
-30.times do
-  software = Software.new(
-    name:    Faker::Company.name,
-    category: Faker::Company.industry,
-    url:  Faker::Internet.url,
-    demo_url: Faker::Internet.url
-  )
-
-  software.save!
-end
-puts 'Finished!'
-
-puts 'Creating 80 fake softwares Plans...'
-80.times do
-  softwarePlan = SoftwarePlan.new(
-    name:    Faker::Subscription.plan,
-    official_price: Faker::Commerce.price,
-  )
-  #add a software to softwareplan
-  softwarePlan.software= Software.all.shuffle.take(1)[0]
-  softwarePlan.save!
-end
-puts 'Finished!'
-
-puts 'Creating 80 fake softwares features...'
-80.times do
-  softwareFeature = SoftwareFeature.new
-  #add a softwareplan to softwarefeatures
-  softwareFeature.software_plan = SoftwarePlan.all.shuffle.take(1)[0]
-  softwareFeature.feature = Feature.all.shuffle.take(1)[0]
-  softwareFeature.save!
-end
 puts 'Finished!'
 
 
-puts "create subscriptio plans...."
-SubscriptioPlan.create!(name: "Free", price: 0.00)
-SubscriptioPlan.create!(name: "Premium", price: 10.00)
-puts 'Finished!'
 
-
-puts "Create Companies ..."
-company_sizes = ['Less than 5', 'Between 5 and 10', 'Between 10 and 49', 'Between 50 and 499', '500 and more']
-turnovers = ['Less than €100k', 'Between €100k and €500k', 'Between €500k and €1 Million', 'Between €1 Million and €5 Million', 'Between €5 Million and €10 Million', 'Between €10 Million and €50 Million', 'More than €50 Million' ]
-20.times do
-  company = Company.new(
-  	name: Faker::Company.name,
-  	address: "#{Faker::Address.street_address}, #{Faker::Address.city}",
-  	country: "Belgium",
-  	company_size: company_sizes.shuffle.take(1)[0],
-  	turnover:  turnovers.shuffle.take(1)[0]
-  	)
-  company.subscriptio_plan = SubscriptioPlan.all.shuffle.take(1)[0]
-  company.save!
-end
-puts 'Finished!'
-
-puts "Create users"
-
-functions = ["CEO", "CFO", "CTO", "CIO", "Purchasing Manager", "Other"]
-5.times do
-	user = User.new(
-	  email: Faker::Internet.email,
-	  password: "123456",
-	  first_name: Faker::Name.first_name,
-	  last_name: Faker::Name.last_name,
-	  phone_number: "+32 #{Faker::PhoneNumber.subscriber_number(length: 9)}",
-	  function: functions.shuffle.take(1)[0],
-	  company_admin: false,
-	  admin: false,
-	)
-	user.company = Company.all.shuffle.take(1)[0]
-	user.save!
-end
-puts 'Finished!'
-
-
-puts "Create ratings"
-80.times do
-	rating = Rating.new(
-		rating: [0, 1, 2, 3, 4, 5].shuffle.first,
-		description: Faker::Hipster.paragraph
-	)
-	rating.user = User.all.shuffle.take(1)[0]
-	rating.software_plan = SoftwarePlan.all.shuffle.first
-	rating.save!
-end
 
 
 
 scrapped_data = {}
 
 urls = [
-  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/revamp-crm", "https://www.capterra.com/p/148028/Revamp-CRM/"]
-]
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/sales-cloud", "https://www.capterra.com/p/191340/Salesforce-Billing/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/teamleader", "https://www.capterra.com/p/153190/Teamleader/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/zoho-crm", "https://www.capterra.com/p/155928/Zoho-CRM/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/you-dont-need-a-crm", "https://www.capterra.com/p/132752/You-Don-t-Need-a-CRM/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/pipedrive", "https://www.capterra.com/p/173508/Pipedrive/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/socialjscrm-en", "https://www.capterra.com/p/171298/SocialJsCRM/"],
+  ["https://www.appvizer.co.uk/construction/real-estate-mgt/optima-crm", "https://www.capterra.com/p/176188/Optima-CRM/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/sage-crm", "https://www.capterra.com/p/140059/Sage-One/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/cirrus-shield", "https://www.capterra.com/p/167775/Cirrus-Shield-CRM/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/simple-crm", "https://www.capterra.com/p/180601/Simple-CRM/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/efficy-crm", "https://www.capterra.com/p/149894/Efficy-CRM/"],
+  ["https://www.appvizer.co.uk/customer/client-relationship-mgt/revamp-crm", "https://www.capterra.com/p/148028/Revamp-CRM/"],
+
+  ["https://www.appvizer.co.uk/accounting-finance/accounting/quickbooks", "https://www.capterra.com/p/46497/QuickBooks/"],
+  ["https://www.appvizer.co.uk/accounting-finance/accounting/azopio", "https://www.capterra.com/p/160586/Azopio/"],
+  ["https://www.appvizer.co.uk/accounting-finance/accounting/momenteo", "https://www.capterra.com/p/153758/Momenteo/"],
+  ["https://www.appvizer.co.uk/accounting-finance/accounting/freshbooks", "https://www.capterra.com/p/142390/FreshBooks/"],
+  ["https://www.appvizer.co.uk/accounting-finance/accounting/express-accounts", "https://www.capterra.com/p/189163/Express-Accounts/"],
+  ["https://www.appvizer.co.uk/accounting-finance/accounting/sage-business-cloud-accounting", "https://www.capterra.com/p/140059/Sage-One/"],
+
+  ["https://www.appvizer.co.uk/collaboration/collaborative-platform/wimi", "https://www.capterra.com/p/131830/Wimi/"],
+  ["https://www.appvizer.co.uk/collaboration/collaborative-platform/interstis", "https://www.capterra.com/p/181650/interStis/"],
+  ["https://www.appvizer.co.uk/collaboration/collaborative-platform/atolia", "https://www.capterra.com/p/172205/Atolia/"],
+  ["https://www.appvizer.co.uk/operations/project-management/maestroprojet", "https://www.capterra.com/p/186016/maestroPROJET/"],
+  ["https://www.appvizer.co.uk/operations/project-management/wrike", "https://www.capterra.com/p/76113/Wrike/"],
+  ["https://www.appvizer.co.uk/operations/project-management/icescrum", "https://www.capterra.com/p/161518/iceScrum/"],
+  ["https://www.appvizer.co.uk/operations/project-management/planzone", "https://www.capterra.com/p/564/Planzone/"],
+  ["https://www.appvizer.co.uk/operations/project-management/beesbusy", "https://www.capterra.com/p/192503/Beesbusy/"],
+  ["https://www.appvizer.co.uk/operations/project-management/taskeo", "https://www.capterra.com/p/205047/Taskeo/"],
+  ["https://www.appvizer.co.uk/operations/project-management/agantty", "https://www.capterra.com/p/150248/Agantty/"],
+  ["https://www.appvizer.co.uk/operations/project-management/z0-gravity", "https://www.capterra.com/p/181649/z0-Gravity/"],
+  ["https://www.appvizer.co.uk/operations/project-management/bubble-plan", "https://www.capterra.com/p/161137/Bubbe-Plan/"],
+  ["https://www.appvizer.co.uk/operations/project-management/planisware-orchestra", "https://www.capterra.com/p/146320/NQI-Orchestra/"],
+  ["https://www.appvizer.co.uk/operations/project-management/mondaycom", "https://www.capterra.com/p/147657/monday-com/"],
+  ["https://www.appvizer.co.uk/operations/project-management/gladys", "https://www.capterra.com/p/146442/Gladys/"],
+  ["https://www.appvizer.co.uk/operations/project-management/socialjsproject-en", "https://www.capterra.com/p/171295/SocialJsProject/"],
+  ["https://www.appvizer.co.uk/operations/project-management/optimy", "https://www.capterra.com/p/142236/Optimy/"],
+  ["https://www.appvizer.co.uk/operations/project-management/workfront", "https://www.capterra.com/p/18561/Workfront-Project-Management-Software/"],
+  ["https://www.appvizer.co.uk/operations/project-management/forecast-it", "https://www.capterra.com/p/138122/Forecast-it/"],
+  ["https://www.appvizer.co.uk/operations/project-management/redmine", "https://www.capterra.com/p/201260/Redmine/"],
+  ["https://www.appvizer.co.uk/operations/project-management/smartsheet", "https://www.capterra.com/p/79104/Smartsheet/"]
+
+] 
 
 
 urls.each do |url|
@@ -205,36 +156,79 @@ urls.each do |url|
   scrapped_data[company][:website] << @doc.css("p.ProductSummary__CompanyDetailItem-uex5jn-5.fxpGcm")[1].content
 
   p "Pausing 15 seconds to avoid being kicked out of the websites"
-  sleep(15) 
+   sleep(5) 
 end
 
 
 
+all_features = []
+
+scrapped_data.each{|key, value| value[:detailed_features].each{|feature| all_features << feature}  }
+
+all_features = all_features.uniq
+
+all_features.each do |feature|
+  Feature.create!(:name => feature)
+end
+
 scrapped_data.each do |key, value|
-  
+
+ url = value[:picture][0]
+
+ tempfile = Down.download(url)
+
+  # data = IO.copy_stream(data, "~/#{data.base_uri.to_s.split('/')[-1]}")
+
+  p ""
   p "Software picture url: #{value[:picture][0]}"
 
-  file = URI.open(value[:picture][0])
   software = Software.new(:name => key, :url => value[:website][0], :category => value[:category][0])
-  p file
 
-  software.photo.attach(io: file, filename: 'nes.png', content_type: 'image/png')
 
+ 
+  software.photo.attach(io: tempfile, filename: "image_#{key}_2.png", content_type: "image/png" ) 
+  software.save!
+
+=begin
+  software = Software.new(:name => key, :url => value[:website][0], :category => value[:category][0])
   software.save
-  p value[:plan].length 
-
+=end
+  if value[:plan].length > 6
+    value[:plan] = value[:plan][9..12]
+  end 
+  
   i = 0
+  j = 0
+  h = 0
   while i < value[:plan].length
-      if value[:price][i] == nil || value[:price][i].match(/\d+/) == nil
-        software_plan = SoftwarePlan.new(:name => value[:plan][i], :official_price => nil)
-        software_plan.software = software
-        software_plan.save
-      else
+    if value[:price][i] == nil || value[:price][i].match(/\d+/) == nil
+      
+    else
       software_plan = SoftwarePlan.new(:name => value[:plan][i], :official_price => value[:price][i].match(/([+-]?([0-9]*[.])?[0-9]+)/)[0])
       software_plan.software = software
-      software_plan.save
+      software_plan.save!
+      while j < value[:detailed_features].length
+        p value[:have_detailed_features][h]
+        if value[:have_detailed_features][h] == "check"
+          p value[:detailed_features][j]
+          feature = Feature.where(:name => value[:detailed_features][j])[0]
+          p feature
+          software_feature = SoftwareFeature.new()
+          software_feature.software_plan = software_plan
+          software_feature.feature = feature
+          software_feature.save!
+        end
+        
+        j += 1
+        h += value[:plan].length
+      end
     end
-      i += 1
+
+   
+  j = 0
+  
+    i += 1 
+    h = i
   end
 end
 
