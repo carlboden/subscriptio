@@ -35,7 +35,7 @@
     <div class="row justify-content-between">
       <div class="col-xs-12 col-sm-6">
         <h2 class="mb-3"> Recommendations </h2>
-        <p class="mb-3"> <i> <u> Your software</u>: <%= @subscription.software_plan.software.name %> - <%= @subscription.software_plan.name %> </i></p>
+        <p class="mb-3 text-center"> <i> <u> Your software</u>: <%= @subscription.software_plan.software.name %> - <%= @subscription.software_plan.name %> </i></p>
 
         <div class="cards text-center mb-4">
           <div class="card-software">
@@ -59,14 +59,14 @@
           </div>
         </div>
 
-        <p class="mb-3"> <i> <u> Other software </u></i></p>
+        <p class="mb-3 text-center"> <i> <u> Other software </u></i></p>
 
         <div class="cards text-center mb-4">
           <div class="card-software">
             <p>Cheaper alternative </p>
             <% if ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) > 0.0 %>
-              <h2 class="mt-3 mb-4"><a href="<%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.url%>">  <%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name%> </a>
-                - <a href="<%=software_plan_path(Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan) %>"> <%= Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.name %> </a></h2>
+              <h2 class="mt-3"><a href="<%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.url%>">  <%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name%> </a> </h2>
+              <p> <a href="<%=software_plan_path(Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan) %>"> <%= Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.name %> </a></p>
             <% else %>
               <p class= "mt-3 mb-4 full-opacity-bold">You have already the cheapest software 🎉</p>
 
@@ -81,21 +81,41 @@
           <div class="card-software">
             <p>Potential yearly savings</p>
             <% if ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) > 0.0 %>
-              <h2 class="mt-3 mb-4 card-red" > €<%= ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) * 12 %>  </h2>
+              <h2 class="mt-3 mb-4 card-orange" > €<%= ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) * 12 %>  </h2>
             <% else %>
-              <h2 class="mt-3 mb-4 card-green" > €<%= ( @subscription.price - @lowest_subscription.price ) * 12 %>  </h2>
+              <h2 class="mt-3 mb-4 card-green" > €<%= ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) * 12 %>  </h2>
             <% end %>
 
           </div>
         </div>
 
-           <p class="ml-3"> <strong>Better alternative: </strong>
-          <% if @max_rated_alternative.software.name == @subscription.software_plan.software.name && @max_rated_alternative.name == @subscription.software_plan.name %>
-             none - you have the best-rated software 🥇 </p>
+
+        <div class="cards text-center mb-4">
+          <div class="card-software">
+            <p>Better alternative </p>
+            <% if ( @max_rating - @average_review ) > 0.0 %>
+              <h2 class="mt-3"><a href="<%=@max_rated_alternative.software.url%>"> <%= @max_rated_alternative.software.name%> </a></h2>
+              <p> <a href="<%=@max_rated_alternative%>"> <%= @max_rated_alternative.name %> </a></p>
             <% else %>
-              <a href="<%=@max_rated_alternative.software.url%>"> <%=@max_rated_alternative.software.name%> </a> - <a href="<%=software_plan_path(@max_rated_alternative.id)%>"> <%=@max_rated_alternative.name%> </a></p>
-          <% end %>
-        <p class="ml-3"> <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> See all alternatives </a> </p>
+              <p class= "mt-3 mb-4 full-opacity-bold">You have already the best-reviewed software 🎉</p>
+            <% end %>
+          </div>
+
+          <div class="card-software">
+            <p>Avg score your software</p>
+            <h2 class="mt-3 mb-4"><span class="fa fa-star checked"></span><%= @average_review %></h2>
+          </div>
+
+          <div class="card-software">
+            <p>Avg score better software</p>
+            <% if ( @max_rating - @average_review ) > 0.0 %>
+              <h2 class="mt-3 mb-4"><span class="fa fa-star checked"></span><%= @max_rating %>  </h2>
+            <% else %>
+              <p class= "mt-3 mb-4 full-opacity-bold">You have already the best-reviewed software 🎉</p>
+            <% end %>
+
+          </div>
+        </div>
       </div>
 
       <div class="col-xs-12 col-sm-5">
@@ -242,9 +262,9 @@
 =end %>
 
   <div class="row m-3">
-    <div class="col-12">
+    <div class="col-8 offset-2">
       <h2 class="text-center m-5"> Software price per user distribution </h2>
-      <%= column_chart @subscription_range_price , width: "800px", height: "300px"%>
+      <%= column_chart @subscription_range_price %>
     </div>
   </div>
 
