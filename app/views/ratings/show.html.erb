@@ -1,5 +1,13 @@
-<h1> Rating from <%= @rating.user.first_name%></h1>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 offset-sm-4">
+      <div class="form-basic">
+        <h2> Rating from <%= @rating.user.first_name%></h2>
 
-<li> <%=@rating.rating%> by <%=@rating.user.first_name%> size company: <%=@rating.user.company.company_size.downcase%> employees and with <%=@subscription.number_of_user%> users</a></li>
-<p> <%= @rating.description%> </p>
+        <li> <%=@rating.rating%> by <%=@rating.user.first_name%> size company: <%=@rating.user.company.company_size.downcase%> employees and with <%=@subscription.number_of_user%> users</a></li>
+        <p> <%= @rating.description%> </p>
+      </div>
+    </div>
+  </div>
+</div>
 

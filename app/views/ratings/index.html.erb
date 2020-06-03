@@ -1,7 +1,17 @@
-<h1> all the ratings for a software plan</h1>
-<ul>
-    <% @ratings.each do |rating| %>
-        <li> <a href="<%=rating_path(rating.id)%>"> <%=rating.rating%> by <%=rating.user.first_name%> </a></li>
-        <p> <%= rating.description%> </p>
-    <%end%>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 offset-sm-4">
+      <div class="form-basic">
+
+        <h2> all the ratings for a software plan</h2>
+        <ul>
+            <% @ratings.each do |rating| %>
+                <li> <a href="<%=rating_path(rating.id)%>"> <%=rating.rating%> by <%=rating.user.first_name%> </a></li>
+                <p> <%= rating.description%> </p>
+            <%end%>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
