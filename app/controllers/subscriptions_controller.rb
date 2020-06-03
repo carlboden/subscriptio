@@ -127,7 +127,7 @@ class SubscriptionsController < ApplicationController
         
         features_all_software_plan_hash.each do |key, features|
           right = {true: 0, false: 0}
-          array_feature.sample(10).each do |feature|
+          array_feature[1..10].each do |feature|
             if features.include? feature
               right[:true] += 1
             else
