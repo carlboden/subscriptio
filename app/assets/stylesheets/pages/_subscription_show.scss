@@ -22,3 +22,46 @@
   color: orange;
 }
 
+
+.card-software {
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  padding: 16px;
+
+}
+
+
+.card-software h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-software p {
+  font-size: 12px;
+  opacity: .7;
+  margin: 0;
+}
+
+.full-opacity-bold {
+  opacity: 1;
+  font-weight: bold;
+}
+
+
+.card-green {
+  background: #5DCD8D;
+  color: white;
+}
+
+.card-red {
+  background: #F5B643;
+  color: white;
+}
+
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 16px;
+}

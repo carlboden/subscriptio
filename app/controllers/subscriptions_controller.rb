@@ -5,6 +5,7 @@ class SubscriptionsController < ApplicationController
         @subscriptions = Subscription.where(:company_id => params[:company_id])
 
         @lowest_price_same_range_number_user = calculate_cheaper_plan_range_user(@subscriptions)
+
         @all_alternative_hash = calculate_alternative_price(@subscriptions)
         if params[:query2].present? 
           @subscriptions = Subscription.where(:software_plan_id => SoftwarePlan.where(software_id: Software.where("name ILIKE ?", "%#{params[:query2]}%")), :company_id => params[:company_id])
@@ -191,7 +192,7 @@ class SubscriptionsController < ApplicationController
                 subscription_in_range[subscription.id] << sub
             end
         end
-  
+
         subscription_in_range.each do |key, subscription|
           lowest_price_same_range_number_user[key] = subscription_in_range[key][0]
         end
@@ -360,13 +361,14 @@ class SubscriptionsController < ApplicationController
           end
         end
 
-        max_rating = software_plan_with_ratings[all_software_plans[0][0].id]
+        @max_rating = software_plan_with_ratings[all_software_plans[0][0].id]
         max_rating_id = all_software_plans[0][0].id
         software_plan_with_ratings.each do |key, index|
-          if max_rating < index
+          if @max_rating < index
             max_rating_id = key
           end
         end
+
         @max_rated_alternative = SoftwarePlan.find(max_rating_id)
     end
 
