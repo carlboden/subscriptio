@@ -7,9 +7,9 @@
 
         <div data-controller="software-plan">
             <%= simple_form_for([@company, @subscription]) do |f|%>
-                <div class="form-group">
+                <div class="form-group" >
                   <%= label :software, "Software"%>
-                  <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), include_blank: true, data: { action: "software-plan#fetchPlans" }, class: "form-control" %>
+                  <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), include_blank: true, data: { action: "software-plan#fetchPlans" }, class: "form-control, select2" %>
                 </div>
 
                 <div class="form-group">
