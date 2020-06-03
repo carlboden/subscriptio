@@ -50,12 +50,17 @@
 
 
 .card-green {
-  background: #5DCD8D;
+  background: $subscriptio-green;
   color: white;
 }
 
 .card-red {
-  background: #F5B643;
+  background: $subscriptio-red;
+  color: white;
+}
+
+.card-orange {
+  background: $subscriptio-orange;
   color: white;
 }
 
