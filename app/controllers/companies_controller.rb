@@ -104,6 +104,21 @@ class CompaniesController < ApplicationController
         @low_sum_expenses_2020 = 0
         @low_expenses_per_month_2020.each { |key, value| @low_sum_expenses_2020 += value }
 
+        @expenses_day_to_end_year = 0
+        @low_expenses_day_to_end_year = 0
+        current_month = Date.today.strftime('%Y-%m')
+        while current_month != "2021"
+            @expenses_day_to_end_year +=  @expenses_per_month_2020[current_month]
+            @low_expenses_day_to_end_year += @low_expenses_per_month_2020[current_month]
+            if current_month[5..7].to_i == 12
+                current_month = "2021"
+            elsif current_month[5..7].to_i < 9
+                current_month = current_month[0..3] + "-0" + ( current_month[5..7].to_i + 1).to_s
+            else
+                current_month = current_month[0..3] + "-" + ( current_month[5..7].to_i + 1).to_s
+            end
+        end
+        @economy_to_day = @expenses_day_to_end_year - @low_expenses_day_to_end_year
     end
 
     def strip_date(date)

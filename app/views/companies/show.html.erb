@@ -100,7 +100,9 @@
 
       <%  current_month = Date.today.strftime('%Y-%m')%>
 
-      <p> <strong>Potential savings if you switch now: </strong> </p>
+      
+
+      <p> <strong>Potential savings if you switch now: </strong> €<%= @economy_to_day %> </p>
 
 <!--      <p> The payment for this month <%=@expenses_per_month[current_month]%> € </p>
       <p> The payment with the lowest subscription for this month <%=@low_expenses_per_month[current_month]%> € </p>
