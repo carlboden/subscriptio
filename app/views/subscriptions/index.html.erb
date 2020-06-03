@@ -52,12 +52,12 @@
         <div class="card-subscription-indicators col-1">
 
           <% if ( @lowest_price_same_range_number_user[subscription.id].price - subscription.price ) < 0 %>
-       
             <%= image_tag "traffic-light-red.png"%>
-          <%elsif ( @lowest_price_same_range_number_user[subscription.id].price - subscription.price ) == 0 %>
-            <%= image_tag "traffic-light-green.png"%>
+          <% elsif @all_alternative_hash[subscription.id][1] < subscription.price %>
+            <%= image_tag "traffic-light-orange.png"%>            
           <% else %>
-            <%= image_tag "traffic-light-orange.png"%>
+            <%= image_tag "traffic-light-green.png"%>
+          
           <% end %>
 
         </div>

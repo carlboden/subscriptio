@@ -103,10 +103,10 @@
 <%
 =begin %>
         <p class="ml-3"> <strong>Cheaper alternative: </strong>
-          <% if @lowest_subscription.software_plan.software.name == @subscription.software_plan.software.name && @lowest_subscription.software_plan.name == @subscription.software_plan.name %>
+          <% if Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name == @subscription.software_plan.software.name  %>
             <span style="display:inline; background-color:#5DCD8D; color:white"> You have the cheapest software </span> </p>
           <% else %>
-            <a href="<%=@lowest_subscription.software_plan.software.url%>"> <%=@lowest_subscription.software_plan.software.name%> </a> - <a href="<%=software_plan_path(@lowest_subscription.software_plan) %>"> <%= @lowest_subscription.software_plan.name %> </a>
+            <a href="<%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.url%>"> <%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name%> </a> - <a href="<%=software_plan_path(Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan) %>"> <%= Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.name %> </a>
             : €<%= @lowest_subscription.price %> : <span style="background-color:#F5B643; color:white"> €<%= @lowest_subscription.price - @subscription.price %> </span> difference per month  </p>
           <% end %>
 <%
@@ -293,22 +293,14 @@
 <%
 =end %>
 
-  <div class="container">
-    <h2 class="my-5">Graphical analysis </h2>
-    <div class="row">
-      <div class="col-xs-12 col sm-6">
-        <%= column_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
-      </div>
-
-      <div class="col-xs-12 col sm-6">
-        <%= pie_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
-      </div>
-    </div>
-
-    <div class="row mt-5">
-        <%= line_chart Subscription.group(:price).count , width: "400px", height: "300px"%>
+  <div class="row m-3">
+    <div class="col-12">
+      <h2 class="text-center m-5"> Software price per user distribution </h2>
+      <%= column_chart @subscription_range_price , width: "800px", height: "300px"%>
     </div>
   </div>
+
+
 
 <%
 =begin %> <%else%>
