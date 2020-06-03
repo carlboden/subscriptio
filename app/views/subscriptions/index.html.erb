@@ -21,19 +21,19 @@
 
 
   <div class="container mb-3 d-flex justify-content-center">
-    <%= simple_form_for company_subscriptions_path, method: :get do %>
+   <%= form_tag company_subscriptions_path, method: :get do %>
       <%= text_field_tag :query2,
         params[:query2],
-        autocomplete: :off,
-        class: "form-control search-input",
-        placeholder: "Search in my subscriptions...."%>
-      <%= submit_tag "Search", class: "btn btn-primary" %>
-    <% end %>
+        class: "form-control",
+        placeholder: "Find a movie"
+      %>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
   </div>
 
 
    <div class="container">
-    <%@subs.each do |subscription|%>
+    <%@subscriptions.each do |subscription|%>
       <div class="card-subscription mb-3">
         <div class="col-xs-1 col-sm-2">
            <a href="./subscriptions/<%=subscription.id%>">
@@ -51,9 +51,10 @@
         </div>
         <div class="card-subscription-indicators col-1">
 
-          <% if ( @lowest_price_same_range_number_user.price - subscription.price ) < 0 %>
+          <% if ( @lowest_price_same_range_number_user[subscription.id].price - subscription.price ) < 0 %>
+       
             <%= image_tag "traffic-light-red.png"%>
-          <%elsif @lowest_subscription.software_plan.software.name == subscription.software_plan.software.name && @lowest_subscription.software_plan.name == subscription.software_plan.name %>
+          <%elsif ( @lowest_price_same_range_number_user[subscription.id].price - subscription.price ) == 0 %>
             <%= image_tag "traffic-light-green.png"%>
           <% else %>
             <%= image_tag "traffic-light-orange.png"%>

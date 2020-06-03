@@ -1,67 +1,18 @@
 class SubscriptionsController < ApplicationController
-    def index
-
+  
+  def index
         #@softwares = Software.pluck(:name).sort
         @subscriptions = Subscription.where(:company_id => params[:company_id])
-        @subscription_decreasing_order = Subscription.order('price ASC').where(:company_id => params[:company_id])
+        @lowest_price_same_range_number_user = calculate_cheaper_plan_range_user(@subscriptions)
 
-        @lowest_price = @subscription_decreasing_order[0]
-
-        @subscriptions.each do |subscription|
-          @subscription_in_range = []
-          range_user = (subscription.number_of_user - (1 + (subscription.number_of_user/2)**2))..(subscription.number_of_user + (1 + (subscription.number_of_user/2)**2))
-          @subscription_decreasing_order.each do |sub|
-              if range_user === sub.number_of_user
-                  @subscription_in_range << sub
-              end
-          end
-          @lowest_price_same_range_number_user = @subscription_in_range[0]
-        end
-
-
-        @subscriptions.each do |subscription|
-          range_user = (subscription.number_of_user - (1 + (subscription.number_of_user/2)**2))..(subscription.number_of_user + (1 + (subscription.number_of_user/2)**2))
-
-          @softwares_same_category = Software.where(:category => subscription.software_plan.software.category)
-          all_software_plans = []
-          @softwares_same_category.each { |software| all_software_plans << software.software_plans}
-          all_subscription = []
-          all_software_plans.each do |software|
-            software.each do |plan|
-              Subscription.where(software_plan_id: plan.id,  :number_of_user => range_user ).order("price ASC")[0] != nil ? all_subscription << Subscription.where(software_plan_id: plan.id).order("price ASC")[0] : ""
-            end
-          end
-
-          min_price = all_subscription[0].price
-            @lowest_subscription = all_subscription[0]
-            all_subscription.each do |subscription|
-              if min_price > subscription.price
-                min_price = subscription.price
-                @lowest_subscription = subscription
-              end
-            end
-          end
-
-
-        if params[:query].present?
-          PgSearch::Multisearch.rebuild(Feature)
-          PgSearch::Multisearch.rebuild(Software)
-          @results = PgSearch.multisearch(params[:query])
-          #@results = Feature.whose_name_starts_with(params[:query])
-        else
-         @softwares = Software.all
-        end
-
-        if params[:query2].present?
-          @subs= Subscription.software_search(params[:query2])
-        else
-          @subs = @subscriptions
+        if params[:query2].present? 
+          @subscriptions = Subscription.where(:software_plan_id => SoftwarePlan.where(software_id: Software.where("name ILIKE ?", "%#{params[:query2]}%")), :company_id => params[:company_id])
         end
     end
 
     def new
         @company = Company.find(current_user.company_id)
-        @softwares = Software.order('name ASC').all
+        @softwares = Software.order('LOWER(name) ASC').all
         @subscription = Subscription.new
     end
 
@@ -196,6 +147,27 @@ class SubscriptionsController < ApplicationController
     end
 
     private
+
+    def calculate_cheaper_plan_range_user(subscriptions)
+      lowest_price_same_range_number_user = {}
+      subscriptions.each do |subscription|
+        subscription_decreasing_order = Subscription.order('price ASC').where(:software_plan_id => subscription.software_plan_id)
+        subscription_in_range = {}
+        subscription_in_range[subscription.id] = []
+        range_user = (subscription.number_of_user - (1 + (subscription.number_of_user/2)**2))..(subscription.number_of_user + (1 + (subscription.number_of_user/2)**2))
+        subscription_decreasing_order.each do |sub|
+            if range_user === sub.number_of_user
+                subscription_in_range[subscription.id] << sub
+            end
+        end
+  
+        subscription_in_range.each do |key, subscription|
+          lowest_price_same_range_number_user[key] = subscription_in_range[key][0]
+        end
+      end
+      lowest_price_same_range_number_user
+    end
+
 
     def params_subscription
         params.require(:subscription).permit(:start_date, :end_date, :price, :software_plan_id, :number_of_user)
