@@ -24,7 +24,7 @@
 <div class="container">
   <div class="row justify-content-around mb-5">
     <div class="home-image col-xs-12 col-md-4">
-        <%= image_tag "overview_page.png" %>
+        <%= image_tag "manage_subscriptions.png" %>
       </div>
       <div class="home-image-info col-xs-12 col-sm-4">
         <h2>Manage software subscriptions</h2>
@@ -42,7 +42,7 @@
       <p>Subscriptio takes this work completely out of your hands and recommends the cheapest software solutions for your needs </p>
     </div>
     <div class="home-image col-xs-12 col-md-4">
-      <%= image_tag "dashboard.png" %>
+      <%= image_tag "find_cheapest_vendors.png" %>
     </div>
   </div>
 </div>
@@ -93,7 +93,7 @@
           <i class="fas fa-check"></i>
           <p> Dashboard to see how much you can save </p>
         </div>
-        <h2>€29 / month</h2>
+        <h2>€9,99 / month</h2>
         <div class="button">
           <%= link_to "SIGN UP", new_user_registration_path, class: "subscriptio-btn-primary" %>
         </div>
@@ -108,39 +108,20 @@
 
 
 
-      <% if user_signed_in? %>
-<!--
-        <li class="nav-item active">
-          <%= link_to "Home", "#", class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Messages", "#", class: "nav-link" %>
-        </li>
-        <li class="nav-item dropdown">
-          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%= link_to "Action", "#", class: "dropdown-item" %>
-            <%= link_to "Another action", "#", class: "dropdown-item" %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-          </div>
-        </li>
--->
-      <% if current_user.company_id == nil %>
-        <a href="./users/<%=current_user.id%>/edit.Join"> I want to join a company </a>
-        <%= link_to "New Company!", new_company_path, class:"nav_link" %>
+  <% if user_signed_in? %>
 
+    <% if current_user.company_id == nil %>
+      <a href="./users/<%=current_user.id%>/edit.Join"> I want to join a company </a>
+      <%= link_to "New Company!", new_company_path, class:"nav_link" %>
 
-      <% elsif current_user.company.subscriptio_plan.id == 1 && current_user.company_admin %>
+    <% elsif current_user.company.subscriptio_plan.id == 1 && current_user.company_admin %>
         <%= link_to "Become a Premium Member", new_user_bank_detail_path(current_user.id), class:"nav_link" %>
     <%end%>
 
-          <% else %>
+  <% else %>
 
-<!--        <li class="nav-item">
-          <%= link_to "Login", new_user_session_path, class: "nav-link" %>
-        </li> -->
 
-      <% end %>
+  <% end %>
 
 
 
