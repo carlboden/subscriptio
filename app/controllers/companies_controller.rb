@@ -6,7 +6,8 @@ class CompaniesController < ApplicationController
 
     def create
         @company = Company.new(params_company)
-        @company.subscriptio_plan_id = 2
+        @subscriptio_plan = SubscriptioPlan.where(:name => "Premium Plan")[0]
+        @company.subscriptio_plan = @subscriptio_plan
         @user = User.find(current_user.id)
         @user.company_admin = true
         if @company.save

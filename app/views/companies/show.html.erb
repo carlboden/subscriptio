@@ -15,7 +15,7 @@
       <h3> Subscriptio plan </h3>
         <div class="p-3">
           <p><%=@company.subscriptio_plan.name%></p>
-          <p>€<%=@company.subscriptio_plan.price%></p>
+          <p>€<%=@company.subscriptio_plan.price%> per month</p>
         </div>
     </div>
     <div class="col-xs-12 col-sm-8">
@@ -75,12 +75,11 @@
 
     </div>
 
-
-        <% if current_user.company.subscriptio_plan.id == 1%>
-          <%= link_to "Become a Premium Member", new_user_bank_detail_path(current_user.id), class:"nav_link"%>
-          <%else%>
-          <%= button_to "I want to cancel my subscription", "../users/#{current_user.id}/bank_details/#{BankDetail.where(:user_id => current_user.id)[0].id}", method: :delete, data: { confirm: "Are you sure?" }  %>
-      <%end%>
+  <% if current_user.company.subscriptio_plan.name == "Free"%>
+    <%= link_to "Become a Premium Member", new_user_bank_detail_path(current_user.id), class:"nav_link"%>
+  <%else%>
+    <%= button_to "Cancel my subscription", "../users/#{current_user.id}/bank_details/#{BankDetail.where(:user_id => current_user.id)[0]}", method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger ml-3" %>
+  <%end%>
 
 
 <%else%>
