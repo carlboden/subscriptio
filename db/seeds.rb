@@ -72,16 +72,16 @@ urls = [
   ["https://www.appvizer.co.uk/operations/project-management/redmine", "https://www.capterra.com/p/201260/Redmine/"],
   ["https://www.appvizer.co.uk/operations/project-management/smartsheet", "https://www.capterra.com/p/79104/Smartsheet/"]
 
-] 
+]
 
 
 urls.each do |url|
   @doc = Nokogiri::HTML(RestClient.get(url[0]))
-      
+
   # Extract the name of the company
   p "extracting company name"
   company = @doc.css("nav.ng-star-inserted a.ng-star-inserted")[2].content.gsub("\n", "").strip
-  
+
   scrapped_data[company] = {picture: [], website: [], plan: [], category: [], price: [], period: [], features: [], detailed_features: [], have_detailed_features: []}
   # Extract the Plan type
 
@@ -130,7 +130,7 @@ urls.each do |url|
 
   @doc.css("section.ng-star-inserted cim-edition-comparison-feature-row.ng-star-inserted div").each do |link|
       # test << link.content
-      scrapped_data[company][:detailed_features] << link.content.gsub("\n", "").strip  
+      scrapped_data[company][:detailed_features] << link.content.gsub("\n", "").strip
   end
 
   scrapped_data[company][:detailed_features] = scrapped_data[company][:detailed_features].reject { |value| value == ""}
@@ -156,7 +156,7 @@ urls.each do |url|
   scrapped_data[company][:website] << @doc.css("p.ProductSummary__CompanyDetailItem-uex5jn-5.fxpGcm")[1].content
 
   p "Pausing 15 seconds to avoid being kicked out of the websites"
-   sleep(5) 
+   sleep(5)
 end
 
 
@@ -185,8 +185,8 @@ scrapped_data.each do |key, value|
   software = Software.new(:name => key, :url => value[:website][0], :category => value[:category][0])
 
 
- 
-  software.photo.attach(io: tempfile, filename: "image_#{key}_2.png", content_type: "image/png" ) 
+
+  software.photo.attach(io: tempfile, filename: "image_#{key}_2.png", content_type: "image/png" )
   software.save!
 
 =begin
@@ -195,17 +195,17 @@ scrapped_data.each do |key, value|
 =end
   if value[:plan].length > 6
     value[:plan] = value[:plan][9..12]
-  end 
-  
+  end
+
   i = 0
   j = 0
   h = 0
   while i < value[:plan].length
     if value[:price][i] == nil || value[:price][i].match(/\d+/) == nil
-      
+
     else
       software_plan = SoftwarePlan.new(:name => value[:plan][i], :official_price => value[:price][i].match(/([+-]?([0-9]*[.])?[0-9]+)/)[0])
-      software_plan.software = s  oftware
+      software_plan.software = software
       software_plan.save!
       while j < value[:detailed_features].length
         p value[:have_detailed_features][h]
@@ -218,16 +218,16 @@ scrapped_data.each do |key, value|
           software_feature.feature = feature
           software_feature.save!
         end
-        
+
         j += 1
         h += value[:plan].length
       end
     end
 
-   
+
     j = 0
-  
-    i += 1 
+
+    i += 1
     h = i
   end
 end
