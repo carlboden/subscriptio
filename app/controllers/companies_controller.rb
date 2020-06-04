@@ -44,15 +44,15 @@ class CompaniesController < ApplicationController
            end
 
            subscription.price == subscription_in_range[0].price ? @subscription_status["You already have the best plan"] += 1 : @subscription_status["Cheaper Plan Available"] += 1
-           if (0..25) === subscription.price
+           if (0..25) === ( subscription.price * subscription.number_of_user )
             @subscription_range_price["0 - 25€"] += 1
-           elsif (26..50) === subscription.price
+           elsif (26..50) === ( subscription.price  * subscription.number_of_user )
             @subscription_range_price["26 - 50€"] += 1
-           elsif (51..100) === subscription.price
+           elsif (51..100) === ( subscription.price  * subscription.number_of_user )
             @subscription_range_price["51 - 100€"] += 1
-           elsif (101..250) === subscription.price
+           elsif (101..250) === ( subscription.price  * subscription.number_of_user )
             @subscription_range_price["101 - 250€"] += 1
-           elsif (251..500) === subscription.price
+           elsif (251..500) === ( subscription.price  * subscription.number_of_user )
             @subscription_range_price["251 - 500€"] += 1
            else
             @subscription_range_price["501€ +"] += 1
@@ -103,6 +103,13 @@ class CompaniesController < ApplicationController
         @expenses_per_month_2020.each { |key, value| @sum_expenses_2020 += value}
         @low_sum_expenses_2020 = 0
         @low_expenses_per_month_2020.each { |key, value| @low_sum_expenses_2020 += value }
+
+        @expenses_per_month_2021 = @expenses_per_month.select{|key, value| key.include? "2021"}
+        @low_expenses_per_month_2021 = @low_expenses_per_month.select{|key, value| key.include? "2021"}
+        @sum_expenses_2021 = 0
+        @expenses_per_month_2021.each { |key, value| @sum_expenses_2021 += value}
+        @low_sum_expenses_2021 = 0
+        @low_expenses_per_month_2021.each { |key, value| @low_sum_expenses_2021 += value }
 
         @expenses_day_to_end_year = 0
         @low_expenses_day_to_end_year = 0
