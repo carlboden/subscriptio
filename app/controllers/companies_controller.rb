@@ -6,7 +6,7 @@ class CompaniesController < ApplicationController
 
     def create
         @company = Company.new(params_company)
-        @company.subscriptio_plan_id = 1
+        @company.subscriptio_plan_id = 2
         @user = User.find(current_user.id)
         @user.company_admin = true
         if @company.save
@@ -23,7 +23,7 @@ class CompaniesController < ApplicationController
         @company = Company.find(current_user.company_id)
         @users = User.where(company_id: @company.id)
         @subscriptions = Subscription.order(:start_date).where(:company_id => params[:id])
-        
+
         @expenses_per_month = {"2020-01" => 0, "2020-02" => 0, "2020-03" => 0, "2020-04" => 0, "2020-05" => 0, "2020-06" => 0, "2020-07" => 0, "2020-08" => 0, "2020-09" => 0, "2020-10" => 0, "2020-11" => 0, "2020-12" => 0}
         @low_expenses_per_month = {"2020-01" => 0, "2020-02" => 0, "2020-03" => 0, "2020-04" => 0, "2020-05" => 0, "2020-06" => 0, "2020-07" => 0, "2020-08" => 0, "2020-09" => 0, "2020-10" => 0, "2020-11" => 0, "2020-12" => 0}
         @sum_expenses = 0
@@ -42,7 +42,7 @@ class CompaniesController < ApplicationController
                    subscription_in_range << subscription
                end
            end
-           
+
            subscription.price == subscription_in_range[0].price ? @subscription_status["You already have the best plan"] += 1 : @subscription_status["Cheaper Plan Available"] += 1
            if (0..25) === subscription.price
             @subscription_range_price["0 - 25€"] += 1
@@ -57,15 +57,15 @@ class CompaniesController < ApplicationController
            else
             @subscription_range_price["501€ +"] += 1
            end
-           
-           
+
+
             start_date = strip_date(subscription.start_date)
             end_date = strip_date(subscription.end_date)
 
             # To have if the month is before 10, keep the format 2020-05
             udpate_format_date = start_date[0..3] + '-' + ( start_date[4..7].to_i < 10 ?  "0" + start_date[4..7].to_i.to_s : start_date[4..7])
             if @expenses_per_month[udpate_format_date] == nil
-                
+
                 @expenses_per_month[udpate_format_date] = ( subscription.price * subscription.number_of_user )
                 @low_expenses_per_month[udpate_format_date] = ( subscription_in_range[0].price * subscription.number_of_user )
                 @sum_expenses += ( subscription.price * subscription.number_of_user )
@@ -76,27 +76,27 @@ class CompaniesController < ApplicationController
                 @sum_expenses += ( subscription.price * subscription.number_of_user )
                 @low_sum_expenses += ( subscription_in_range[0].price * subscription.number_of_user )
             end
-            
+
             start_date = add_one_day_strip_date(start_date)
 
             while start_date.to_i <= end_date.to_i
                 udpate_format_date = start_date[0..3] + '-' + ( start_date[4..7].to_i < 10 ? "0" + start_date[4..7] : start_date[4..7] )
-                if @expenses_per_month[udpate_format_date] == nil 
+                if @expenses_per_month[udpate_format_date] == nil
                     @expenses_per_month[udpate_format_date] = ( subscription.price * subscription.number_of_user )
                     @low_expenses_per_month[udpate_format_date] = ( subscription_in_range[0].price * subscription.number_of_user )
                     @sum_expenses += ( subscription.price * subscription.number_of_user )
                     @low_sum_expenses += ( subscription_in_range[0].price * subscription.number_of_user )
-                else 
+                else
                     @expenses_per_month[udpate_format_date] += ( subscription.price * subscription.number_of_user )
                     @low_expenses_per_month[udpate_format_date] += ( subscription_in_range[0].price * subscription.number_of_user )
                     @sum_expenses += ( subscription.price * subscription.number_of_user )
-                    @low_sum_expenses += ( subscription_in_range[0].price * subscription.number_of_user )   
+                    @low_sum_expenses += ( subscription_in_range[0].price * subscription.number_of_user )
                 end
                 start_date = add_one_day_strip_date(start_date)
-                
-            end           
+
+            end
         end
-        
+
         @expenses_per_month_2020 = @expenses_per_month.select{|key, value| key.include? "2020"}
         @low_expenses_per_month_2020 = @low_expenses_per_month.select{|key, value| key.include? "2020"}
         @sum_expenses_2020 = 0
@@ -125,7 +125,7 @@ class CompaniesController < ApplicationController
         format_date = date.strftime('%Y%m')
         # To keep the format the same even if for the first date
         # formatted_date = format_date[0..3] + ( format_date[4..7].to_i).to_s
-        
+
     end
 
     def add_one_day_strip_date(date)
