@@ -86,36 +86,58 @@
 <%else%>
 
 <div class="container mt-5">
-  <div class="row">
-    <div class="col-12">
-      <h2 class="text-center m-5"> Expenses evolution current year</h2>
+  <% current_year = Date.today.strftime('%Y') %>
+  <h2 class="text-center m-5"> Subscription expenses evolution <%= current_year %></h2>
+  <div class="row justify-content-between">
+    <div class="col-10 offset-1">
+      <div class="cards-dashboard text-center mb-5">
+        <div class="card-dashboard">
+          <p class="mb-2">Predicted total subscription expenses in <%= current_year %></p>
+          <h2> €<%=@sum_expenses_2020%></h2>
+        </div>
+        <div class="card-dashboard">
+          <p class="mb-2"> Lowest possible total subscription expenses in <%= current_year %></p>
+          <h2>€<%= @low_sum_expenses_2020%></h2>
+        </div>
+        <div class="card-dashboard">
+          <% current_month = Date.today.strftime('%Y-%m')%>
+          <% next_year = Date.today.next_year(1).strftime('%Y') %>
 
-      <p> <strong>Predicted total expenses: </strong> €<%=@sum_expenses_2020%></p>
-      <p> <strong>Lowest possible total expenses: </strong> €<%= @low_sum_expenses_2020%>
-  <!--      - <strong>Total possible savings: </strong> €<%=@sum_expenses_2020 - @low_sum_expenses_2020%>  -->
-      </p>
-
-      <%  current_month = Date.today.strftime('%Y-%m')%>
-
-
-
-      <p> <strong>Potential savings if you switch now: </strong> €<%= @economy_to_day %> </p>
-
-<!--      <p> The payment for this month <%=@expenses_per_month[current_month]%> € </p>
-      <p> The payment with the lowest subscription for this month <%=@low_expenses_per_month[current_month]%> € </p>
--->
-      <br>
-      <br>
-
-      <%= line_chart [{name: "Your Price", data: @expenses_per_month_2020},
-         {name: "Cheapest Price available", data: @low_expenses_per_month_2020}]  %>
-
-         <br>
-         <br>
+          <p class="mb-2">Potential total savings in <%= current_year %> if you switch now</p>
+          <% if @sum_expenses_2020 - @low_sum_expenses_2020%>
+            <h2 class="card-red">€<%= @economy_to_day %></h2>
+          <% else %>
+            <h2 class="card-green">€<%= @economy_to_day %></h2>
+          <% end %>
+        </div>
+        <div class="card-dashboard">
+          <p class="mb-2">Potential yearly savings as of <%= next_year %></p>
+          <% if @sum_expenses_2020 - @low_sum_expenses_2020%>
+            <h2 class="card-red">€<%=@sum_expenses_2020 - @low_sum_expenses_2020%></h2>
+          <% else %>
+            <h2 class="card-green">€<%=@sum_expenses_2020 - @low_sum_expenses_2020%></h2>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="row m-3">
+<%
+=begin %>
+ <p> The payment for this month <%=@expenses_per_month[current_month]%> € </p>
+      <p> The payment with the lowest subscription for this month <%=@low_expenses_per_month[current_month]%> € </p>
+
+    - <strong>Total possible savings: </strong> €<%=@sum_expenses_2020 - @low_sum_expenses_2020%>  -->
+<%
+=end %>
+  <div class="row m-5">
+    <div class="col-10 offset-1">
+      <%= line_chart [{name: "Your Price", data: @expenses_per_month_2020},
+         {name: "Cheapest Price available", data: @low_expenses_per_month_2020}]  %>
+    </div>
+  </div>
+
+  <div class="row m-5">
     <div class="col-12">
       <h2 class="text-center m-5"> Software price per user distribution </h2>
       <%= column_chart @subscription_range_price , width: "800px", height: "300px"%>
