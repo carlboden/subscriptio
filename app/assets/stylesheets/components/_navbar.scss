@@ -34,6 +34,12 @@
     color: white;
     opacity: 0.5;
   }
+  .name {
+    color: white !important;
+  }
+  .name:hover {
+    opacity: 1 !important;
+  }
 }
 
 .navbar-lewagon-white {
@@ -52,4 +58,10 @@
   color: rgba(0,0,0,0.8);
 }
 
+.fixed-top {
+  position: fixed !important;
+}
 
+.name {
+  color: $subscriptio-gray !important
+}
