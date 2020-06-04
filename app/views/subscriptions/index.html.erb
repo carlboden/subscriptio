@@ -33,7 +33,7 @@
         <p><%= subscription[1].end_date%></p>
       </div>
       <div class="col-5">
-        <p><strong> €<%= subscription[1].price%> / month</strong>
+        <p><strong> €<%= subscription[1].price  * subscription[1].number_of_user%> / month</strong>
         <p> <%= subscription[1].software_plan.name%> </p>
         <p> <%= subscription[1].number_of_user%> users </p>
       </div>
