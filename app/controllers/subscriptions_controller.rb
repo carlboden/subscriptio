@@ -6,7 +6,7 @@ class SubscriptionsController < ApplicationController
 
         @lowest_price_same_range_number_user = calculate_cheaper_plan_range_user(@subscriptions)
 
-        @all_alternative_hash = update_calculation(@subscriptions)
+        @all_alternative_hash = calculate_alternative_price(@subscriptions)
         
         if params[:query2].present?
           @subscriptions = Subscription.where(:software_plan_id => SoftwarePlan.where(software_id: Software.where("name ILIKE ?", "%#{params[:query2]}%")), :company_id => params[:company_id])
@@ -117,11 +117,11 @@ class SubscriptionsController < ApplicationController
   end
 
 
-  def update_calculation(subscriptions)
+  def calculate_alternative_price(subscriptions)
     all_alternative_hash = {}
 
     subscriptions.each do |sub|
-      alt_soft = Software.includes(:subscriptions, software_plans: :features).where( category: sub.software.category)
+      alt_soft = Software.includes(:subscriptions, software_plans: :features).where( category: sub.software.category).where.not(id: sub.software.id)
       alt_plans = (alt_soft).map(&:software_plans).flatten.select do |soft|
          (sub.software_plan.features | soft.features).size > sub.software_plan.features.size / 2 
       end 
