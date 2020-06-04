@@ -314,7 +314,7 @@ class SubscriptionsController < ApplicationController
         end
 
         @max_rated_alternative = SoftwarePlan.find(max_rating_id)
-        
+  
     end
 
 end
