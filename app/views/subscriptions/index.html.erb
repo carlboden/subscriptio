@@ -3,7 +3,7 @@
     <h2 class="text-center"> Overview of subscriptions </h2>
   </div>
   <div class="row justify-content-end mr-3">
-      <%= link_to new_company_subscription_path(current_user.company_id) do %> <i class="fas fa-plus "> Add new </i><% end %>
+      <%= link_to new_company_subscription_path(current_user.company_id) do %> <i class="fas fa-plus "> </i><% end %>
   </div>
 
   <div class="row mb-4 justify-content-center">
@@ -20,6 +20,16 @@
     </div>
     <% end %>
   </div>
+
+<% if @lowest_price_same_range_number_user.length == 0 %>
+  <div class="container">
+    <p class="text-center my-5">No subscription found </p>
+    <div class="row justify-content-center">
+      <%= link_to "Add new", new_company_subscription_path(current_user.company_id), class: "btn btn-primary" %>
+    </div>
+  </div>
+
+<% else %>
 
   <% @lowest_price_same_range_number_user.each do |key,subscription|%>
   <% if ( subscription[0].price - subscription[1].price ) < 0 %>
@@ -40,7 +50,7 @@
       </div>
       <div class="card-subscription-indicators col-1">
           <%= image_tag "traffic-light-red.png"%>
-        
+
       </div>
     </div>
     <% end %>
@@ -65,7 +75,7 @@
       </div>
       <div class="card-subscription-indicators col-1">
           <%= image_tag "traffic-light-orange.png"%>
-        
+
       </div>
     </div>
     <% end %>
@@ -89,14 +99,14 @@
         <p> <%= subscription[1].number_of_user%> users </p>
       </div>
       <div class="card-subscription-indicators col-1">
-        
+
           <%= image_tag "traffic-light-green.png"%>
-        
+
       </div>
     </div>
     <% end %>
   <%end%>
-
+<% end %>
 </div>
 
 
