@@ -1,0 +1,46 @@
+.card-dashboard {
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  padding: 16px;
+
+}
+
+.card-dashboard h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-dashboard p {
+  font-size: 12px;
+  opacity: .7;
+  margin: 0;
+}
+
+.full-opacity-bold {
+  opacity: 1;
+  font-weight: bold;
+}
+
+
+.card-green {
+  background: $subscriptio-green;
+  color: white;
+}
+
+.card-red {
+  background: $subscriptio-red;
+  color: white;
+}
+
+.card-orange {
+  background: $subscriptio-orange;
+  color: white;
+}
+
+
+.cards-dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 32px;
+}
