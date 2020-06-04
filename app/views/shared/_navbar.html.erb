@@ -1,4 +1,4 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon fixed-top navbar <%= yield(:navbar_class)  %>">
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon <%="fixed-top" if params[:controller] == "pages" %>  <%= yield(:navbar_class)  %>">
 
   <%= link_to "SUBSCRIPTIO", root_path, class: "logo-link" %>
 
@@ -30,6 +30,9 @@
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
           </div>
         </li>
+
+        <li class="nav-item nav-link name"> <%= current_user.first_name  %> </li>
+
       <% else %>
          <li class="nav-item">
           <%= link_to "Discover", new_user_session_path, class: "nav-link" %>
