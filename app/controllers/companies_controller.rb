@@ -104,6 +104,13 @@ class CompaniesController < ApplicationController
         @low_sum_expenses_2020 = 0
         @low_expenses_per_month_2020.each { |key, value| @low_sum_expenses_2020 += value }
 
+        @expenses_per_month_2021 = @expenses_per_month.select{|key, value| key.include? "2021"}
+        @low_expenses_per_month_2021 = @low_expenses_per_month.select{|key, value| key.include? "2021"}
+        @sum_expenses_2021 = 0
+        @expenses_per_month_2021.each { |key, value| @sum_expenses_2021 += value}
+        @low_sum_expenses_2021 = 0
+        @low_expenses_per_month_2021.each { |key, value| @low_sum_expenses_2021 += value }
+
         @expenses_day_to_end_year = 0
         @low_expenses_day_to_end_year = 0
         current_month = Date.today.strftime('%Y-%m')

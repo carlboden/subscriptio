@@ -113,9 +113,9 @@
         <div class="card-dashboard">
           <p class="mb-2">Potential yearly savings as of <%= next_year %></p>
           <% if @sum_expenses_2020 - @low_sum_expenses_2020%>
-            <h2 class="card-red">€<%=@sum_expenses_2020 - @low_sum_expenses_2020%></h2>
+            <h2 class="card-red">€<%=@sum_expenses_2021 - @low_sum_expenses_2021%></h2>
           <% else %>
-            <h2 class="card-green">€<%=@sum_expenses_2020 - @low_sum_expenses_2020%></h2>
+            <h2 class="card-green">€<%=@sum_expenses_2021 - @low_sum_expenses_2021%></h2>
           <% end %>
         </div>
       </div>
