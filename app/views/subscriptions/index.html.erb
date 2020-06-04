@@ -22,6 +22,7 @@
   </div>
 
   <% @lowest_price_same_range_number_user.each do |key,subscription|%>
+  <% if ( subscription[0].price - subscription[1].price ) < 0 %>
     <div class="card-subscription mb-3">
       <div class="col-xs-1 col-sm-2">
          <a href="./subscriptions/<%=key%>">
@@ -38,17 +39,63 @@
         <p> <%= subscription[1].number_of_user%> users </p>
       </div>
       <div class="card-subscription-indicators col-1">
-        <% if ( subscription[0].price - subscription[1].price ) < 0 %>
           <%= image_tag "traffic-light-red.png"%>
-        <% elsif @all_alternative_hash[key][1] < subscription[1].price %>
-          <%= image_tag "traffic-light-orange.png"%>
-        <% else %>
-          <%= image_tag "traffic-light-green.png"%>
-        <% end %>
+        
       </div>
     </div>
+    <% end %>
   <%end%>
 
+<% @lowest_price_same_range_number_user.each do |key,subscription|%>
+  <% if  ( ( subscription[0].price - subscription[1].price ) >= 0 ) && @all_alternative_hash[key][1] < subscription[1].price %>
+    <div class="card-subscription mb-3">
+      <div class="col-xs-1 col-sm-2">
+         <a href="./subscriptions/<%=key%>">
+          <%= cl_image_tag subscription[1].software_plan.software.photo.key %> </a>
+      </div>
+      <div class="card-subscription-infos col-xs-5 col-sm-4">
+        <h2><a href="./subscriptions/<%=key%>"> <%=subscription[1].software_plan.software.name%> </a></h2>
+        <p> <%= subscription[1].software_plan.software.category %>  </p>
+        <p><%= subscription[1].end_date%></p>
+      </div>
+      <div class="col-5">
+        <p><strong> €<%= subscription[1].price  * subscription[1].number_of_user%> / month</strong>
+        <p> <%= subscription[1].software_plan.name%> </p>
+        <p> <%= subscription[1].number_of_user%> users </p>
+      </div>
+      <div class="card-subscription-indicators col-1">
+          <%= image_tag "traffic-light-orange.png"%>
+        
+      </div>
+    </div>
+    <% end %>
+  <%end%>
+
+  <% @lowest_price_same_range_number_user.each do |key,subscription|%>
+  <% if ( subscription[0].price - subscription[1].price ) >= 0 && @all_alternative_hash[key][1] >= subscription[1].price %>
+    <div class="card-subscription mb-3">
+      <div class="col-xs-1 col-sm-2">
+         <a href="./subscriptions/<%=key%>">
+          <%= cl_image_tag subscription[1].software_plan.software.photo.key %> </a>
+      </div>
+      <div class="card-subscription-infos col-xs-5 col-sm-4">
+        <h2><a href="./subscriptions/<%=key%>"> <%=subscription[1].software_plan.software.name%> </a></h2>
+        <p> <%= subscription[1].software_plan.software.category %>  </p>
+        <p><%= subscription[1].end_date%></p>
+      </div>
+      <div class="col-5">
+        <p><strong> €<%= subscription[1].price  * subscription[1].number_of_user%> / month</strong>
+        <p> <%= subscription[1].software_plan.name%> </p>
+        <p> <%= subscription[1].number_of_user%> users </p>
+      </div>
+      <div class="card-subscription-indicators col-1">
+        
+          <%= image_tag "traffic-light-green.png"%>
+        
+      </div>
+    </div>
+    <% end %>
+  <%end%>
 
 </div>
 

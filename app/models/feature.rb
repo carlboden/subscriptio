@@ -8,6 +8,7 @@ class Feature < ApplicationRecord
                     tsearch: { prefix: true }
                   }
     
-	has_many :software_features
+  has_many :software_features
+  has_many :software_plans, through: :features
 	validates :name, presence: :true
 end
