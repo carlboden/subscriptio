@@ -7,7 +7,7 @@ class SubscriptionsController < ApplicationController
         @lowest_price_same_range_number_user = calculate_cheaper_plan_range_user(@subscriptions)
 
         @all_alternative_hash = calculate_alternative_price(@subscriptions)
-        
+
         if params[:query2].present?
           @subscriptions = Subscription.where(:software_plan_id => SoftwarePlan.where(software_id: Software.where("name ILIKE ?", "%#{params[:query2]}%")), :company_id => params[:company_id])
           array_subscription_in_scope = []
@@ -29,7 +29,7 @@ class SubscriptionsController < ApplicationController
         @company = Company.find(current_user.company_id)
         @subscription.company = @company
         if @subscription.save
-            redirect_to company_subscriptions_path(@company.id)
+            redirect_to company_subscriptions_path(@company.id), notice: 'Your subscription was successfully created.'
         else
             render :new
         end
@@ -62,13 +62,13 @@ class SubscriptionsController < ApplicationController
       subscription_array = [@subscription]
       @all_alternative_hash = calculate_alternative_price(subscription_array)
 
-      
+
 
       same_software_lowest_price_market
 
       same_software_lowest_price_same_users
 
-      
+
 
       other_software_better_reviews
 
@@ -92,7 +92,7 @@ class SubscriptionsController < ApplicationController
         @average_review = (sum / @subscription.software_plan.ratings.length).round(2)
       end
 
-      @rating = Rating.new  
+      @rating = Rating.new
 
     end
 
@@ -123,9 +123,9 @@ class SubscriptionsController < ApplicationController
     subscriptions.each do |sub|
       alt_soft = Software.includes(:subscriptions, software_plans: :features).where( category: sub.software.category).where.not(id: sub.software.id)
       alt_plans = (alt_soft).map(&:software_plans).flatten.select do |soft|
-         (sub.software_plan.features | soft.features).size > sub.software_plan.features.size / 2 
-      end 
-    
+         (sub.software_plan.features | soft.features).size > sub.software_plan.features.size / 2
+      end
+
       compares_subscriptions = alt_plans.map(&:subscriptions).flatten
 
       lowest_price_same_features = calculate_cheaper_plan_range_user(compares_subscriptions)
@@ -164,7 +164,7 @@ class SubscriptionsController < ApplicationController
       end
     end
     lowest_price_same_range_number_user = red_light_price.merge(lowest_price_same_range_number_user)
-    
+
   end
 
 
@@ -303,7 +303,7 @@ class SubscriptionsController < ApplicationController
             end
           end
         end
-        
+
         @max_rating = software_plan_with_ratings[all_software_plans[0][0].id]
         max_rating_id = all_software_plans[0][0].id
         software_plan_with_ratings.each do |key, index|
@@ -314,7 +314,7 @@ class SubscriptionsController < ApplicationController
         end
 
         @max_rated_alternative = SoftwarePlan.find(max_rating_id)
-  
+
     end
 
 end
