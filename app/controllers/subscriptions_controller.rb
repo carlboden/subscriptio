@@ -2,12 +2,19 @@ class SubscriptionsController < ApplicationController
 
   def index
 
-        @subscriptions = Subscription.where(:company_id => params[:company_id]).paginate(page: params[:page], per_page: 5)
+        @subscriptions = Subscription.where(:company_id => params[:company_id])
 
         @lowest_price_same_range_number_user = calculate_cheaper_plan_range_user(@subscriptions)
+         
+        
         @all_alternative_hash = calculate_alternative_price(@subscriptions)
         if params[:query2].present?
           @subscriptions = Subscription.where(:software_plan_id => SoftwarePlan.where(software_id: Software.where("name ILIKE ?", "%#{params[:query2]}%")), :company_id => params[:company_id])
+          array_subscription_in_scope = []
+          @subscriptions.each do |subscription|
+            array_subscription_in_scope << subscription.id
+          end
+          @lowest_price_same_range_number_user = @lowest_price_same_range_number_user.select{|key, content| array_subscription_in_scope.include? key}
         end
     end
 
@@ -61,7 +68,7 @@ class SubscriptionsController < ApplicationController
 
       same_software_lowest_price_same_users
 
-      other_software_lowest_price
+      
 
       other_software_better_reviews
 
@@ -162,8 +169,8 @@ class SubscriptionsController < ApplicationController
         lowest_price_same_features = calculate_cheaper_plan_range_user(subscriptions_same_features)
         lowest_price = {subscription_id => [0, 1500]}
         lowest_price_same_features.each do |key, subscription|
-          if lowest_price.values[0][1] > subscription.price
-            lowest_price = {subscription_id =>[key, subscription.price] }
+          if lowest_price.values[0][1] > subscription[0].price
+            lowest_price = {subscription_id =>[key, subscription[0].price] }
           end
         end
 
@@ -177,6 +184,7 @@ class SubscriptionsController < ApplicationController
 
     def calculate_cheaper_plan_range_user(subscriptions)
       lowest_price_same_range_number_user = {}
+      red_light_price = {}
       subscriptions.each do |subscription|
         subscription_decreasing_order = Subscription.order('price ASC').where(:software_plan_id => subscription.software_plan_id)
         subscription_in_range = {}
@@ -188,11 +196,16 @@ class SubscriptionsController < ApplicationController
             end
         end
 
-        subscription_in_range.each do |key, subscription|
-          lowest_price_same_range_number_user[key] = subscription_in_range[key][0]
+        subscription_in_range.each do |key, subscriptio|
+          if subscription_in_range[key][0].price < subscription.price
+            red_light_price[key] = [subscription_in_range[key][0], subscription]
+          else
+            lowest_price_same_range_number_user[key] = [subscription_in_range[key][0], subscription]
+          end
         end
       end
-      lowest_price_same_range_number_user
+      lowest_price_same_range_number_user = red_light_price.merge(lowest_price_same_range_number_user)
+      
     end
 
 
@@ -300,30 +313,6 @@ class SubscriptionsController < ApplicationController
         all_software_plans.each do |software|
           software.each do |plan|
             Subscription.where(software_plan_id: plan.id,  :number_of_user => range_user ).order("price ASC")[0] != nil ? all_subscription << Subscription.where(software_plan_id: plan.id).order("price ASC")[0] : ""
-          end
-        end
-    end
-
-
-    def other_software_lowest_price
-       range_user = (@subscription.number_of_user - (1 + (@subscription.number_of_user/2)**2))..(@subscription.number_of_user + (1 + (@subscription.number_of_user/2)**2))
-
-        @softwares_same_category = Software.where(:category => @subscription.software_plan.software.category)
-        all_software_plans = []
-        @softwares_same_category.each { |software| all_software_plans << software.software_plans}
-        all_subscription = []
-        all_software_plans.each do |software|
-          software.each do |plan|
-            Subscription.where(software_plan_id: plan.id,  :number_of_user => range_user ).order("price ASC")[0] != nil ? all_subscription << Subscription.where(software_plan_id: plan.id).order("price ASC")[0] : ""
-          end
-        end
-
-      min_price = all_subscription[0].price
-        @lowest_subscription = all_subscription[0]
-        all_subscription.each do |subscription|
-          if min_price > subscription.price
-            min_price = subscription.price
-            @lowest_subscription = subscription
           end
         end
     end
