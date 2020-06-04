@@ -63,7 +63,7 @@
           <div class="card-software">
             <p>Cheaper alternative </p>
             <% if ( @subscription.price - @all_alternative_hash[@subscription.id][1] ) > 0.0 %>
-              <h2 class="mt-3"><a href="<%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.url%>">  <%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name%> </a> </h2>
+              <h2 class="mt-3"><a href="<%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.url%>", target="_blank">  <%=Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.software.name%> </a> </h2>
               <p> <a href="<%=software_plan_path(Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan) %>"> <%= Subscription.find(@all_alternative_hash[@subscription.id][0]).software_plan.name %> </a></p>
             <% else %>
               <p class= "mt-3 mb-4 full-opacity-bold">You have already the cheapest software 🎉</p>
@@ -92,7 +92,7 @@
           <div class="card-software">
             <p>Better alternative </p>
             <% if ( @max_rating - @average_review ) > 0.0 %>
-              <h2 class="mt-3"><a href="<%=@max_rated_alternative.software.url%>"> <%= @max_rated_alternative.software.name%> </a></h2>
+              <h2 class="mt-3"><a href="<%=@max_rated_alternative.software.url%>", target="_blank"> <%= @max_rated_alternative.software.name%> </a></h2>
               <p> <a href="<%=@max_rated_alternative%>"> <%= @max_rated_alternative.name %> </a></p>
             <% else %>
               <p class= "mt-3 mb-4 full-opacity-bold">You have already the best-reviewed software 🎉</p>
@@ -111,8 +111,8 @@
             <% else %>
               <p class= "mt-3 mb-4 full-opacity-bold">You have already the best-reviewed software 🎉</p>
             <% end %>
-
           </div>
+          <p class="mt-3"> <a href="<%=softwares_url%>.<%=@subscription.software_plan.software.category%>"> See all alternatives </a> </p>
         </div>
       </div>
 

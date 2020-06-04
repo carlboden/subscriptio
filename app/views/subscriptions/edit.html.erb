@@ -1,29 +1,39 @@
-<div class="container">
+<div class="container mt-5">
   <div class="row">
     <div class="col-xs-12 col-sm-4 offset-sm-4">
       <div class="form-basic">
 
         <h2> Edit subscription </h2>
 
-        <div data-controller="software-plan">
+        <div data-controller="software">
             <%= simple_form_for([@company, @subscription]) do |f|%>
-                <%= label :software, "Software"%><br>
-                <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), include_blank: true, data: { action: "software-plan#fetchPlans" } %>
-                <br>
-                <br>
-                <%= label :other, "Plan"%><br>
-                <div data-target="software-plan.wrapper">
-
+                <div class="form-group" >
+                  <%= label :software, "Software"%>
+                  <%= select_tag :software, options_from_collection_for_select(@softwares, "id", "name"), include_blank: true, data: { action: "software#fetchPlans" }, class: "form-control select2" %>
                 </div>
-                <br>
-                <%= f.input :start_date, as: :string, input_html: {class: "datepicker_full"} %> <br>
-                <%= f.input :end_date, as: :string, input_html: { class: "datepicker_full"} %> <br>
+
+                <div class="form-group">
+                  <%= label :other, "Plan"%>
+                    <div data-target="software.wrapper" >
+                    </div>
+                </div>
+
+                <%= f.input :start_date,
+                            as: :string,
+                            required: true,
+                            input_html: {class: "datepicker_full"} %>
+                <%= f.input :end_date,
+                            as: :string,
+                            required: true,
+                            input_html: { class: "datepicker_full"} %>
                 <%= f.input :number_of_user,
-                                    as: :integer,
-                                    required: true %>
-                        <%= f.input :price,
-                                    as: :float,
-                                    required: true %>
+                            as: :integer,
+                            required: true %>
+                <%= f.input :price,
+                            as: :float,
+                            required: true,
+                            label: 'Price per Month per User' %>
+
                 <%= f.submit "Save", class: "btn btn-primary" %>
             <% end %>
         </div>

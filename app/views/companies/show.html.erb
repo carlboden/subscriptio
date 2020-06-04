@@ -37,7 +37,12 @@
               <td><%= user.first_name%></td>
               <td><%= user.last_name%></td>
               <td><%= user.function%></td>
-              <td><%= user.company_admin %> </td>
+              <td><% if user.company_admin = "true" %>
+                  <%= "Yes" %>
+                  <% else %>
+                  <%= "No" %>
+                  <% end %>
+              </td>
               <td><%= user.status %> </td>
               <td><%= link_to edit_user_path(user.id) do %>
                   <i class="fas fa-edit"></i>
@@ -50,13 +55,6 @@
                   <a href="./<%=@company.id%>/users/<%=user.id%>/edit.Approved">
                     <i class="far fa-thumbs-up"></i>
                   </a>
-<!--                  <form method="patch" action="./<%=@company.id%>/users/<%=user.id%>" class="inline">
-                    <input type="hidden" name="status" value="Approved">
-                    <button type="submit"  class="link-button">
-                      <i class="far fa-thumbs-up"></i>
-                    </button>
-                  </form>
--->
                 <% end %>
                </td>
 
@@ -83,7 +81,6 @@
           <%else%>
           <%= button_to "I want to cancel my subscription", "../users/#{current_user.id}/bank_details/#{BankDetail.where(:user_id => current_user.id)[0].id}", method: :delete, data: { confirm: "Are you sure?" }  %>
       <%end%>
-      <a href="./<%=@company.id%>/users"> See all Company Members </a>
 
 
 <%else%>
@@ -100,7 +97,7 @@
 
       <%  current_month = Date.today.strftime('%Y-%m')%>
 
-      
+
 
       <p> <strong>Potential savings if you switch now: </strong> €<%= @economy_to_day %> </p>
 
