@@ -15,13 +15,12 @@ class RatingsController < ApplicationController
 
 	def create
 	  @softwarePlan = SoftwarePlan.find(params[:software_plan_id])
-	  @subscription = Subscription.where(:software_plan_id => params[:software_plan_id])[0]
-    @rating = Rating.new(rating_params)
+	  @subscription = Subscription.where(:software_plan_id => params[:software_plan_id], :company_id => current_user.company.id)[0]
+      @rating = Rating.new(rating_params)
   	  @rating.software_plan = @softwarePlan
   	  @rating.user = current_user
-
 	  if @rating.save
-     redirect_to company_subscription_path(current_user.company.id, @subscription)
+     	redirect_to company_subscription_path(current_user.company.id, @subscription)
 	  else
 	  	render :new
 	  end
@@ -43,7 +42,7 @@ class RatingsController < ApplicationController
     def destroy
         @rating = Rating.find(params[:id])
         @rating.destroy
-        @subscription = Subscription.where(:software_plan_id => params[:software_plan_id])[0]
+        @subscription = Subscription.where(:software_plan_id => params[:software_plan_id], :company_id => current_user.company.id)[0]
         redirect_to company_subscription_path(current_user.company.id, @subscription)
     end
 
