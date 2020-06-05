@@ -56,7 +56,7 @@ class SubscriptionsController < ApplicationController
     end
 
     def show
-
+      
       @subscription = Subscription.find(params[:id])
       create_data_histogram
       subscription_array = [@subscription]
