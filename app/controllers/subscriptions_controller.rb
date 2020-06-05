@@ -123,7 +123,7 @@ class SubscriptionsController < ApplicationController
     subscriptions.each do |sub|
       alt_soft = Software.includes(:subscriptions, software_plans: :features).where( category: sub.software.category).where.not(id: sub.software.id)
       alt_plans = (alt_soft).map(&:software_plans).flatten.select do |soft|
-         (sub.software_plan.features | soft.features).size > sub.software_plan.features.size / 2
+         (sub.software_plan.features | soft.features).size > ((sub.software_plan.features.size / 3 ) * 4)
       end
 
       compares_subscriptions = alt_plans.map(&:subscriptions).flatten
