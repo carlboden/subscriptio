@@ -1,18 +1,51 @@
-<div class="container p-5 mt-3">
+<div class="container mt-3">
+  <h2 class="text-center">All softwares for the category <%=@softwares[0].category%> </h2>
+  <div class="row justify-content-center">
+    <div>
+      <%= simple_form_for softwares_path, method: :get do %>
+        <%= text_field_tag :query,
+          params[:query],
+          class: "form-control",
+          placeholder: "I want to find...."
+          %>
+    </div>
+    <div class="ml-3">
+        <%= submit_tag "Search", class: "btn btn-primary" %>
+    </div>
+      <% end %>
 
-  <h2>All softwares for the category <%=@softwares[0].category%> </h2>
+  </div>
+
+  <div class="row mt-3">
+    <div class="software-cards">
+      <% @softwares.each do |software| %>
+        <%software_plan = SoftwarePlan.where(software_id: software.id)%>
+        <%software_plan.each do |plan|%>
+          <div class="software-card">
+            <%reviews = plan.ratings%>
+            <%sum_reviews = 0.0%>
+            <%reviews.each do |review|%>
+              <%sum_reviews += review.rating%>
+            <% end %>
+            <%average_reviews = sum_reviews/(reviews.length)%>
+            <%sum_price = 0%>
+            <%subscriptions = Subscription.order('price ASC').where(:software_plan_id => plan.id)%>
+
+            <%subscriptions[0] == nil ? lowest_price = nil : lowest_price = subscriptions[0].price%>
+            <%subscriptions.each do |subscription|%>
+              <%sum_price += subscription.price%>
+            <% end %>
+            <%subscriptions[0] == nil ?   average_price = nil :  average_price = sum_price / (subscriptions.length)%>
+            <%= plan.software.name %> - <%=plan.name%> - Official Price: <%=plan.official_price%> € - <%='%.2f' %  average_reviews%> stars <%=lowest_price == nil ? "" : "- lowest_price: #{lowest_price}" %>  <%=average_price == nil ? "" : "- average_price: #{'%.2f' % average_price}" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 
 
-  <%= simple_form_for softwares_path, method: :get do %>
-    <%= text_field_tag :query,
-      params[:query],
-      class: "form-control",
-      placeholder: "I want to find...."
-    %>
-    <%= submit_tag "Search", class: "btn btn-primary" %>
-  <% end %>
-
-
+<%
+=begin %>
   <ul>
   	<% @softwares.each do |software| %>
   		<%software_plan = SoftwarePlan.where(software_id: software.id)%>
@@ -35,6 +68,10 @@
   		<%end%>
   	<%  end %>
   </ul>
+
+  <%end%>
+<%
+=end %>
 
 </div>
 
